@@ -1,0 +1,14 @@
+.custom-table {
+    border-collapse: collapse;
+}
+
+.custom-table th, .custom-table td {
+    border-right: 1px solid #000; /* Màu và độ dày border tùy ý */
+    padding: 8px; /* Tùy chỉnh khoảng cách giữa nội dung và border */
+    border-top: none; /* Ẩn border cột ngang */
+    border-bottom: none; /* Ẩn border cột ngang */
+}
+
+.custom-table th:last-child, .custom-table td:last-child {
+    border-right: none; /* Loại bỏ border bên phải của cột cuối cùng */
+}
