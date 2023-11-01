@@ -12,41 +12,45 @@ import {ToastContainer} from "react-toastify";
 import LoginForm from "./components/user/LoginForm";
 import Home from "./components/home/Home";
 import HomeDetail from "./components/home_detail/HomeDetail";
-
+import Cart from "./components/cart/Cart";
 
 
 function App() {
-  axiosClient();
-  return (
-      <>
-        <ToastContainer></ToastContainer>
-        <Routes>
-          <Route path="/401" element={<Error401/>}/>
-          <Route path="/403" element={<Error403/>}/>
-          <Route path="/login" element={<LoginForm/>}/>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/detail" element={<HomeDetail/>}/>
+    axiosClient();
+    return (
+        <>
+            <ToastContainer></ToastContainer>
+            <Routes>
+                <Route path="/401" element={<Error401/>}/>
+                <Route path="/403" element={<Error403/>}/>
+                <Route path="/login" element={<LoginForm/>}/>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/detail" element={<HomeDetail/>}/>
+                <Route path="/cart" element={<Cart/>}/>
+
+                <Route path="/admin/information/:id" element={<Information/>}/>
+                <Route path="/admin/home" element={<HomeAdmin/>}/>
+                <Route path="/admin/*" element={<HomeAdmin/>}/>
 
 
+                <Route
+                    element={
+                        <Authentication
+                            allowedRoles={[
+                                EnumAppUserRole.ROLE_ADMIN,
+                            ]}
+                        />
+                    }
+                >
+                    {/*<Route path="/admin/information/:id" element={<Information/>}/>*/}
+                    {/*<Route path="/admin/home" element={<HomeAdmin/>}/>*/}
+                    {/*<Route path="/admin/*" element={<HomeAdmin/>}/>*/}
+                </Route>
 
-          <Route
-              element={
-                <Authentication
-                    allowedRoles={[
-                      EnumAppUserRole.ROLE_ADMIN,
-                    ]}
-                />
-              }
-          >
-            <Route path="/admin/information/:id" element={<Information/>}/>
-            <Route path="/admin/home" element={<HomeAdmin/>}/>
-            <Route path="/admin/*" element={<HomeAdmin/>}/>
-          </Route>
 
-
-        </Routes>
-      </>
-  );
+            </Routes>
+        </>
+    );
 }
 
 export default App;

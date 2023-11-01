@@ -47,3 +47,14 @@ export const getIdByUserName = async (userName) => {
         `http://localhost:8080/api/user/get-id-app-user/${userName}`
     );
 };
+
+export const loginWithFacebook = async (facebookUser) => {
+    return await axios.post(
+        apiAuth + `/login-by-facebook`,
+        facebookUser
+    );
+};
+
+export const getObjByUserName = async () => {
+    return await axios.get(apiAuth + `/get-obj-by-user`);
+}

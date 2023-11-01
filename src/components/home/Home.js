@@ -21,29 +21,17 @@ function Home() {
         <>
             <Header/>
             <Carousel>
-                <Carousel.Item interval={3000}>
-                    <ExampleCarouselImage link={"https://i.imgur.com/aeyESqd.jpg"} text="First slide"/>
-                    <Carousel.Caption>
-                        <h1>Triệu Người Chung Tay Quyên Góp</h1>
-                        <p>Vì một Việt Nam tốt đẹp hơn!</p>
-                    </Carousel.Caption>
+                <Carousel.Item interval={2000}>
+                    <ExampleCarouselImage link={"https://i.imgur.com/hGcNOjB.jpg"} text="First slide"/>
                 </Carousel.Item>
-                <Carousel.Item interval={3000}>
-                    <ExampleCarouselImage link={"https://i.imgur.com/0luhGEi.jpg"} text="Second slide"/>
-                    <Carousel.Caption>
-                        <h1>Dự Án Cộng Đồng</h1>
-                        <p>Cùng chung tay - Xây trường mới - Dựng tương lai</p>
-                    </Carousel.Caption>
+                <Carousel.Item interval={2000}>
+                    <ExampleCarouselImage link={"https://i.imgur.com/opo70w8.jpg"} text="Second slide"/>
                 </Carousel.Item>
-                <Carousel.Item interval={3000}>
-                    <ExampleCarouselImage link={"https://i.imgur.com/nJhSDVJ.jpg"} text="Third slide"/>
-                    <Carousel.Caption>
-                        <h1>#Homenothouse</h1>
-                        <p>Không chỉ là ngôi nhà, hãy là một mái ấm!</p>
-                    </Carousel.Caption>
+                <Carousel.Item interval={2000}>
+                    <ExampleCarouselImage link={"https://i.imgur.com/sWqodzX.jpg"} text="Third slide"/>
                 </Carousel.Item>
             </Carousel>
-            <div style={{marginTop: "5%"}}>
+            <div style={{marginTop: "5%", zIndex: "99999"}}>
                 <div className="container">
                     <Card style={{width: '100%', height: "100%"}}>
                         <div className="row">
@@ -96,8 +84,10 @@ function Home() {
 
             <div style={{marginTop: "5%", backgroundColor: "#FED7C3"}}>
                 <div className="container" style={{paddingBottom: "4%"}}>
-                    <h1 style={{textAlign: "center", marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các hoàn cảnh quyên góp</h1>
-                    <p style={{textAlign: "center", marginBottom: "5%"}}>Chung tay quyên góp giúp đỡ các hoàn cảnh khó khăn trên khắp cả nước.</p>
+                    <h1 style={{textAlign: "center", marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các hoàn
+                        cảnh quyên góp</h1>
+                    <p style={{textAlign: "center", marginBottom: "5%"}}>Chung tay quyên góp giúp đỡ các hoàn cảnh khó
+                        khăn trên khắp cả nước.</p>
                     <div className="row">
                         <div className="col-4">
                             <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
@@ -131,7 +121,8 @@ function Home() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -176,7 +167,8 @@ function Home() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -221,7 +213,8 @@ function Home() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -266,7 +259,8 @@ function Home() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -311,7 +305,8 @@ function Home() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -356,7 +351,8 @@ function Home() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -377,7 +373,8 @@ function Home() {
 
             <div style={{backgroundColor: "#FEE1E8"}}>
                 <div className="container" style={{paddingBottom: "5%"}}>
-                    <h1 style={{textAlign: "center", marginBottom: "5%", paddingTop: "7%"}}>Ví Nhân Ái - Thiện nguyện mỗi ngày</h1>
+                    <h1 style={{textAlign: "center", marginBottom: "5%", paddingTop: "7%"}}>Ví Nhân Ái - Thiện nguyện
+                        mỗi ngày</h1>
                     <div className="row">
                         <div className="col-4">
                             <div style={{marginTop: "10%"}}>
@@ -389,7 +386,8 @@ function Home() {
                                     </div>
                                     <div className="col-8">
                                         <h5>Quyên góp nhanh chóng, dễ dàng</h5>
-                                        <p style={{color: "gray", fontSize: "90%"}}>Chỉ với vài chạm, bạn đã góp phần giúp đỡ 1 hoàn cảnh khó khăn có cuộc sống
+                                        <p style={{color: "gray", fontSize: "90%"}}>Chỉ với vài chạm, bạn đã góp phần
+                                            giúp đỡ 1 hoàn cảnh khó khăn có cuộc sống
                                             tốt đẹp hơn.</p>
                                     </div>
                                 </div>
@@ -405,7 +403,8 @@ function Home() {
                                         </div>
                                         <div className="col-8">
                                             <h5>1000đ cũng là đáng quý</h5>
-                                            <p style={{color: "gray", fontSize: "90%"}}>Với mức ủng hộ tối thiểu 1.000 đồng, bạn đã cùng hàng triệu nhà hảo tâm
+                                            <p style={{color: "gray", fontSize: "90%"}}>Với mức ủng hộ tối thiểu 1.000
+                                                đồng, bạn đã cùng hàng triệu nhà hảo tâm
                                                 khác của “Trái tim MoMo” giúp đỡ những mảnh đời khó khăn.</p>
                                         </div>
                                     </div>
@@ -420,7 +419,8 @@ function Home() {
                                 <div className="row">
                                     <div className="col-8">
                                         <h5>Minh bạch, công khai mọi khoản đóng góp</h5>
-                                        <p style={{color: "gray", fontSize: "90%"}}>Mọi thông tin về hoạt động đóng góp, tài trợ đều được công khai và cập nhật
+                                        <p style={{color: "gray", fontSize: "90%"}}>Mọi thông tin về hoạt động đóng góp,
+                                            tài trợ đều được công khai và cập nhật
                                             liên
                                             tục.</p>
                                     </div>
@@ -435,7 +435,8 @@ function Home() {
                                 <div className="row">
                                     <div className="col-8">
                                         <h5>Đối tác của các cơ quan, tổ chức hảo tâm uy tín</h5>
-                                        <p style={{color: "gray", fontSize: "90%"}}>“Trái tim MoMo” đã và đang kết nối được với rất nhiều đơn vị bảo trợ, báo
+                                        <p style={{color: "gray", fontSize: "90%"}}>“Trái tim MoMo” đã và đang kết nối
+                                            được với rất nhiều đơn vị bảo trợ, báo
                                             chí, đơn vị
                                             hảo tâm uy tín trên cả nước.</p>
                                     </div>
@@ -452,26 +453,13 @@ function Home() {
             </div>
 
             <div className="container" style={{paddingBottom: "10%"}}>
-                <h1 style={{textAlign: "center", marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các đối tác đồng hành</h1>
-                <p style={{textAlign: "center", marginBottom: "5%"}}>Các tổ chức nhân đạo Phi Lợi Nhuận đồng hành cùng Ví MoMo giúp đỡ các hoàn cảnh khó khăn trên khắp cả nước.</p>
+                <h1 style={{textAlign: "center", marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các đối tác
+                    đồng hành</h1>
+                <p style={{textAlign: "center", marginBottom: "5%"}}>Các tổ chức nhân đạo Phi Lợi Nhuận đồng hành cùng
+                    Ví MoMo giúp đỡ các hoàn cảnh khó khăn trên khắp cả nước.</p>
                 <div className="row">
                     <div className="col-4">
-                        <Card style={{ width: '100%', height: "5rem", marginBottom: "5%" }}>
-                            <div className="row">
-                                <div className="col-3">
-                                    <Image variant="top"
-                                              style={{width: "4rem", height: "4rem", margin: "11%"}}
-                                              id="img1" src="https://i.imgur.com/2jeoooy.jpg" rounded/>
-                                </div>
-                                <div className="col-9">
-                                    <label htmlFor="img1" style={{marginTop: "6%"}}>MSD United Way</label>
-                                    <p style={{fontSize: "90%", color: "gray"}}>Hỗ trợ các hoàn cảnh khó khăn</p>
-                                </div>
-                            </div>
-                        </Card>
-                    </div>
-                    <div className="col-4">
-                        <Card style={{ width: '100%', height: "5rem", marginBottom: "5%" }}>
+                        <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
                             <div className="row">
                                 <div className="col-3">
                                     <Image variant="top"
@@ -486,7 +474,7 @@ function Home() {
                         </Card>
                     </div>
                     <div className="col-4">
-                        <Card style={{ width: '100%', height: "5rem", marginBottom: "5%" }}>
+                        <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
                             <div className="row">
                                 <div className="col-3">
                                     <Image variant="top"
@@ -501,7 +489,7 @@ function Home() {
                         </Card>
                     </div>
                     <div className="col-4">
-                        <Card style={{ width: '100%', height: "5rem", marginBottom: "5%" }}>
+                        <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
                             <div className="row">
                                 <div className="col-3">
                                     <Image variant="top"
@@ -516,7 +504,7 @@ function Home() {
                         </Card>
                     </div>
                     <div className="col-4">
-                        <Card style={{ width: '100%', height: "5rem", marginBottom: "5%" }}>
+                        <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
                             <div className="row">
                                 <div className="col-3">
                                     <Image variant="top"
@@ -531,7 +519,22 @@ function Home() {
                         </Card>
                     </div>
                     <div className="col-4">
-                        <Card style={{ width: '100%', height: "5rem", marginBottom: "5%" }}>
+                        <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
+                            <div className="row">
+                                <div className="col-3">
+                                    <Image variant="top"
+                                           style={{width: "4rem", height: "4rem", margin: "11%"}}
+                                           id="img1" src="https://i.imgur.com/2jeoooy.jpg" rounded/>
+                                </div>
+                                <div className="col-9">
+                                    <label htmlFor="img1" style={{marginTop: "6%"}}>MSD United Way</label>
+                                    <p style={{fontSize: "90%", color: "gray"}}>Hỗ trợ các hoàn cảnh khó khăn</p>
+                                </div>
+                            </div>
+                        </Card>
+                    </div>
+                    <div className="col-4">
+                        <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
                             <div className="row">
                                 <div className="col-3">
                                     <Image variant="top"

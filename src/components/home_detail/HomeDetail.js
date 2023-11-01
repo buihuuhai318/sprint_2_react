@@ -44,8 +44,7 @@ function HomeDetail() {
     return (
         <>
             <Header/>
-            <div id="targetDiv1"></div>
-            <div style={{marginTop: "3%"}}>
+            <div style={{marginTop: "3%"}} id="targetDiv1">
                 <div className="container">
                     <h2>
                         Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện Vân Hồ, Tỉnh Sơn La
@@ -291,7 +290,7 @@ function HomeDetail() {
                                 </Card>
                             </div>
                             <div className="col-4">
-                                <div className="sticky-top" style={{top: "70px"}}>
+                                <div className="sticky-top" style={{top: "90px"}}>
                                     <h5>Chương trình đang diễn ra</h5>
                                     <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
                                         <Card.Img variant="top" src="https://i.imgur.com/2jeoooy.jpg"/>

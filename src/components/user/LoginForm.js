@@ -7,6 +7,12 @@ import {RingLoader} from "react-spinners";
 import '../../css/user/spinner.css'
 import '../../css/user/login.css'
 import {Helmet} from "react-helmet";
+import {BsFacebook, IconName} from "react-icons/bs";
+import {AiOutlineFacebook} from "@react-icons/all-files/ai/AiOutlineFacebook";
+import {AiFillFacebook} from "react-icons/ai";
+import {GrFacebook} from "react-icons/gr";
+import Swal from "sweetalert2";
+import {LoginSocialFacebook} from "reactjs-social-login";
 
 
 function LoginForm() {
@@ -96,6 +102,46 @@ function LoginForm() {
     const initAccount = {
         userName: "",
         password: ""
+    }
+
+    const handleLogin = async (resolve) => {
+        try {
+
+            const result = await AuthService.loginWithFacebook( resolve.data );
+            console.log(resolve)
+            AuthService.addJwtTokenToLocalStorage(result.data.jwtToken);
+            const tempURL = localStorage.getItem("tempURL");
+            localStorage.removeItem("tempURL");
+            if (tempURL) {
+                navigate(tempURL);
+            } else {
+                navigate('/');
+
+            }
+        } catch (e) {
+            Swal.fire({
+                icon: 'error',
+                title: e.response.data,
+            })
+        }
+    }
+
+    const loginWithFacebook = async (resolve) => {
+        console.log(resolve);
+        Swal.fire({
+            text: 'Chào '+resolve.data.name+', bạn có muốn đăng nhập thông qua facebook ' + resolve.data.email+" không?",
+            showDenyButton: true,
+            confirmButtonText: 'Xác nhận',
+            denyButtonText: `Thoát`,
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                handleLogin(resolve)
+            } else if (result.isDenied) {
+                return;
+            }
+        })
+
     }
 
     const login = async (data) => {
@@ -224,15 +270,37 @@ function LoginForm() {
                                         </div>
                                     </div>
                                     <div style={{display: isOTPVisible ? 'none' : 'block', marginTop: forgot ? '20px' : '54px'}}>
-                                        <div style={{width: '40%', marginLeft: 'auto', marginRight: 'auto'}}>
+                                        <div style={{width: '45%', marginLeft: 'auto', marginRight: 'auto'}}>
                                             <button type="submit" style={{
-                                                width: '100%',
+                                                width: '60%',
                                                 color: 'black',
-                                                backgroundColor: 'rgba(192, 192, 192, 0.4)'
+                                                backgroundColor: 'rgba(192, 192, 192, 0.4)',
+                                                marginLeft: "auto",
+                                                marginRight: "2%"
                                             }}
                                                     className="btn btn-light" onClick={handleClick}>
                                                 Đăng Nhập
                                             </button>
+                                            {/*<button type="submit" style={{*/}
+                                            {/*    color: 'black',*/}
+                                            {/*    backgroundColor: 'rgba(192, 192, 192, 0.4)',*/}
+                                            {/*    marginLeft: "10%",*/}
+                                            {/*    marginRight: "2%"*/}
+                                            {/*}}*/}
+                                            {/*        className="btn btn-light" onClick={loginWithFacebook}>*/}
+                                            {/*    <GrFacebook/>*/}
+                                            {/*</button>*/}
+                                            <LoginSocialFacebook
+                                                className="btn border-0"
+                                         // border-0       appId="263186536240807"
+                                         //        appSecret="9b7840e0e3c737ca4f9d6535c1006239"
+                                                onResolve={(resolve) => {
+                                                    loginWithFacebook(resolve);
+                                                }}
+
+                                             appId="263186536240807" onReject="9b7840e0e3c737ca4f9d6535c1006239">
+                                                <BsFacebook color="blue" size={30} />
+                                            </LoginSocialFacebook>
                                         </div>
                                     </div>
                                     <div className="mt-3 pt-2" style={{display: isOTPVisible ? 'none' : 'block', textAlign: "center"}}>

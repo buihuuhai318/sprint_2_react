@@ -1,72 +1,124 @@
-import {Link} from "react-router-dom";
-import {Navbar} from "react-bootstrap";
-import React from "react";
+import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import * as appUserService from "../../service/user/AuthService";
+import {getIdByUserName, infoAppUserByJwtToken} from "../../service/user/AuthService";
+import * as UserService from "../../service/user/UserService";
+import {toast} from "react-toastify";
+import {BsSuitHeart} from "react-icons/bs";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Table from "react-bootstrap/Table";
 
 
 function Header() {
+    const navigate = useNavigate();
+    const [JwtToken, setJwtToken] = useState(localStorage.getItem("JWT"));
+    const [userName, setUsername] = useState("");
+    const [userId, setUserId] = useState("");
+    const [name, setName] = useState("");
+
+    useEffect(() => {
+        getAppUserId();
+        getUsername();
+        getInfoUser();
+    }, []);
+
+    const handleLogOut = () => {
+        localStorage.removeItem("JWT");
+        setJwtToken(undefined);
+        setUsername(undefined);
+        setName(undefined);
+        setUserId(undefined);
+        navigate("/login");
+        toast("Đăng xuất thành công");
+        window.location.reload();
+    };
+
+    const getInfoUser = async () => {
+        try {
+            const res = await appUserService.getObjByUserName();
+            setName(res.data.name);
+        } catch (e) {
+
+        }
+    }
+
+    const getUsername = async () => {
+        try {
+            const response = await appUserService.infoAppUserByJwtToken();
+            setUsername(response.sub);
+        } catch (e) {
+
+        }
+    };
+
+    const getAppUserId = async () => {
+        const isLoggedIn = infoAppUserByJwtToken();
+        if (isLoggedIn) {
+            const id = await getIdByUserName(isLoggedIn.sub);
+            setUserId(id.data);
+        }
+    };
+
+
     return (
         <>
-            <nav className="navbar navbar-expand-lg sticky-top" style={{backgroundColor: "white", zIndex: "2000"}}>
-                <div className="container-fluid" style={{backgroundColor: "white"}}>
-                    <Navbar.Brand as={Link} to="/admin/home" style={{padding: "0"}}>
+            <Navbar expand="lg" className="bg-body-tertiary sticky-top" style={{zIndex: '2000'}}>
+                <Container>
+                    <Navbar.Brand as={Link} to="/">
                         <img
                             src="https://i.imgur.com/jXcDXlY.png"
                             alt="Home"
                             height="40"
                         />
                     </Navbar.Brand>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                        <Nav className="me-auto">
+                            <NavDropdown title="Hoàng Cảnh Quyên Góp" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">
+                                    Another action
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                                <NavDropdown.Divider/>
+                                <NavDropdown.Item href="#action/3.4">
+                                    Separated link
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                            <Nav.Link href="#home">Đối Tác Đồng Hành</Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                    <Navbar.Collapse className="justify-content-end">
+                        {userName === "" ?
+                            <Navbar.Text>
+                                <Link className="nav-link" role="button" to="/login"
+                                      aria-expanded="false">
+                                    Đăng Nhập
+                                </Link>
+                            </Navbar.Text>
+                            :
+                            <>
+                                <Nav.Link as={Link}  to="/cart" style={{width: "40%"}} id='basic-nav-dropdown-cart'>
+                                        Giỏ tình thương: 200.000 <BsSuitHeart style={{marginBottom: "2%"}}/>
+                                </Nav.Link>
 
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hoàng Cảnh Quyên Góp
-                                </a>
-                                <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Action</a></li>
-                                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                                    <li><hr className="dropdown-divider"/></li>
-                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Đối Tác Đồng Hành</a>
-                            </li>
-                        </ul>
-                        {/*<form className="d-flex" role="search">*/}
-                        {/*    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>*/}
-                        {/*        <button className="btn btn-outline-success" type="submit">Search</button>*/}
-                        {/*</form>*/}
-                    </div>
-                    <div className="collapse navbar-collapse" style={{marginLeft: "auto", width: "0"}}>
-                        <div style={{marginLeft: "auto", marginRight: "2%"}}>
-                            <Link className="nav-link" role="button" to="/login"
-                                aria-expanded="false">
-                                Đăng Nhập
-                            </Link>
-                        </div>
-                        {/*<ul className="navbar-nav" style={{marginLeft: "auto"}}>*/}
-                        {/*    <li className="nav-item dropdown">*/}
-                        {/*        <a className="nav-link dropdown-toggle" role="button"*/}
-                        {/*           data-bs-toggle="dropdown" aria-expanded="false">*/}
-                        {/*            asd*/}
-                        {/*            /!*{userAppName} - {roleName()}*!/*/}
-                        {/*        </a>*/}
-                        {/*        <ul className="dropdown-menu dropdown-menu-dark" style={{left: "-60px"}}>*/}
-                        {/*            /!*<li><Link to={`/admin/information/${userId}`} className="dropdown-item">Thông Tin Cá*!/*/}
-                        {/*            /!*    Nhân</Link></li>*!/*/}
-                        {/*            /!*<li>*!/*/}
-                        {/*            /!*    <button onClick={() => {*!/*/}
-                        {/*            /!*        // handleLogOut();*!/*/}
-                        {/*            /!*    }} className="dropdown-item">Đăng Xuất*!/*/}
-                        {/*            /!*    </button>*!/*/}
-                        {/*            /!*</li>*!/*/}
-                        {/*        </ul>*/}
-                        {/*    </li>*/}
-                        {/*</ul>*/}
-                    </div>
-                </div>
-            </nav>
+                                <label htmlFor="basic-nav-dropdown-login"
+                                       style={{color: `gray`, marginRight: "2%", marginLeft: "4%"}}>Xin chào: </label>
+                                <NavDropdown title={name !== "" ? name : userName} id="basic-nav-dropdown-login">
+                                    <NavDropdown.Item href="#action/3.1">Thông Tin Cá Nhân</NavDropdown.Item>
+                                    <NavDropdown.Divider/>
+                                    <NavDropdown.Item href="#action/3.4" onClick={handleLogOut}>
+                                        Đăng Xuất
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </>
+                        }
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         </>
     )
 }
