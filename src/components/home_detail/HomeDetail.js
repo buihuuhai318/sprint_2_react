@@ -16,22 +16,30 @@ function HomeDetail() {
 
     const params = useParams();
     const [project, setProject] = useState(null);
+    const [image, setImage] = useState(null);
+    const [story, setStory] = useState(null);
+    const [days, setDays] = useState(0);
 
     const getProject = async (id) => {
         try {
             const res = await HomeService.getProject(id);
-            console.log(res);
-            setProject(res.)
+            // console.log(res)
+            setProject(res.data.list[0].project);
+            setImage(res.data.list);
+            setDays(res.data.day);
+            setStory(res.data.stringList);
         } catch (e) {
 
         }
     }
 
+    console.log(story)
+
     const handleScrollToDiv1 = () => {
         const targetDiv = document.getElementById('targetDiv1');
         if (targetDiv) {
             const targetOffset = targetDiv.offsetTop - 70; // Khoảng cách từ phía trên
-            window.scrollTo({ top: targetOffset, behavior: 'smooth' });
+            window.scrollTo({top: targetOffset, behavior: 'smooth'});
         }
     };
 
@@ -39,7 +47,7 @@ function HomeDetail() {
         const targetDiv = document.getElementById('targetDiv2');
         if (targetDiv) {
             const targetOffset = targetDiv.offsetTop - 70; // Khoảng cách từ phía trên
-            window.scrollTo({ top: targetOffset, behavior: 'smooth' });
+            window.scrollTo({top: targetOffset, behavior: 'smooth'});
         }
     };
 
@@ -47,7 +55,7 @@ function HomeDetail() {
         const targetDiv = document.getElementById('targetDiv3');
         if (targetDiv) {
             const targetOffset = targetDiv.offsetTop - 70; // Khoảng cách từ phía trên
-            window.scrollTo({ top: targetOffset, behavior: 'smooth' });
+            window.scrollTo({top: targetOffset, behavior: 'smooth'});
         }
     };
 
@@ -57,57 +65,26 @@ function HomeDetail() {
     }, []);
 
 
-    return (
+    return (project &&
         <>
             <Header/>
             <div style={{marginTop: "3%"}} id="targetDiv1">
                 <div className="container">
                     <h2>
-                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện Vân Hồ, Tỉnh Sơn La
+                        {project.title}
                     </h2>
                     <p>
-                        ❤️ Hiện người dân, đặc biệt là trẻ em ở thôn vẫn phải dùng ống nhựa, ống tre dẫn nước từ các mó
-                        nước về để sử dụng. Khi mùa khô đến thì việc thiếu nước của cả thôn trở nên nghiêm trọng hơn.
+                        {project.description}
                     </p>
                     <p style={{fontSize: "80%"}}>Hôm Nay</p>
                     <div className="row">
                         <div className="col-8">
                             <Carousel>
-                                <Carousel.Item interval={3000}>
-                                    <ExampleCarouselImage link={"https://i.imgur.com/aeyESqd.jpg"} text="First slide"/>
-                                    <Carousel.Caption>
-                                        <h1>Triệu Người Chung Tay Quyên Góp</h1>
-                                        <p>Vì một Việt Nam tốt đẹp hơn!</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item interval={3000}>
-                                    <ExampleCarouselImage link={"https://i.imgur.com/0luhGEi.jpg"} text="Second slide"/>
-                                    <Carousel.Caption>
-                                        <h1>Dự Án Cộng Đồng</h1>
-                                        <p>Cùng chung tay - Xây trường mới - Dựng tương lai</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item interval={3000}>
-                                    <ExampleCarouselImage link={"https://i.imgur.com/nJhSDVJ.jpg"} text="Third slide"/>
-                                    <Carousel.Caption>
-                                        <h1>#Homenothouse</h1>
-                                        <p>Không chỉ là ngôi nhà, hãy là một mái ấm!</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item interval={3000}>
-                                    <ExampleCarouselImage link={"https://i.imgur.com/nJhSDVJ.jpg"} text="Third slide"/>
-                                    <Carousel.Caption>
-                                        <h1>#Homenothouse</h1>
-                                        <p>Không chỉ là ngôi nhà, hãy là một mái ấm!</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item interval={3000}>
-                                    <ExampleCarouselImage link={"https://i.imgur.com/nJhSDVJ.jpg"} text="Third slide"/>
-                                    <Carousel.Caption>
-                                        <h1>#Homenothouse</h1>
-                                        <p>Không chỉ là ngôi nhà, hãy là một mái ấm!</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
+                                {image.map((img, index) => (
+                                    <Carousel.Item interval={3000}>
+                                        <ExampleCarouselImage link={img.name} text="First slide"/>
+                                    </Carousel.Item>
+                                ))}
                             </Carousel>
                         </div>
                         <div className="col-4">
@@ -123,35 +100,45 @@ function HomeDetail() {
                                                   borderRadius: "50%",
                                                   marginBottom: "8%"
                                               }}
-                                              id="img1" src="https://i.imgur.com/2jeoooy.jpg"/>
+                                              id="img1" src={project.company.companyImage.name}/>
                                     <label htmlFor="img1" style={{margin: "5%", marginTop: "13%"}}>
-                                        <p style={{fontSize: "90%", margin: "0"}}>Đồng hành cùng dự án</p>
-                                        <p style={{fontSize: "90%", margin: "0"}}>MSD United Way</p>
+                                        <p style={{fontSize: "90%", margin: "0", color: "gray"}}>
+                                            Đồng hành cùng dự án</p>
+                                        <p style={{fontSize: "90%", margin: "0"}}>{project.company.name}</p>
                                     </label>
                                     <Card.Text>
 
                                     </Card.Text>
                                     <div style={{marginBottom: "5%"}}>
                                         <p style={{fontWeight: "bold"}}>
-                                            55.000đ <label style={{fontWeight: "initial", color: "gray"}}> /
-                                            170.000.000đ</label>
+                                            {project.now.toLocaleString('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND'
+                                            })}
+                                            <label style={{fontWeight: "initial", color: "gray"}}> /
+                                                {project.target.toLocaleString('vi-VN', {
+                                                    style: 'currency',
+                                                    currency: 'VND'
+                                                })}
+                                            </label>
                                         </p>
-                                        <ProgressBar now={8.44} label={`${8.44}%`} visuallyHidden/>
+                                        <ProgressBar now={project.now / project.target * 100}
+                                                     label={`${project.now / project.target * 100}%`} visuallyHidden/>
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
                                             <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
                                                 góp</p>
-                                            <p style={{fontWeight: "bold"}}>17</p>
+                                            <p style={{fontWeight: "bold"}}>{project.count}</p>
                                         </div>
                                         <div className="col-3">
                                             <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Đạt được</p>
-                                            <p style={{fontWeight: "bold"}}>8.44%</p>
+                                            <p style={{fontWeight: "bold"}}>{(project.now / project.target * 100).toFixed(2)}%</p>
                                         </div>
                                         <div className="col-4">
                                             <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Thời Hạn
                                                 Còn</p>
-                                            <p style={{fontWeight: "bold"}}>120 Ngày</p>
+                                            <p style={{fontWeight: "bold"}}>{days} Ngày</p>
                                         </div>
                                         <Button variant="primary" style={{fontSize: "80%", marginTop: "5%"}}>Quyên
                                             góp</Button>
@@ -182,74 +169,12 @@ function HomeDetail() {
                             <div className="col-8">
                                 <div id="targetDiv2"></div>
                                 <h5 style={{marginTop: "2%", marginBottom: "3%"}}>Câu chuyện</h5>
-                                <p>
-                                    Khi bắt đầu bước vào mùa khô, đội ngũ khảo sát theo chân các cán bộ xã về thôn
-                                    Tân Thành, một trong những thôn đặc biệt khó khăn thuộc xã Chiềng Xuân, huyện
-                                    Vân Hồ, tỉnh Sơn La. Thôn Tân Thành có 33 hộ gia đình, 147 nhân khẩu gồm 68 phụ
-                                    nữ và 38 trẻ em. Người dân ở đây 100% là người đồng bào dân tộc Mông với công
-                                    việc chính là sản xuất nông nghiệp với các loại cây ngắn ngày như: ngô, sắn, lúa
-                                    và chăn nuôi nhỏ lẻ.
-                                </p>
-                                <p>
-                                    Thôn Tân Thành có công trình nước sinh hoạt tự chảy được nhà nước đầu tư xây
-                                    dựng vào năm 2007 theo Chương trình 135, tuy nhiên trải qua hơn 16 năm sử dụng,
-                                    hiện đã xuống cấp và hư hỏng nặng nề: bai đầu nguồn đang bị bùn đất lấn chiếm;
-                                    05 bể chứa nước bị nứt vỡ, hiện đang bỏ hoang; đường ống dẫn nước bị nứt vỡ ở
-                                    nhiều điểm, nhiều đoạn không còn ống,… Điều này khiến cho người dân nơi đây
-                                    không được cung cấp đầy đủ nước để phục vụ cho sinh hoạt đời sống hàng ngày.
-                                </p>
-                                <p>
-                                    Thôn Tân Thành có công trình nước sinh hoạt tự chảy được nhà nước đầu tư xây
-                                    dựng vào năm 2007 theo Chương trình 135, tuy nhiên trải qua hơn 16 năm sử dụng,
-                                    hiện đã xuống cấp và hư hỏng nặng nề: bai đầu nguồn đang bị bùn đất lấn chiếm;
-                                    05 bể chứa nước bị nứt vỡ, hiện đang bỏ hoang; đường ống dẫn nước bị nứt vỡ ở
-                                    nhiều điểm, nhiều đoạn không còn ống,… Điều này khiến cho người dân nơi đây
-                                    không được cung cấp đầy đủ nước để phục vụ cho sinh hoạt đời sống hàng ngày.
-                                </p>
-                                <p>
-                                    Thôn Tân Thành có công trình nước sinh hoạt tự chảy được nhà nước đầu tư xây
-                                    dựng vào năm 2007 theo Chương trình 135, tuy nhiên trải qua hơn 16 năm sử dụng,
-                                    hiện đã xuống cấp và hư hỏng nặng nề: bai đầu nguồn đang bị bùn đất lấn chiếm;
-                                    05 bể chứa nước bị nứt vỡ, hiện đang bỏ hoang; đường ống dẫn nước bị nứt vỡ ở
-                                    nhiều điểm, nhiều đoạn không còn ống,… Điều này khiến cho người dân nơi đây
-                                    không được cung cấp đầy đủ nước để phục vụ cho sinh hoạt đời sống hàng ngày.
-                                </p>
-                                <p>
-                                    Thôn Tân Thành có công trình nước sinh hoạt tự chảy được nhà nước đầu tư xây
-                                    dựng vào năm 2007 theo Chương trình 135, tuy nhiên trải qua hơn 16 năm sử dụng,
-                                    hiện đã xuống cấp và hư hỏng nặng nề: bai đầu nguồn đang bị bùn đất lấn chiếm;
-                                    05 bể chứa nước bị nứt vỡ, hiện đang bỏ hoang; đường ống dẫn nước bị nứt vỡ ở
-                                    nhiều điểm, nhiều đoạn không còn ống,… Điều này khiến cho người dân nơi đây
-                                    không được cung cấp đầy đủ nước để phục vụ cho sinh hoạt đời sống hàng ngày.
-                                </p>
-                                <p>
-                                    Thôn Tân Thành có công trình nước sinh hoạt tự chảy được nhà nước đầu tư xây
-                                    dựng vào năm 2007 theo Chương trình 135, tuy nhiên trải qua hơn 16 năm sử dụng,
-                                    hiện đã xuống cấp và hư hỏng nặng nề: bai đầu nguồn đang bị bùn đất lấn chiếm;
-                                    05 bể chứa nước bị nứt vỡ, hiện đang bỏ hoang; đường ống dẫn nước bị nứt vỡ ở
-                                    nhiều điểm, nhiều đoạn không còn ống,… Điều này khiến cho người dân nơi đây
-                                    không được cung cấp đầy đủ nước để phục vụ cho sinh hoạt đời sống hàng ngày.
-                                </p>
-                                <p>
-                                    Thôn Tân Thành có công trình nước sinh hoạt tự chảy được nhà nước đầu tư xây
-                                    dựng vào năm 2007 theo Chương trình 135, tuy nhiên trải qua hơn 16 năm sử dụng,
-                                    hiện đã xuống cấp và hư hỏng nặng nề: bai đầu nguồn đang bị bùn đất lấn chiếm;
-                                    05 bể chứa nước bị nứt vỡ, hiện đang bỏ hoang; đường ống dẫn nước bị nứt vỡ ở
-                                    nhiều điểm, nhiều đoạn không còn ống,… Điều này khiến cho người dân nơi đây
-                                    không được cung cấp đầy đủ nước để phục vụ cho sinh hoạt đời sống hàng ngày.
-                                </p>
-                                <p>
-                                    Thôn Tân Thành có công trình nước sinh hoạt tự chảy được nhà nước đầu tư xây
-                                    dựng vào năm 2007 theo Chương trình 135, tuy nhiên trải qua hơn 16 năm sử dụng,
-                                    hiện đã xuống cấp và hư hỏng nặng nề: bai đầu nguồn đang bị bùn đất lấn chiếm;
-                                    05 bể chứa nước bị nứt vỡ, hiện đang bỏ hoang; đường ống dẫn nước bị nứt vỡ ở
-                                    nhiều điểm, nhiều đoạn không còn ống,… Điều này khiến cho người dân nơi đây
-                                    không được cung cấp đầy đủ nước để phục vụ cho sinh hoạt đời sống hàng ngày.
-                                </p>
-
-
+                                {story.map((str, index) => (
+                                    <p>{str}</p>
+                                ))}
                                 <hr/>
-                                <h5 id="targetDiv3" style={{marginTop: "3%", marginBottom: "3%"}}>Nhà hảo tâm hàng đầu</h5>
+                                <h5 id="targetDiv3" style={{marginTop: "3%", marginBottom: "3%"}}>Nhà hảo tâm hàng
+                                    đầu</h5>
                                 <Card>
                                     <Table style={{
                                         margin: "1%",
@@ -374,7 +299,8 @@ function HomeDetail() {
 
             <div style={{marginTop: "5%"}}>
                 <div className="container" style={{paddingBottom: "4%"}}>
-                    <h4 style={{marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các chương trình quyên góp khác</h4>
+                    <h4 style={{marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các chương trình quyên góp
+                        khác</h4>
                     <div className="row">
                         <div className="col-4">
                             <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
@@ -406,7 +332,8 @@ function HomeDetail() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -451,7 +378,8 @@ function HomeDetail() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -496,7 +424,8 @@ function HomeDetail() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">

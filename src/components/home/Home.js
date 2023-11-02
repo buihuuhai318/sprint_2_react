@@ -125,9 +125,14 @@ function Home() {
                                             <div className="row">
                                                 <div className="col-8">
                                                     <Card.Img variant="top"
-                                                              style={{width: "2rem", height: "2rem", borderRadius: "50%"}}
+                                                              style={{
+                                                                  width: "2rem",
+                                                                  height: "2rem",
+                                                                  borderRadius: "50%"
+                                                              }}
                                                               id="img1" src={project.companyImage}/>
-                                                    <label htmlFor="img1" style={{margin: "5%"}}>{project.company}</label>
+                                                    <label htmlFor="img1"
+                                                           style={{margin: "5%"}}>{project.company}</label>
                                                 </div>
                                                 <div className="col-4">
                                                     <Badge bg="warning" text="dark" style={{marginTop: "13%"}}>
@@ -147,16 +152,20 @@ function Home() {
                                                     currency: 'VND'
                                                 })}</label>
                                             </p>
-                                            <ProgressBar now={project.now/project.target*100} label={`${project.now/project.targetLimit*100}%`} visuallyHidden/>
+                                            <ProgressBar now={project.now / project.targetLimit * 100}
+                                                         label={`${project.now / project.targetLimit * 100}%`}
+                                                         visuallyHidden/>
                                         </div>
                                         <div className="row">
                                             <div className="col-5">
-                                                <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt
+                                                    quyên
                                                     góp</p>
                                                 <p style={{fontWeight: "bold"}}>{project.count}</p>
                                             </div>
                                             <div className="col-3">
-                                                <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Đạt được</p>
+                                                <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Đạt
+                                                    được</p>
                                                 <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                             </div>
                                             <div className="col-4">
@@ -271,7 +280,11 @@ function Home() {
                                     </div>
                                     <div className="col-9">
                                         <label htmlFor="img1" style={{marginTop: "6%"}}>{company.name}</label>
-                                        <p style={{fontSize: "70%", color: "gray", marginRight: "5%"}}>{company.description}</p>
+                                        <p style={{
+                                            fontSize: "70%",
+                                            color: "gray",
+                                            marginRight: "5%"
+                                        }}>{company.description}</p>
                                     </div>
                                 </div>
                             </Card>
