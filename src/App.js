@@ -13,6 +13,7 @@ import LoginForm from "./components/user/LoginForm";
 import Home from "./components/home/Home";
 import HomeDetail from "./components/home_detail/HomeDetail";
 import Cart from "./components/cart/Cart";
+import Bill from "./components/cart/Bill";
 
 
 function App() {
@@ -25,8 +26,9 @@ function App() {
                 <Route path="/403" element={<Error403/>}/>
                 <Route path="/login" element={<LoginForm/>}/>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/detail" element={<HomeDetail/>}/>
+                <Route path="/detail/:id" element={<HomeDetail/>}/>
                 <Route path="/cart" element={<Cart/>}/>
+                <Route path="/bill" element={<Bill/>}/>
 
                 <Route path="/admin/information/:id" element={<Information/>}/>
                 <Route path="/admin/home" element={<HomeAdmin/>}/>

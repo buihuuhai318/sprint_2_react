@@ -1,16 +1,31 @@
 import * as React from 'react';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Button, Card, Nav, Tab, Tabs} from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
 import ExampleCarouselImage from "../home/ExampleCarouselImage";
 import Badge from "react-bootstrap/Badge";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Table from 'react-bootstrap/Table';
+import * as HomeService from "../../service/home/HomeService";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 function HomeDetail() {
+
+    const params = useParams();
+    const [project, setProject] = useState(null);
+
+    const getProject = async (id) => {
+        try {
+            const res = await HomeService.getProject(id);
+            console.log(res);
+            setProject(res.)
+        } catch (e) {
+
+        }
+    }
 
     const handleScrollToDiv1 = () => {
         const targetDiv = document.getElementById('targetDiv1');
@@ -38,6 +53,7 @@ function HomeDetail() {
 
     useEffect(() => {
         document.title = "#Thehome - Detail"; // Đặt tiêu đề mới tại đây
+        getProject(params.id)
     }, []);
 
 

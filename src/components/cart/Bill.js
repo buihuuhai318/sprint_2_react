@@ -1,22 +1,37 @@
-import * as React from 'react';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import Table from "react-bootstrap/Table";
-import {Card, CloseButton} from "react-bootstrap";
-import ProgressBar from "react-bootstrap/ProgressBar";
-import Badge from "react-bootstrap/Badge";
 import Carousel from "react-bootstrap/Carousel";
 import ExampleCarouselImage from "../home/ExampleCarouselImage";
-import Button from 'react-bootstrap/Button';
 import {BsSuitHeart} from "react-icons/bs";
+import Table from "react-bootstrap/Table";
+import Badge from "react-bootstrap/Badge";
+import {Card, CloseButton} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {useEffect} from "react";
+import ProgressBar from "react-bootstrap/ProgressBar";
+import Button from "react-bootstrap/Button";
+import * as React from "react";
+import {useEffect, useState} from "react";
+import * as appUserService from "../../service/user/AuthService";
 
 
-export function Cart() {
+function Bill() {
 
     useEffect(() => {
-        document.title = "#Thehome - Giỏ tình thương"; // Đặt tiêu đề mới tại đây
+        document.title = "#Thehome - Hoá đơn"; // Đặt tiêu đề mới tại đây
+    }, []);
+
+    const [name, setName] = useState("");
+
+    const getInfoUser = async () => {
+        try {
+            const res = await appUserService.getObjByUserName();
+            setName(res.data.name);
+        } catch (e) {
+        }
+    }
+
+    useEffect(() => {
+        getInfoUser();
     }, []);
 
     return (
@@ -35,127 +50,106 @@ export function Cart() {
             </Carousel>
             <div style={{marginTop: "5%"}}>
                 <div className="container">
-                    <h3 className="text-center">Giỏ tình thương <BsSuitHeart/></h3>
+                    <h3 className="text-center">Cám ơn {name} <BsSuitHeart/></h3>
                     <hr/>
-                    <div className="row">
-                        <div className="col-8">
-                            <Table>
-                                <thead>
-                                <tr>
-                                    <th className="col-1">#</th>
-                                    <th className="col-6">Chương trình</th>
-                                    <th className="col-2">Thời Hạn</th>
-                                    <th className="col-2">Số tiền</th>
-                                    <th className="col-1">Xoá</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La
-                                    </td>
-                                    <td>
-                                        <Badge bg="warning" text="dark">
-                                            Còn 120 ngày
-                                        </Badge>
-                                    </td>
-                                    <td>200.000đ</td>
-                                    <td>
-                                        <CloseButton/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La
-                                    </td>
-                                    <td>
-                                        <Badge bg="warning" text="dark">
-                                            Còn 120 ngày
-                                        </Badge>
-                                    </td>
-                                    <td>200.000đ</td>
-                                    <td>
-                                        <CloseButton/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La
-                                    </td>
-                                    <td>
-                                        <Badge bg="warning" text="dark">
-                                            Còn 120 ngày
-                                        </Badge>
-                                    </td>
-                                    <td>200.000đ</td>
-                                    <td>
-                                        <CloseButton/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La
-                                    </td>
-                                    <td>
-                                        <Badge bg="warning" text="dark">
-                                            Còn 120 ngày
-                                        </Badge>
-                                    </td>
-                                    <td>200.000đ</td>
-                                    <td>
-                                        <CloseButton/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-                        <div className="col-4">
-                            <div className="sticky-top" style={{top: "90px"}}>
-                                <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
-                                    <Card.Body>
-                                        <Card.Title>
-                                            Hoá Đơn
-                                        </Card.Title>
-                                        <hr/>
-                                        <Card.Text>
-                                            <Table>
-                                                <tbody>
-                                                <tr>
-                                                    <th className="col-6">Lượt Quyên Góp</th>
-                                                    <td className="col-2">4</td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="col-2">Tổng tiền</th>
-                                                    <td className="col-1">200.000đ</td>
-                                                </tr>
-                                                </tbody>
-                                            </Table>
-                                        </Card.Text>
-                                        <div style={{marginTop: "3%"}}>
-                                            <div className="container">
-                                                <div className="text-center">
-                                                    <Link to="/bill" className="btn btn-outline-dark">Quyên Góp Ngay</Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card.Body>
-                                </Card>
+                    <Table style={{width: "50%", margin: "5%"}}>
+                        <tbody>
+                        <tr>
+                            <th className="col-2">Thời gian</th>
+                            <td className="col-2">31/10/2023</td>
+                        </tr>
+                        <tr>
+                            <th>Lượt Quyên Góp</th>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <th>Tổng tiền</th>
+                            <td>200.000đ</td>
+                        </tr>
+                        <tr>
+                            <th>Trạng thái</th>
+                            <td style={{color: "green"}}>Đã quyên góp thành công</td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                    <Table style={{margin: "5%", width: "80%"}}>
+                        <thead>
+                        <tr>
+                            <th className="col-1">#</th>
+                            <th className="col-6">Chương trình</th>
+                            <th className="col-2">Thời Hạn</th>
+                            <th className="col-2">Số tiền</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
+                                Vân Hồ, Tỉnh Sơn La
+                            </td>
+                            <td>
+                                <Badge bg="warning" text="dark">
+                                    Còn 120 ngày
+                                </Badge>
+                            </td>
+                            <td>200.000đ</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
+                                Vân Hồ, Tỉnh Sơn La
+                            </td>
+                            <td>
+                                <Badge bg="warning" text="dark">
+                                    Còn 120 ngày
+                                </Badge>
+                            </td>
+                            <td>200.000đ</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
+                                Vân Hồ, Tỉnh Sơn La
+                            </td>
+                            <td>
+                                <Badge bg="warning" text="dark">
+                                    Còn 120 ngày
+                                </Badge>
+                            </td>
+                            <td>200.000đ</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
+                                Vân Hồ, Tỉnh Sơn La
+                            </td>
+                            <td>
+                                <Badge bg="warning" text="dark">
+                                    Còn 120 ngày
+                                </Badge>
+                            </td>
+                            <td>200.000đ</td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                    <div style={{marginTop: "3%"}}>
+                        <div className="container">
+                            <div className="text-center">
+                                <Link to="/bill" className="btn btn-outline-dark">Trở lại trang chủ</Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style={{marginTop: "5%"}}>
+            <div style={{marginTop: "3%"}}>
                 <div className="container" style={{paddingBottom: "4%"}}>
-                    <h4 style={{marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các chương trình quyên góp khác</h4>
+                    <h4 style={{marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các chương trình quyên góp
+                        khác</h4>
+                    <hr/>
                     <div className="row">
                         <div className="col-4">
                             <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
@@ -187,7 +181,8 @@ export function Cart() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -232,7 +227,8 @@ export function Cart() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -277,7 +273,8 @@ export function Cart() {
                                     </div>
                                     <div className="row">
                                         <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên góp</p>
+                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
+                                                góp</p>
                                             <p style={{fontWeight: "bold"}}>17</p>
                                         </div>
                                         <div className="col-3">
@@ -297,7 +294,7 @@ export function Cart() {
             </div>
             <Footer/>
         </>
-    );
+    )
 }
 
-export default Cart;
+export default Bill;

@@ -1,6 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import * as appUserService from "../../service/user/AuthService";
+import * as HomeService from "../../service/home/HomeService";
 import {getIdByUserName, infoAppUserByJwtToken} from "../../service/user/AuthService";
 import * as UserService from "../../service/user/UserService";
 import {toast} from "react-toastify";
@@ -18,12 +19,24 @@ function Header() {
     const [userName, setUsername] = useState("");
     const [userId, setUserId] = useState("");
     const [name, setName] = useState("");
+    const [types, setTypes] = useState([]);
 
     useEffect(() => {
         getAppUserId();
         getUsername();
         getInfoUser();
+        getTypes();
     }, []);
+
+    const getTypes = async () => {
+        try {
+            const res = await HomeService.listType();
+            console.log(res);
+            setTypes(res.data);
+        } catch (e) {
+
+        }
+    }
 
     const handleLogOut = () => {
         localStorage.removeItem("JWT");
@@ -41,7 +54,6 @@ function Header() {
             const res = await appUserService.getObjByUserName();
             setName(res.data.name);
         } catch (e) {
-
         }
     }
 
@@ -78,15 +90,10 @@ function Header() {
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto">
                             <NavDropdown title="Hoàng Cảnh Quyên Góp" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                <NavDropdown.Divider/>
-                                <NavDropdown.Item href="#action/3.4">
-                                    Separated link
-                                </NavDropdown.Item>
+                                {types.map((type, index) => (
+                                    <NavDropdown.Item href="#action/3.1" key={index}>{type.name}</NavDropdown.Item>
+                                ) )}
+
                             </NavDropdown>
                             <Nav.Link href="#home">Đối Tác Đồng Hành</Nav.Link>
                         </Nav>
@@ -101,7 +108,7 @@ function Header() {
                             </Navbar.Text>
                             :
                             <>
-                                <Nav.Link as={Link}  to="/cart" style={{width: "40%"}} id='basic-nav-dropdown-cart'>
+                                <Nav.Link as={Link}  to="/cart" style={{width: "auto"}} id='basic-nav-dropdown-cart'>
                                         Giỏ tình thương: 200.000 <BsSuitHeart style={{marginBottom: "2%"}}/>
                                 </Nav.Link>
 

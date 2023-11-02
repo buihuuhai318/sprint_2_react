@@ -107,7 +107,7 @@ function LoginForm() {
     const handleLogin = async (resolve) => {
         try {
 
-            const result = await AuthService.loginWithFacebook( resolve.data );
+            const result = await AuthService.loginWithFacebook(resolve.data);
             console.log(resolve)
             AuthService.addJwtTokenToLocalStorage(result.data.jwtToken);
             const tempURL = localStorage.getItem("tempURL");
@@ -129,7 +129,7 @@ function LoginForm() {
     const loginWithFacebook = async (resolve) => {
         console.log(resolve);
         Swal.fire({
-            text: 'Chào '+resolve.data.name+', bạn có muốn đăng nhập thông qua facebook ' + resolve.data.email+" không?",
+            text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua facebook ' + resolve.data.email + " không?",
             showDenyButton: true,
             confirmButtonText: 'Xác nhận',
             denyButtonText: `Thoát`,
@@ -138,7 +138,7 @@ function LoginForm() {
             if (result.isConfirmed) {
                 handleLogin(resolve)
             } else if (result.isDenied) {
-                return;
+
             }
         })
 
@@ -216,15 +216,15 @@ function LoginForm() {
             <div style={{width: '40%', height: '30%', margin: '0% auto 0% auto', padding: '10% 0 15% 0'}}>
                 <div className="transparent-div-HaiBH card"
                      style={{backgroundColor: 'rgba(192, 192, 192, 0.3)', border: "0 solid", borderRadius: "10%"}}>
-                        <div style={{width: "80%", marginRight: "auto",  marginLeft: "auto"}} className="mt-4 mb-2">
-                            <img
-                                src="https://i.imgur.com/QkqytXc.png" // Đường dẫn đến hình ảnh logo của bạn
-                                alt="Home"
-                                width="100%"
+                    <div style={{width: "80%", marginRight: "auto", marginLeft: "auto"}} className="mt-4 mb-2">
+                        <img
+                            src="https://i.imgur.com/QkqytXc.png" // Đường dẫn đến hình ảnh logo của bạn
+                            alt="Home"
+                            width="100%"
 
-                            />
-                        </div>
-                        <hr/>
+                        />
+                    </div>
+                    <hr/>
                     <div className="card-body" style={{width: "70%", marginLeft: "auto", marginRight: "auto"}}>
                         <div>
                             <Formik
@@ -264,15 +264,19 @@ function LoginForm() {
                                                    }}/>
                                         </div>
                                         <div className="row" hidden={!forgot}>
-                                            <div className="ml-auto col-12" style={{textAlign: "right", marginTop: "10px"}}>
+                                            <div className="ml-auto col-12"
+                                                 style={{textAlign: "right", marginTop: "10px"}}>
                                                 <Link to="/" style={{color: "black"}}>Quên mật khẩu</Link>
                                             </div>
                                         </div>
                                     </div>
-                                    <div style={{display: isOTPVisible ? 'none' : 'block', marginTop: forgot ? '20px' : '54px'}}>
-                                        <div style={{width: '45%', marginLeft: 'auto', marginRight: 'auto'}}>
+                                    <div style={{
+                                        display: isOTPVisible ? 'none' : 'block',
+                                        marginTop: forgot ? '20px' : '54px'
+                                    }}>
+                                        <div style={{width: '55%', marginLeft: 'auto', marginRight: 'auto'}}>
                                             <button type="submit" style={{
-                                                width: '60%',
+                                                width: '70%',
                                                 color: 'black',
                                                 backgroundColor: 'rgba(192, 192, 192, 0.4)',
                                                 marginLeft: "auto",
@@ -281,29 +285,19 @@ function LoginForm() {
                                                     className="btn btn-light" onClick={handleClick}>
                                                 Đăng Nhập
                                             </button>
-                                            {/*<button type="submit" style={{*/}
-                                            {/*    color: 'black',*/}
-                                            {/*    backgroundColor: 'rgba(192, 192, 192, 0.4)',*/}
-                                            {/*    marginLeft: "10%",*/}
-                                            {/*    marginRight: "2%"*/}
-                                            {/*}}*/}
-                                            {/*        className="btn btn-light" onClick={loginWithFacebook}>*/}
-                                            {/*    <GrFacebook/>*/}
-                                            {/*</button>*/}
+
                                             <LoginSocialFacebook
                                                 className="btn border-0"
-                                         // border-0       appId="263186536240807"
-                                         //        appSecret="9b7840e0e3c737ca4f9d6535c1006239"
                                                 onResolve={(resolve) => {
                                                     loginWithFacebook(resolve);
                                                 }}
-
-                                             appId="263186536240807" onReject="9b7840e0e3c737ca4f9d6535c1006239">
-                                                <BsFacebook color="blue" size={30} />
-                                            </LoginSocialFacebook>
+                                                appId="263186536240807" onReject="9b7840e0e3c737ca4f9d6535c1006239">
+                                                <BsFacebook color="black" size={30}/>
+                                            </LoginSocialFacebook >
                                         </div>
                                     </div>
-                                    <div className="mt-3 pt-2" style={{display: isOTPVisible ? 'none' : 'block', textAlign: "center"}}>
+                                    <div className="mt-3 pt-2"
+                                         style={{display: isOTPVisible ? 'none' : 'block', textAlign: "center"}}>
                                         <div style={{marginLeft: 'auto', marginRight: 'auto', color: "black"}}>
                                             <label style={{marginRight: "2%"}}>
                                                 Bạn mới biết đến #Thehome:
@@ -338,7 +332,10 @@ function LoginForm() {
                                                 marginRight: 'auto',
                                                 display: isOTPReset ? 'none' : 'block'
                                             }}>
-                                                <button type="submit" style={{width: '100%', backgroundColor: 'rgba(192, 192, 192, 0.4)'}}
+                                                <button type="submit" style={{
+                                                    width: '100%',
+                                                    backgroundColor: 'rgba(192, 192, 192, 0.4)'
+                                                }}
                                                         className="btn btn-light">
                                                     Xác Nhận
                                                 </button>
