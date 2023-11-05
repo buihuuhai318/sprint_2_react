@@ -33,8 +33,6 @@ function HomeDetail() {
         }
     }
 
-    console.log(story)
-
     const handleScrollToDiv1 = () => {
         const targetDiv = document.getElementById('targetDiv1');
         if (targetDiv) {

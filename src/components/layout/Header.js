@@ -11,6 +11,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Table from "react-bootstrap/Table";
+import ListGroup from 'react-bootstrap/ListGroup';
+
 
 
 function Header() {
@@ -89,11 +91,12 @@ function Header() {
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto">
-                            <NavDropdown title="Hoàng Cảnh Quyên Góp" id="basic-nav-dropdown">
-                                {types.map((type, index) => (
-                                    <NavDropdown.Item href="#action/3.1" key={index}>{type.name}</NavDropdown.Item>
-                                ) )}
-
+                            <NavDropdown title="Hoàng Cảnh Quyên Góp" id="basic-nav-dropdown" style={{paddingTop: "0", margin: "0"}}>
+                                    {types.map((type, index) => (
+                                        <NavDropdown.Item href="#action/3.1" key={index}>
+                                                {type.name}
+                                        </NavDropdown.Item>
+                                    ) )}
                             </NavDropdown>
                             <Nav.Link href="#home">Đối Tác Đồng Hành</Nav.Link>
                         </Nav>

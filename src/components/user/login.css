@@ -1,0 +1,15 @@
+
+.nav-tabs .nav-item .nav-link.active {
+    background-color: rgba(192, 192, 192, 0.3); /* Màu nền khi được chọn */
+    color: black; /* Màu chữ khi được chọn */
+}
+
+/* Thay đổi màu nền khi không được nhấn vào */
+.nav-tabs .nav-item .nav-link {
+    background-color: rgba(192, 192, 192, 0.0); /* Màu nền khi không được chọn */
+    color: black; /* Màu chữ khi không được chọn */
+}
+
+/*.HaiBH-button {*/
+/*    background-color: rgba(192, 192, 192, 0.0);*/
+/*}*/

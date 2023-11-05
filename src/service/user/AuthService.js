@@ -11,6 +11,10 @@ export const login = async (data) => {
     return await axios.post(apiAuth + "/login-by-username", data);
 }
 
+export const signup = async (data) => {
+    return await axios.post(apiAuth + "/create", data);
+}
+
 export const resetOTP = async (data) => {
     return await axios.post(apiAuth + "/resetOTP", data);
 }
@@ -57,4 +61,16 @@ export const loginWithFacebook = async (facebookUser) => {
 
 export const getObjByUserName = async () => {
     return await axios.get(apiAuth + `/get-obj-by-user`);
+}
+
+export const forgot = async (data) => {
+    return await axios.post(apiAuth + `/forgotPass`, data);
+}
+
+export const resetPass = async (userName, url, data) => {
+    return await axios.post(apiAuth + `/forgot/${userName}/${url}`, data);
+}
+
+export const check = async (userName, url) => {
+    return await axios.get(apiAuth + `/check/${userName}/${url}`);
 }
