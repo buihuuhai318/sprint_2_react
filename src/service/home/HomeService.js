@@ -1,23 +1,23 @@
 import axios from "axios";
 
 
-const apiAccount = "http://localhost:8080/api/home";
+const apiHome = "http://localhost:8080/api/home";
 
 
 export const listType = async () => {
-    return await axios.get(apiAccount + `/types`);
+    return await axios.get(apiHome + `/types`);
 }
 
 export const listProject = async () => {
-    return await axios.get(apiAccount + `/projects`);
+    return await axios.get(apiHome + `/projects`);
 }
 
 export const getProject = async (id) => {
-    return await axios.get(apiAccount + `/project/${id}`);
+    return await axios.get(apiHome + `/project/${id}`);
 }
 
 export const listCompany = async () => {
-    return await axios.get(apiAccount + `/companies`);
+    return await axios.get(apiHome + `/companies`);
 }
 
 

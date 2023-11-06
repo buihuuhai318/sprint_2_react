@@ -20,7 +20,6 @@ function Home() {
     const getProjects = async () => {
         try {
             const res = await HomeService.listProject();
-            console.log(res);
             setProjects(res.data.content);
         } catch (e) {
 
@@ -30,7 +29,6 @@ function Home() {
     const getCompanies = async () => {
         try {
             const res = await HomeService.listCompany();
-            console.log(res);
             setCompanies(res.data.content);
         } catch (e) {
 
@@ -118,7 +116,7 @@ function Home() {
                                 <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
                                     <Card.Img variant="top" src={project.projectImage}/>
                                     <Card.Body>
-                                        <Card.Title>
+                                        <Card.Title style={{height: "6rem"}}>
                                             {project.title}
                                         </Card.Title>
                                         <Card.Text>

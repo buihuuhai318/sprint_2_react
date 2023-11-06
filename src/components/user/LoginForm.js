@@ -580,13 +580,13 @@ function LoginForm() {
                                 </>
                                 :
                                 <Tabs
-                                    defaultActiveKey="profile"
+                                    defaultActiveKey="login"
                                     id="justify-tab-example"
                                     className="mb-3"
                                     justify
                                     style={{marginTop: "3%"}}
                                 >
-                                    <Tab eventKey="profile" title="Đăng Nhập" onKeyUp={() => {
+                                    <Tab eventKey="login" title="Đăng Nhập" onKeyUp={() => {
                                         getTitle("Đăng Nhập")
                                     }}>
                                         <div className="card-body"
@@ -748,7 +748,7 @@ function LoginForm() {
                                             </div>
                                         </div>
                                     </Tab>
-                                    <Tab eventKey="longer-tab" title="Đăng Ký" onKeyUp={() => {
+                                    <Tab eventKey="signup" title="Đăng Ký" onKeyUp={() => {
                                         getTitle("Đăng ký")
                                     }}>
                                         <div className="card-body"

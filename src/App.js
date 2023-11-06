@@ -14,6 +14,7 @@ import Home from "./components/home/Home";
 import HomeDetail from "./components/home_detail/HomeDetail";
 import Cart from "./components/cart/Cart";
 import Bill from "./components/cart/Bill";
+import ListProject from "./components/home/ListProject";
 
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
                 <Route path="/detail/:id" element={<HomeDetail/>}/>
                 <Route path="/cart" element={<Cart/>}/>
                 <Route path="/bill" element={<Bill/>}/>
+                <Route path="/list" element={<ListProject/>}/>
+                <Route path="/list/:id" element={<ListProject/>}/>
 
                 <Route path="/admin/information/:id" element={<Information/>}/>
                 <Route path="/admin/home" element={<HomeAdmin/>}/>

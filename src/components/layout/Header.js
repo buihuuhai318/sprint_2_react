@@ -12,6 +12,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Table from "react-bootstrap/Table";
 import ListGroup from 'react-bootstrap/ListGroup';
+import Form from 'react-bootstrap/Form';
+import {Button} from "react-bootstrap";
 
 
 
@@ -22,6 +24,7 @@ function Header() {
     const [userId, setUserId] = useState("");
     const [name, setName] = useState("");
     const [types, setTypes] = useState([]);
+    const [valueSearch, setValueSearch] = useState("");
 
     useEffect(() => {
         getAppUserId();
@@ -93,7 +96,7 @@ function Header() {
                         <Nav className="me-auto">
                             <NavDropdown title="Hoàng Cảnh Quyên Góp" id="basic-nav-dropdown" style={{paddingTop: "0", margin: "0"}}>
                                     {types.map((type, index) => (
-                                        <NavDropdown.Item href="#action/3.1" key={index}>
+                                        <NavDropdown.Item as={Link} to={`/list/${type.id}`} key={index}>
                                                 {type.name}
                                         </NavDropdown.Item>
                                     ) )}
@@ -101,6 +104,17 @@ function Header() {
                             <Nav.Link href="#home">Đối Tác Đồng Hành</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
+                    <Form className="d-flex">
+                        <Form.Control
+                            type="search"
+                            placeholder="..."
+                            className="me-2"
+                            aria-label="search"
+                            value={valueSearch}
+                            onChange={(e) => setValueSearch(e.target.value)}
+                        />
+                        <Button as={Link} to={`/list?value=${valueSearch}`} variant="outline-success" style={{width: "45%"}}>Tìm kiếm</Button>
+                    </Form>
                     <Navbar.Collapse className="justify-content-end">
                         {userName === "" ?
                             <Navbar.Text>

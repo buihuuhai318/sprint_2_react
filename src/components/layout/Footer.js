@@ -17,7 +17,7 @@ function Footer() {
             {/*        </Navbar.Brand>*/}
             {/*    </Container>*/}
             {/*</Navbar>*/}
-            <nav className="navbar navbar-expand-lg sticky-top" style={{backgroundColor: "rgb(23 23 23)"}}>
+            <nav className="navbar navbar-expand-lg sticky-bottom" style={{backgroundColor: "rgb(23 23 23)"}}>
                 <div className="container">
                     <Navbar.Brand as={Link} to="/admin/home" style={{padding: "0"}}>
                         <img

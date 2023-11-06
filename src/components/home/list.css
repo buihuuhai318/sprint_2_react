@@ -1,0 +1,29 @@
+div.scrollmenu {
+    background-color: #ffffff;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+div.scrollmenu a {
+    display: inline-block;
+    color: #000000;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #b4b4b4;
+    color: #ffffff !important;
+}
+
+.card:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng card */
+    cursor: pointer;
+}
+
+.card:hover a {
+    color: #38cea1 !important; /* Màu bạn muốn đổi khi hover */
+}
