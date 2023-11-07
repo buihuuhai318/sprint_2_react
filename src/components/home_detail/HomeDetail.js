@@ -2,14 +2,17 @@ import * as React from 'react';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import {useEffect, useState} from "react";
-import {Button, Card, Nav, Tab, Tabs} from "react-bootstrap";
+import {Button, Card, Nav, Modal, InputGroup} from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
 import ExampleCarouselImage from "../home/ExampleCarouselImage";
 import Badge from "react-bootstrap/Badge";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Table from 'react-bootstrap/Table';
 import * as HomeService from "../../service/home/HomeService";
+import * as CartService from "../../service/cart/CartService";
 import {useNavigate, useParams} from "react-router-dom";
+import {toast} from "react-toastify";
+
 
 
 function HomeDetail() {
@@ -19,6 +22,15 @@ function HomeDetail() {
     const [image, setImage] = useState(null);
     const [story, setStory] = useState(null);
     const [days, setDays] = useState(0);
+    const [showInput, setShowInput] = useState(false);
+    const [inputValue, setInputValue] = useState(null);
+    const [key, setKey] = useState(true);
+
+
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        setInputValue(value);
+    };
 
     const getProject = async (id) => {
         try {
@@ -30,6 +42,32 @@ function HomeDetail() {
             setStory(res.data.stringList);
         } catch (e) {
 
+        }
+    }
+
+    const addCart = async () => {
+        try {
+            if (inputValue < 1000) {
+                toast.warning("Số tiền quyên góp vui lòng lớn hơn 1.000đ bạn nhé !")
+            } else if (inputValue > 10000000000) {
+                toast.warning("Số tiền quyên góp vui lòng bé hơn 1 tỷ bạn nhé !")
+            } else {
+                const cart = {
+                    projectId : project.id,
+                    money : inputValue
+                }
+                const res = await CartService.addToCart(cart);
+                if (res.status === 200) {
+                    setKey(!key);
+                    setShowInput(false);
+                    toast("Đã thêm vào giỏ tình thương !!!")
+                } else {
+                    setShowInput(false);
+                }
+            }
+        } catch (e) {
+            console.log("loi~")
+            setShowInput(false);
         }
     }
 
@@ -65,7 +103,7 @@ function HomeDetail() {
 
     return (project &&
         <>
-            <Header/>
+            <Header key={!key}/>
             <div style={{marginTop: "3%"}} id="targetDiv1">
                 <div className="container">
                     <h2>
@@ -138,8 +176,34 @@ function HomeDetail() {
                                                 Còn</p>
                                             <p style={{fontWeight: "bold"}}>{days} Ngày</p>
                                         </div>
-                                        <Button variant="primary" style={{fontSize: "80%", marginTop: "5%"}}>Quyên
-                                            góp</Button>
+                                        <Button
+                                            variant="primary"
+                                            className="mx-auto mt-3"
+                                            style={{width: "95%"}}
+                                            onClick={() => setShowInput(true)}
+                                            hidden={showInput}
+                                        >
+                                            Quyên góp
+                                        </Button>
+                                        <div className="input-group mt-3" hidden={!showInput}>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                placeholder="Giỏ tình thương"
+                                                aria-label="Recipient's username" aria-describedby="button-addon2"
+                                                value={inputValue}
+                                                onChange={handleInputChange}
+                                            />
+                                                <button
+                                                    className="btn btn-outline-secondary"
+                                                    type="button" id="button-addon2"
+                                                    onClick={() => {
+                                                        addCart();
+                                                    }}
+                                                >
+                                                    Quyên góp
+                                                </button>
+                                        </div>
                                     </div>
                                 </Card.Body>
                             </Card>
@@ -446,5 +510,6 @@ function HomeDetail() {
         </>
     );
 }
+
 
 export default HomeDetail;

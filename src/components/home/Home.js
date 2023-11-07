@@ -10,6 +10,7 @@ import Image from 'react-bootstrap/Image';
 import React, {useEffect, useState} from 'react';
 import Footer from "../layout/Footer";
 import * as HomeService from "../../service/home/HomeService";
+import {Link} from "react-router-dom";
 
 
 function Home() {
@@ -114,11 +115,17 @@ function Home() {
                         {projects.map((project, index) => (
                             <div className="col-4" key={index}>
                                 <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
-                                    <Card.Img variant="top" src={project.projectImage}/>
+                                    <Link to={`/detail/${project.id}`} className="custom-link">
+                                        <Card.Img variant="top" src={project.projectImage}/>
+                                    </Link>
                                     <Card.Body>
-                                        <Card.Title style={{height: "6rem"}}>
-                                            {project.title}
-                                        </Card.Title>
+                                        <Link to={`/detail/${project.id}`}
+                                              style={{color: "black", textDecoration: "none"}}
+                                              className="custom-link">
+                                            <Card.Title style={{height: "6rem"}}>
+                                                {project.title}
+                                            </Card.Title>
+                                        </Link>
                                         <Card.Text>
                                             <div className="row">
                                                 <div className="col-8">
@@ -173,6 +180,7 @@ function Home() {
                                         </div>
                                     </Card.Body>
                                 </Card>
+
                             </div>
                         ))}
 

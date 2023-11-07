@@ -10,16 +10,44 @@ import ExampleCarouselImage from "../home/ExampleCarouselImage";
 import Button from 'react-bootstrap/Button';
 import {BsSuitHeart} from "react-icons/bs";
 import {Link} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import * as CartService from "../../service/cart/CartService";
+
 
 
 export function Cart() {
 
+    const [carts, setCarts] = useState(null);
+    const [moneyCart, setMoneyCart] = useState(0);
+
+
+    const getCarts = async () => {
+        try {
+             const res = await CartService.getCarts();
+             setCarts(res.data);
+            console.log(res)
+        } catch (e) {
+
+        }
+    }
+
+    const getMoneyCart = async () => {
+        try {
+            const res = await CartService.getMoneyCart();
+            setMoneyCart(res.data);
+            console.log(res);
+        } catch (e) {
+
+        }
+    }
+
     useEffect(() => {
         document.title = "#Thehome - Giỏ tình thương"; // Đặt tiêu đề mới tại đây
+        getCarts();
+        getMoneyCart();
     }, []);
 
-    return (
+    return (carts &&
         <>
             <Header/>
             <Carousel>
@@ -50,70 +78,26 @@ export function Cart() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La
-                                    </td>
-                                    <td>
-                                        <Badge bg="warning" text="dark">
-                                            Còn 120 ngày
-                                        </Badge>
-                                    </td>
-                                    <td>200.000đ</td>
-                                    <td>
-                                        <CloseButton/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La
-                                    </td>
-                                    <td>
-                                        <Badge bg="warning" text="dark">
-                                            Còn 120 ngày
-                                        </Badge>
-                                    </td>
-                                    <td>200.000đ</td>
-                                    <td>
-                                        <CloseButton/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La
-                                    </td>
-                                    <td>
-                                        <Badge bg="warning" text="dark">
-                                            Còn 120 ngày
-                                        </Badge>
-                                    </td>
-                                    <td>200.000đ</td>
-                                    <td>
-                                        <CloseButton/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La
-                                    </td>
-                                    <td>
-                                        <Badge bg="warning" text="dark">
-                                            Còn 120 ngày
-                                        </Badge>
-                                    </td>
-                                    <td>200.000đ</td>
-                                    <td>
-                                        <CloseButton/>
-                                    </td>
-                                </tr>
+                                {carts && carts.map((cart, index) => (
+                                    <tr>
+                                        <td>{index + 1}</td>
+                                        <td>{cart.title}</td>
+                                        <td>
+                                            <Badge bg="warning" text="dark">
+                                                Còn {cart.date} ngày
+                                            </Badge>
+                                        </td>
+                                        <td>
+                                            {cart.money.toLocaleString('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND'
+                                            })}
+                                        </td>
+                                        <td>
+                                            <CloseButton/>
+                                        </td>
+                                    </tr>
+                                ))}
                                 </tbody>
                             </Table>
                         </div>
@@ -130,11 +114,16 @@ export function Cart() {
                                                 <tbody>
                                                 <tr>
                                                     <th className="col-6">Lượt Quyên Góp</th>
-                                                    <td className="col-2">4</td>
+                                                    <td className="col-2">{carts.length}</td>
                                                 </tr>
                                                 <tr>
                                                     <th className="col-2">Tổng tiền</th>
-                                                    <td className="col-1">200.000đ</td>
+                                                    <td className="col-1">
+                                                        {moneyCart.toLocaleString('vi-VN', {
+                                                            style: 'currency',
+                                                            currency: 'VND'
+                                                        })}
+                                                    </td>
                                                 </tr>
                                                 </tbody>
                                             </Table>

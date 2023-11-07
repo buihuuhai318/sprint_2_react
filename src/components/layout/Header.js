@@ -2,22 +2,20 @@ import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import * as appUserService from "../../service/user/AuthService";
 import * as HomeService from "../../service/home/HomeService";
+import * as CartService from "../../service/cart/CartService";
 import {getIdByUserName, infoAppUserByJwtToken} from "../../service/user/AuthService";
-import * as UserService from "../../service/user/UserService";
 import {toast} from "react-toastify";
 import {BsSuitHeart} from "react-icons/bs";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Table from "react-bootstrap/Table";
-import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form';
 import {Button} from "react-bootstrap";
 
 
 
-function Header() {
+function Header({refresh}) {
     const navigate = useNavigate();
     const [JwtToken, setJwtToken] = useState(localStorage.getItem("JWT"));
     const [userName, setUsername] = useState("");
@@ -25,18 +23,33 @@ function Header() {
     const [name, setName] = useState("");
     const [types, setTypes] = useState([]);
     const [valueSearch, setValueSearch] = useState("");
+    const [moneyCart, setMoneyCart] = useState(0);
 
     useEffect(() => {
         getAppUserId();
         getUsername();
         getInfoUser();
         getTypes();
+        getMoneyCart();
     }, []);
+
+    useEffect(() => {
+        getMoneyCart();
+    }, [refresh]);
+
+    const getMoneyCart = async () => {
+        try {
+            const res = await CartService.getMoneyCart();
+            setMoneyCart(res.data);
+            console.log(res);
+        } catch (e) {
+
+        }
+    }
 
     const getTypes = async () => {
         try {
             const res = await HomeService.listType();
-            console.log(res);
             setTypes(res.data);
         } catch (e) {
 
@@ -94,7 +107,7 @@ function Header() {
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto">
-                            <NavDropdown title="Hoàng Cảnh Quyên Góp" id="basic-nav-dropdown" style={{paddingTop: "0", margin: "0"}}>
+                            <NavDropdown title="Hoàn Cảnh Quyên Góp" id="basic-nav-dropdown" style={{paddingTop: "0", margin: "0"}}>
                                     {types.map((type, index) => (
                                         <NavDropdown.Item as={Link} to={`/list/${type.id}`} key={index}>
                                                 {type.name}
@@ -126,7 +139,10 @@ function Header() {
                             :
                             <>
                                 <Nav.Link as={Link}  to="/cart" style={{width: "auto"}} id='basic-nav-dropdown-cart'>
-                                        Giỏ tình thương: 200.000 <BsSuitHeart style={{marginBottom: "2%"}}/>
+                                        Giỏ tình thương: {moneyCart.toLocaleString('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                })} <BsSuitHeart style={{marginBottom: "2%"}}/>
                                 </Nav.Link>
 
                                 <label htmlFor="basic-nav-dropdown-login"

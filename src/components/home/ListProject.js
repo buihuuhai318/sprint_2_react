@@ -20,7 +20,6 @@ function List() {
     const [idTypes, setIdTypes] = useState(null);
     const [limit, setLimit] = useState(10);
     const [projects, setProjects] = useState(null);
-    const [valueSearch, setValueSearch] = useState(null);
 
     const getTypes = async (id) => {
         try {
@@ -63,9 +62,6 @@ function List() {
         }
     }
 
-    console.log(location.search)
-
-
     useEffect(() => {
         if (params.id === undefined) {
             const value = new URLSearchParams(location.search).get('value');
@@ -107,7 +103,6 @@ function List() {
                     </Card.Body>
                 </div>
             </Card>
-
             <div className="container mt-3 mb-5">
                 <div className="scrollmenu">
                     {idTypes ? types.map((type, index) => (
@@ -128,11 +123,11 @@ function List() {
                     {projects ? projects.map((project, index) => (
                             <div className="col-4" key={index}>
                                 <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
-                                    <Link to={`/your-destination-page`} className="custom-link">
+                                    <Link to={`/detail/${project.id}`} className="custom-link">
                                         <Card.Img variant="top" src={project.projectImage}/>
                                     </Link>
                                     <Card.Body>
-                                        <Link to={`/your-destination-page`}
+                                        <Link to={`/detail/${project.id}`}
                                               style={{color: "black", textDecoration: "none"}}
                                         className="custom-link">
                                             <Card.Title style={{height: "6rem"}}>
@@ -153,7 +148,7 @@ function List() {
                                                            style={{margin: "5%"}}>{project.company}</label>
                                                 </div>
                                                 <div className="col-4">
-                                                    <Badge bg="warning" text="dark" style={{marginTop: "13%"}}>
+                                                    <Badge bg="warning" text="dark" style={{marginTop: "13%", marginLeft: "10%", width: "6rem"}}>
                                                         Còn {project.date} ngày
                                                     </Badge>
                                                 </div>
@@ -186,9 +181,10 @@ function List() {
                                                     được</p>
                                                 <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                             </div>
-                                            <div className="col-4">
-                                                <Button variant="primary" style={{fontSize: "80%", marginTop: "5%"}}>Quyên
-                                                    góp</Button>
+                                            <div className="col-4 justify-content-end">
+                                                <Button variant="primary" style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                    Quyên góp
+                                                </Button>
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -199,7 +195,6 @@ function List() {
                         <h1 style={{textAlign: "center"}}>Vui lòng quay lại sau !!!</h1>}
                 </div>
             </div>
-
             <Footer/>
         </>
     )
