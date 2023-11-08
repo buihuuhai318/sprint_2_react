@@ -5,22 +5,24 @@ import ExampleCarouselImage from "../home/ExampleCarouselImage";
 import {BsSuitHeart} from "react-icons/bs";
 import Table from "react-bootstrap/Table";
 import Badge from "react-bootstrap/Badge";
-import {Card, CloseButton} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Card} from "react-bootstrap";
+import {Link, useLocation} from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import * as appUserService from "../../service/user/AuthService";
+import format from 'date-fns/format';
 
 
 function Bill() {
 
-    useEffect(() => {
-        document.title = "#Thehome - Hoá đơn"; // Đặt tiêu đề mới tại đây
-    }, []);
-
+    const location = useLocation();
     const [name, setName] = useState("");
+    const [bill, setBill] = useState(null);
+    const [date, setDate] = useState(null);
+
+    console.log(bill)
 
     const getInfoUser = async () => {
         try {
@@ -30,11 +32,20 @@ function Bill() {
         }
     }
 
+    const getDate = (date) => {
+        const dateObject = new Date(date);
+        return format(dateObject, "dd/MM/yyyy HH:mm:ss")
+    }
+
+
+
     useEffect(() => {
+        document.title = "#Thehome - Hoá đơn"; // Đặt tiêu đề mới tại đây
         getInfoUser();
+        setBill(location.state)
     }, []);
 
-    return (
+    return ( bill &&
         <>
             <Header/>
             <Carousel>
@@ -56,15 +67,18 @@ function Bill() {
                         <tbody>
                         <tr>
                             <th className="col-2">Thời gian</th>
-                            <td className="col-2">31/10/2023</td>
+                            <td className="col-2">{getDate(bill.paymentDate)}</td>
                         </tr>
                         <tr>
                             <th>Lượt Quyên Góp</th>
-                            <td>4</td>
+                            <td>{bill.totalProject}</td>
                         </tr>
                         <tr>
                             <th>Tổng tiền</th>
-                            <td>200.000đ</td>
+                            <td>{bill.totalMoney.toLocaleString('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND'
+                            })}</td>
                         </tr>
                         <tr>
                             <th>Trạng thái</th>
@@ -82,58 +96,28 @@ function Bill() {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                Vân Hồ, Tỉnh Sơn La
-                            </td>
-                            <td>
-                                <Badge bg="warning" text="dark">
-                                    Còn 120 ngày
-                                </Badge>
-                            </td>
-                            <td>200.000đ</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                Vân Hồ, Tỉnh Sơn La
-                            </td>
-                            <td>
-                                <Badge bg="warning" text="dark">
-                                    Còn 120 ngày
-                                </Badge>
-                            </td>
-                            <td>200.000đ</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                Vân Hồ, Tỉnh Sơn La
-                            </td>
-                            <td>
-                                <Badge bg="warning" text="dark">
-                                    Còn 120 ngày
-                                </Badge>
-                            </td>
-                            <td>200.000đ</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                Vân Hồ, Tỉnh Sơn La
-                            </td>
-                            <td>
-                                <Badge bg="warning" text="dark">
-                                    Còn 120 ngày
-                                </Badge>
-                            </td>
-                            <td>200.000đ</td>
-                        </tr>
+                        {bill.list.map((cart, index) => (
+                            <tr>
+                                <td style={{verticalAlign: "middle"}}>{index + 1}</td>
+                                <td style={{verticalAlign: "middle"}}>
+                                    <Link to={`/detail/${cart.projectId}`}
+                                          style={{color: "black", textDecoration: "none"}}>
+                                        {cart.title}
+                                    </Link>
+                                </td>
+                                <td style={{verticalAlign: "middle"}}>
+                                    <Badge bg="warning" text="dark">
+                                        Còn {cart.date} ngày
+                                    </Badge>
+                                </td>
+                                <td style={{verticalAlign: "middle"}}>
+                                    {cart.money.toLocaleString('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND'
+                                    })}
+                                </td>
+                            </tr>
+                        ))}
                         </tbody>
                     </Table>
                     <div style={{marginTop: "3%"}}>

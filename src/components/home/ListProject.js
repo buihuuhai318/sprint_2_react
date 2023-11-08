@@ -35,7 +35,6 @@ function List() {
     const getListBySearch = async (value) => {
         try {
             const res = await ListService.getProjectBySearch(value, limit);
-            console.log(res)
             if (res.data !== "") {
                 setProjects(res.data.content);
             } else {
@@ -50,7 +49,6 @@ function List() {
     const getListByType = async (id) => {
         try {
             const res = await ListService.getProject(id, limit);
-            console.log(res)
             if (res.data !== "") {
                 setProjects(res.data.content);
             } else {
@@ -123,13 +121,12 @@ function List() {
                     {projects ? projects.map((project, index) => (
                             <div className="col-4" key={index}>
                                 <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
-                                    <Link to={`/detail/${project.id}`} className="custom-link">
+                                    <Link to={`/detail/${project.id}`}>
                                         <Card.Img variant="top" src={project.projectImage}/>
                                     </Link>
                                     <Card.Body>
                                         <Link to={`/detail/${project.id}`}
-                                              style={{color: "black", textDecoration: "none"}}
-                                        className="custom-link">
+                                              style={{color: "black", textDecoration: "none"}}>
                                             <Card.Title style={{height: "6rem"}}>
                                                 {project.title}
                                             </Card.Title>

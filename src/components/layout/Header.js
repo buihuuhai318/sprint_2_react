@@ -41,7 +41,6 @@ function Header({refresh}) {
         try {
             const res = await CartService.getMoneyCart();
             setMoneyCart(res.data);
-            console.log(res);
         } catch (e) {
 
         }
