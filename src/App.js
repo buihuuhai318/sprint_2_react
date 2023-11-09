@@ -1,21 +1,22 @@
 import 'react-toastify/dist/ReactToastify.css';
 import {Route, Routes} from "react-router-dom";
-import Information from "./components/user/Information";
-import HomeAdmin from "./components/user/HomeAdmin";
+import InformationAdmin from "./components/user/InformationAdmin";
+import HomeAdmin from "./components/home/HomeAdmin";
 import {axiosClient} from "./service/user/AxiosClient";
-import Authentication from "./components/user/Authentication";
-import Error403 from "./components/user/Error403";
-import Error401 from "./components/user/Error401";
-import {EnumAppUserRole} from "./components/user/EnumAppUserRole";
+import Authentication from "./components/auth/Authentication";
+import Error403 from "./components/auth/Error403";
+import Error401 from "./components/auth/Error401";
+import {EnumAppUserRole} from "./components/auth/EnumAppUserRole";
 import React from "react";
 import {ToastContainer} from "react-toastify";
-import LoginForm from "./components/user/LoginForm";
+import LoginForm from "./components/login/LoginForm";
 import Home from "./components/home/Home";
 import HomeDetail from "./components/home_detail/HomeDetail";
 import Cart from "./components/cart/Cart";
 import Bill from "./components/cart/Bill";
 import ListProject from "./components/home/ListProject";
 import {PayPalScriptProvider} from "@paypal/react-paypal-js";
+import Information from "./components/user/Information";
 
 
 function App() {
@@ -36,8 +37,9 @@ function App() {
                     <Route path="/bill/*" element={<Bill/>}/>
                     <Route path="/list" element={<ListProject/>}/>
                     <Route path="/list/:id" element={<ListProject/>}/>
+                    <Route path="/info" element={<Information/>}/>
 
-                    <Route path="/admin/information/:id" element={<Information/>}/>
+                    <Route path="/admin/information/:id" element={<InformationAdmin/>}/>
                     <Route path="/admin/home" element={<HomeAdmin/>}/>
                     <Route path="/admin/*" element={<HomeAdmin/>}/>
 

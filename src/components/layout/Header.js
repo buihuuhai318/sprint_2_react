@@ -148,7 +148,7 @@ function Header({refresh}) {
                                 <label htmlFor="basic-nav-dropdown-login"
                                        style={{color: `white`, marginRight: "2%", marginLeft: "4%"}}>Xin chào: </label>
                                 <NavDropdown title={name !== "" ? name : userName} id="basic-nav-dropdown-login">
-                                    <NavDropdown.Item href="#action/3.1">Thông Tin Cá Nhân</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/info">Thông Tin Cá Nhân</NavDropdown.Item>
                                     <NavDropdown.Divider/>
                                     <NavDropdown.Item href="#action/3.4" onClick={handleLogOut}>
                                         Đăng Xuất

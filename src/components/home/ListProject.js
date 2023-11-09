@@ -32,6 +32,14 @@ function List() {
         }
     }
 
+    const handleScrollToTop = () => {
+        const targetDiv = document.getElementById('targetTop');
+        if (targetDiv) {
+            const targetOffset = targetDiv.offsetTop - 70; // Khoảng cách từ phía trên
+            window.scrollTo({top: targetOffset, behavior: 'smooth'});
+        }
+    };
+
     const getListBySearch = async (value) => {
         try {
             const res = await ListService.getProjectBySearch(value, limit);
@@ -73,6 +81,7 @@ function List() {
             getListByType(params.id);
             setIdTypes(params.id)
         }
+        handleScrollToTop();
     }, [params.id, location.search]);
 
     useEffect(() => {
@@ -81,6 +90,7 @@ function List() {
 
     return (infoType && idTypes && types && projects &&
         <>
+            <div id="targetTop"></div>
             <Header/>
             <Card style={{position: 'relative', border: "none"}}>
                 <Card.Img variant="top"

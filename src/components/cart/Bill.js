@@ -6,23 +6,23 @@ import {BsSuitHeart} from "react-icons/bs";
 import Table from "react-bootstrap/Table";
 import Badge from "react-bootstrap/Badge";
 import {Card} from "react-bootstrap";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import * as appUserService from "../../service/user/AuthService";
 import format from 'date-fns/format';
+import OtherProject from "../layout/OtherProject";
+
 
 
 function Bill() {
 
+    const navigate = useNavigate();
     const location = useLocation();
     const [name, setName] = useState("");
     const [bill, setBill] = useState(null);
-    const [date, setDate] = useState(null);
-
-    console.log(bill)
 
     const getInfoUser = async () => {
         try {
@@ -37,12 +37,13 @@ function Bill() {
         return format(dateObject, "dd/MM/yyyy HH:mm:ss")
     }
 
-
-
     useEffect(() => {
         document.title = "#Thehome - Hoá đơn"; // Đặt tiêu đề mới tại đây
         getInfoUser();
         setBill(location.state)
+        if (!location.state) {
+            navigate("/");
+        }
     }, []);
 
     return ( bill &&
@@ -129,153 +130,7 @@ function Bill() {
                     </div>
                 </div>
             </div>
-            <div style={{marginTop: "3%"}}>
-                <div className="container" style={{paddingBottom: "4%"}}>
-                    <h4 style={{marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các chương trình quyên góp
-                        khác</h4>
-                    <hr/>
-                    <div className="row">
-                        <div className="col-4">
-                            <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
-                                <Card.Img variant="top" src="https://i.imgur.com/2jeoooy.jpg"/>
-                                <Card.Body>
-                                    <Card.Title>Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La</Card.Title>
-                                    <Card.Text>
-                                        <div className="row">
-                                            <div className="col-8">
-                                                <Card.Img variant="top"
-                                                          style={{width: "2rem", height: "2rem", borderRadius: "50%"}}
-                                                          id="img1" src="https://i.imgur.com/2jeoooy.jpg"/>
-                                                <label htmlFor="img1" style={{margin: "5%"}}>MSD United Way</label>
-                                            </div>
-                                            <div className="col-4">
-                                                <Badge bg="warning" text="dark" style={{marginTop: "13%"}}>
-                                                    Còn 120 ngày
-                                                </Badge>
-                                            </div>
-                                        </div>
-                                    </Card.Text>
-                                    <div style={{marginBottom: "5%"}}>
-                                        <p style={{fontWeight: "bold"}}>
-                                            55.000đ <label style={{fontWeight: "initial", color: "gray"}}> /
-                                            170.000.000đ</label>
-                                        </p>
-                                        <ProgressBar now={8.44} label={`${8.44}%`} visuallyHidden/>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
-                                                góp</p>
-                                            <p style={{fontWeight: "bold"}}>17</p>
-                                        </div>
-                                        <div className="col-3">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Đạt được</p>
-                                            <p style={{fontWeight: "bold"}}>8.44%</p>
-                                        </div>
-                                        <div className="col-4">
-                                            <Button variant="primary" style={{fontSize: "80%", marginTop: "5%"}}>Quyên
-                                                góp</Button>
-                                        </div>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                        <div className="col-4">
-                            <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
-                                <Card.Img variant="top" src="https://i.imgur.com/2jeoooy.jpg"/>
-                                <Card.Body>
-                                    <Card.Title>Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La</Card.Title>
-                                    <Card.Text>
-                                        <div className="row">
-                                            <div className="col-8">
-                                                <Card.Img variant="top"
-                                                          style={{width: "2rem", height: "2rem", borderRadius: "50%"}}
-                                                          id="img1" src="https://i.imgur.com/2jeoooy.jpg"/>
-                                                <label htmlFor="img1" style={{margin: "5%"}}>MSD United Way</label>
-                                            </div>
-                                            <div className="col-4">
-                                                <Badge bg="warning" text="dark" style={{marginTop: "13%"}}>
-                                                    Còn 120 ngày
-                                                </Badge>
-                                            </div>
-                                        </div>
-                                    </Card.Text>
-                                    <div style={{marginBottom: "5%"}}>
-                                        <p style={{fontWeight: "bold"}}>
-                                            55.000đ <label style={{fontWeight: "initial", color: "gray"}}> /
-                                            170.000.000đ</label>
-                                        </p>
-                                        <ProgressBar now={8.44} label={`${8.44}%`} visuallyHidden/>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
-                                                góp</p>
-                                            <p style={{fontWeight: "bold"}}>17</p>
-                                        </div>
-                                        <div className="col-3">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Đạt được</p>
-                                            <p style={{fontWeight: "bold"}}>8.44%</p>
-                                        </div>
-                                        <div className="col-4">
-                                            <Button variant="primary" style={{fontSize: "80%", marginTop: "5%"}}>Quyên
-                                                góp</Button>
-                                        </div>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                        <div className="col-4">
-                            <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
-                                <Card.Img variant="top" src="https://i.imgur.com/2jeoooy.jpg"/>
-                                <Card.Body>
-                                    <Card.Title>Chung tay đem nước sạch về cho 147 người dân tại thôn Tân Thành, Huyện
-                                        Vân Hồ, Tỉnh Sơn La</Card.Title>
-                                    <Card.Text>
-                                        <div className="row">
-                                            <div className="col-8">
-                                                <Card.Img variant="top"
-                                                          style={{width: "2rem", height: "2rem", borderRadius: "50%"}}
-                                                          id="img1" src="https://i.imgur.com/2jeoooy.jpg"/>
-                                                <label htmlFor="img1" style={{margin: "5%"}}>MSD United Way</label>
-                                            </div>
-                                            <div className="col-4">
-                                                <Badge bg="warning" text="dark" style={{marginTop: "13%"}}>
-                                                    Còn 120 ngày
-                                                </Badge>
-                                            </div>
-                                        </div>
-                                    </Card.Text>
-                                    <div style={{marginBottom: "5%"}}>
-                                        <p style={{fontWeight: "bold"}}>
-                                            55.000đ <label style={{fontWeight: "initial", color: "gray"}}> /
-                                            170.000.000đ</label>
-                                        </p>
-                                        <ProgressBar now={8.44} label={`${8.44}%`} visuallyHidden/>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Lượt quyên
-                                                góp</p>
-                                            <p style={{fontWeight: "bold"}}>17</p>
-                                        </div>
-                                        <div className="col-3">
-                                            <p style={{color: "gray", marginBottom: "0", fontSize: "80%"}}>Đạt được</p>
-                                            <p style={{fontWeight: "bold"}}>8.44%</p>
-                                        </div>
-                                        <div className="col-4">
-                                            <Button variant="primary" style={{fontSize: "80%", marginTop: "5%"}}>Quyên
-                                                góp</Button>
-                                        </div>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <OtherProject/>
             <Footer/>
         </>
     )

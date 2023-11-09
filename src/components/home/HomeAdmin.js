@@ -1,4 +1,4 @@
-import HeaderAdmin from "./HeaderAdmin";
+import HeaderAdmin from "../layout/HeaderAdmin";
 import {Bar, Doughnut, Pie} from "react-chartjs-2";
 import React, {useEffect, useState} from "react";
 import {Chart, registerables} from "chart.js";
