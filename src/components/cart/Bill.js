@@ -23,6 +23,12 @@ function Bill() {
     const location = useLocation();
     const [name, setName] = useState("");
     const [bill, setBill] = useState(null);
+    const [key, setKey] = useState(true);
+
+
+    const handleChildValueChange = (value) => {
+        setKey(value);
+    };
 
     const getInfoUser = async () => {
         try {
@@ -48,7 +54,7 @@ function Bill() {
 
     return ( bill &&
         <>
-            <Header/>
+            <Header key={!key}/>
             <Carousel>
                 <Carousel.Item interval={2000}>
                     <ExampleCarouselImage link={"https://i.imgur.com/hGcNOjB.jpg"} text="First slide"/>
@@ -124,13 +130,13 @@ function Bill() {
                     <div style={{marginTop: "3%"}}>
                         <div className="container">
                             <div className="text-center">
-                                <Link to="/bill" className="btn btn-outline-dark">Trở lại trang chủ</Link>
+                                <Link to="/" className="btn btn-outline-dark">Trở lại trang chủ</Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <OtherProject/>
+            <OtherProject onValueChange={handleChildValueChange}/>
             <Footer/>
         </>
     )

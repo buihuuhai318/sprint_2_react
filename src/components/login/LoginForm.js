@@ -26,6 +26,7 @@ function LoginForm() {
     const params = useParams();
     const navigate = useNavigate();
     const [isOTPVisible, setOTPVisible] = useState(false);
+    const [reset, setReset] = useState(false);
     const [isOTPReset, setOTPReset] = useState(false);
     const [countdown, setCountdown] = useState(5);
     const [isCounting, setIsCounting] = useState(false);
@@ -48,6 +49,7 @@ function LoginForm() {
             console.log(res)
             if (res.status === 200) {
                 toast("Bạn đã tạo mới tài khoản thành công");
+                setReset(!reset);
             } else if (res.status === 201) {
                 toast.warning(res.data);
             } else {
@@ -83,7 +85,8 @@ function LoginForm() {
             if (res.status === 200) {
                 toast("Cập nhật mật khẩu thành công");
                 setShowReset(false);
-                getTitle("Đăng nhập")
+                getTitle("Đăng nhập");
+                handleLogOut();
             } else {
                 toast.error("Cập nhật mật khẩu thât bại");
             }
@@ -93,6 +96,13 @@ function LoginForm() {
             toast.error("Cập nhật mật khẩu thât bại");
         }
     }
+
+    const handleLogOut = () => {
+        localStorage.removeItem("JWT");
+        navigate("/login");
+        toast("Đăng xuất thành công");
+        window.location.reload();
+    };
 
 
     const getTitle = (tittle) => {
@@ -133,10 +143,8 @@ function LoginForm() {
         document.title = "#Thehome - Đăng nhập"; // Đặt tiêu đề mới tại đây
         setUserNameForNewPass(params.userName);
         setUrl(params.urlPass);
-
         check(params.userName, params.urlPass);
-
-    }, []);
+    }, [reset]);
 
 
     const startCountdown = () => {
@@ -187,7 +195,6 @@ function LoginForm() {
     const handleLogin = async (resolve) => {
         try {
             const result = await AuthService.loginWithFacebook(resolve.data);
-            console.log(resolve)
             AuthService.addJwtTokenToLocalStorage(result.data.jwtToken);
             const tempURL = localStorage.getItem("tempURL");
             localStorage.removeItem("tempURL");
@@ -205,21 +212,21 @@ function LoginForm() {
     }
 
     const loginWithFacebook = async (resolve) => {
-        console.log(resolve);
         Swal.fire({
             text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua facebook ' + resolve.data.email + " không?",
             showDenyButton: true,
             confirmButtonText: 'Xác nhận',
             denyButtonText: `Thoát`,
+            customClass: {
+                confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
+            },
         }).then((result) => {
-
             if (result.isConfirmed) {
                 handleLogin(resolve)
             } else if (result.isDenied) {
 
             }
         })
-
     }
 
     const login = async (data) => {
@@ -263,7 +270,7 @@ function LoginForm() {
                 if (tempURL) {
                     navigate(tempURL);
                 } else {
-                    navigate("/admin/home")
+                    navigate("/")
                 }
                 toast("Đăng nhập thành công");
             } else {

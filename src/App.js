@@ -32,30 +32,36 @@ function App() {
                     <Route path="/forgot/:userName/:urlPass" element={<LoginForm/>}/>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/detail/:id" element={<HomeDetail/>}/>
-                    <Route path="/cart" element={<Cart/>}/>
-                    <Route path="/bill" element={<Bill/>}/>
-                    <Route path="/bill/*" element={<Bill/>}/>
                     <Route path="/list" element={<ListProject/>}/>
                     <Route path="/list/:id" element={<ListProject/>}/>
-                    <Route path="/info" element={<Information/>}/>
-
-                    <Route path="/admin/information/:id" element={<InformationAdmin/>}/>
-                    <Route path="/admin/home" element={<HomeAdmin/>}/>
-                    <Route path="/admin/*" element={<HomeAdmin/>}/>
-
 
                     <Route
                         element={
                             <Authentication
                                 allowedRoles={[
-                                    EnumAppUserRole.ROLE_ADMIN,
+                                    EnumAppUserRole.ROLE_ADMIN, EnumAppUserRole.ROLE_CUSTOMER, EnumAppUserRole.ROLE_EMPLOYEE
                                 ]}
                             />
                         }
                     >
-                        {/*<Route path="/admin/information/:id" element={<Information/>}/>*/}
-                        {/*<Route path="/admin/home" element={<HomeAdmin/>}/>*/}
-                        {/*<Route path="/admin/*" element={<HomeAdmin/>}/>*/}
+                        <Route path="/cart" element={<Cart/>}/>
+                        <Route path="/bill" element={<Bill/>}/>
+                        <Route path="/bill/*" element={<Bill/>}/>
+                        <Route path="/info" element={<Information/>}/>
+                    </Route>
+
+                    <Route
+                        element={
+                            <Authentication
+                                allowedRoles={[
+                                    EnumAppUserRole.ROLE_ADMIN, EnumAppUserRole.ROLE_EMPLOYEE
+                                ]}
+                            />
+                        }
+                    >
+                        <Route path="/admin/information/:id" element={<InformationAdmin/>}/>
+                        <Route path="/admin/home" element={<HomeAdmin/>}/>
+                        <Route path="/admin/*" element={<HomeAdmin/>}/>
                     </Route>
                 </Routes>
             </PayPalScriptProvider>

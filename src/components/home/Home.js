@@ -1,7 +1,7 @@
 import Header from "../layout/Header";
 import Carousel from 'react-bootstrap/Carousel';
 import ExampleCarouselImage from "./ExampleCarouselImage";
-import {Button, Card} from "react-bootstrap";
+import {Button, Card, InputGroup} from "react-bootstrap";
 import Table from 'react-bootstrap/Table';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import './home.css'
@@ -11,12 +11,64 @@ import React, {useEffect, useState} from 'react';
 import Footer from "../layout/Footer";
 import * as HomeService from "../../service/home/HomeService";
 import {Link} from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import {BsSuitHeart} from "react-icons/bs";
+import Form from "react-bootstrap/Form";
+import {toast} from "react-toastify";
+import * as CartService from "../../service/cart/CartService";
 
 
 function Home() {
 
     const [projects, setProjects] = useState([]);
     const [companies, setCompanies] = useState([]);
+    const [show, setShow] = useState(false);
+    const [myModal, setMyModal] = useState(null);
+    const [inputValue, setInputValue] = useState(null);
+    const [key, setKey] = useState(true);
+
+
+    const addCart = async (data) => {
+        try {
+            if (inputValue < 1000) {
+                toast.warning("Số tiền quyên góp vui lòng lớn hơn 1.000đ bạn nhé !")
+            } else if (inputValue > (data.targetLimit - data.now)) {
+                toast.warning("Số tiền quyên góp vượt chỉ tiêu rồi bạn nhé !")
+            } else {
+                const cart = {
+                    projectId: data.id,
+                    money: inputValue
+                }
+                const res = await CartService.addToCart(cart);
+                if (res.status === 200) {
+                    setKey(!key);
+                    toast("Đã thêm vào giỏ tình thương !!!")
+                } else {
+
+                }
+            }
+            setInputValue(null);
+            handleClose();
+        } catch (e) {
+            console.log("loi~")
+            setInputValue(null);
+            handleClose();
+        }
+    }
+
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        setInputValue(value);
+    };
+
+    const handleClose = () => {
+        setShow(false);
+        setMyModal({});
+    }
+    const handleShow = (object) => {
+        setShow(true);
+        setMyModal(object);
+    }
 
     const getProjects = async () => {
         try {
@@ -44,7 +96,7 @@ function Home() {
 
     return (
         <>
-            <Header/>
+            <Header key={!key}/>
             <Carousel>
                 <Carousel.Item interval={2000}>
                     <ExampleCarouselImage link={"https://i.imgur.com/hGcNOjB.jpg"} text="First slide"/>
@@ -175,9 +227,14 @@ function Home() {
                                                 <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                             </div>
                                             <div className="col-4 justify-content-end">
-                                                <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
                                                     Quyên góp
                                                 </Button>
+                                                <Modal show={show} onHide={handleClose}
+                                                       aria-labelledby="contained-modal-title-vcenter"
+                                                       centered>
+                                                    <MyModal action={handleClose} data={myModal}/>
+                                                </Modal>
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -306,6 +363,38 @@ function Home() {
             <Footer/>
         </>
     )
+
+    function MyModal({data, action}) {
+        return (data !== {} &&
+            <>
+                <Modal.Header closeButton>
+                    <Modal.Title>Thêm vào giỏ tình thương <BsSuitHeart style={{marginBottom: "2%"}}/></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            className="input-custom"
+                            placeholder="......"
+                            aria-label="Recipient's username"
+                            aria-describedby="basic-addon2"
+                            type="number"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            autoFocus
+                        />
+                        <Button variant="outline-dark" id="button-addon2" className="custom" onClick={() => addCart(data)}>
+                            Quyên góp
+                        </Button>
+                    </InputGroup>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={action}>
+                        Thoát
+                    </Button>
+                </Modal.Footer>
+            </>
+        )
+    }
 }
 
 export default Home;

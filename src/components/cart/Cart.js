@@ -12,7 +12,6 @@ import {BsSuitHeart} from "react-icons/bs";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import * as CartService from "../../service/cart/CartService";
-import * as HomeService from "../../service/home/HomeService";
 import Modal from "react-bootstrap/Modal";
 import {toast} from "react-toastify";
 import PaypalCheckoutButton from "../paypal/PaypalCheckoutButton";
@@ -27,6 +26,10 @@ export function Cart() {
     const [show, setShow] = useState(false);
     const [myModal, setMyModal] = useState(null);
     const [bill, setBill] = useState(null);
+
+    const handleChildValueChange = (value) => {
+        setKey(value);
+    };
 
     const handleClose = () => {
         setShow(false);
@@ -189,7 +192,7 @@ export function Cart() {
                     </div>
                 </div>
             </div>
-            <OtherProject/>
+            <OtherProject onValueChange={handleChildValueChange}/>
             <Footer/>
         </>
     );

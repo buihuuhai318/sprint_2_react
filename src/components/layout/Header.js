@@ -11,7 +11,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
-import {Button} from "react-bootstrap";
+import {Button, InputGroup} from "react-bootstrap";
+import "./header.css"
 
 
 
@@ -117,16 +118,18 @@ function Header({refresh}) {
                         </Nav>
                     </Navbar.Collapse>
                     <Form className="d-flex">
+                        <InputGroup>
                         <Form.Control
                             type="search"
                             placeholder="..."
-                            className="me-2"
+                            className=""
                             aria-label="search"
                             value={valueSearch}
                             style={{backgroundColor: "#53b7ae"}}
                             onChange={(e) => setValueSearch(e.target.value)}
                         />
-                        <Button as={Link} to={`/list?value=${valueSearch}`} variant="outline-dark" style={{width: "45%"}}>Tìm kiếm</Button>
+                        <Button as={Link} to={`/list?value=${valueSearch}`} variant="outline-light" style={{width: "45%"}}>Tìm kiếm</Button>
+                        </InputGroup>
                     </Form>
                     <Navbar.Collapse className="justify-content-end">
                         {userName === "" ?

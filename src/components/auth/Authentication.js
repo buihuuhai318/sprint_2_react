@@ -19,11 +19,7 @@ const hasValueInAuthorProperty = (allowedRoles, currentRoles) => {
 
 // COMPONENT AUTHORIZATION
 const Authentication = ({ allowedRoles }) => {
-
-
     const infoUser = appUserService.infoAppUserByJwtToken();
-
-
     let roles;
     if (infoUser) {
         roles = infoUser.roleList;
@@ -31,7 +27,7 @@ const Authentication = ({ allowedRoles }) => {
 
     return roles && hasValueInAuthorProperty(allowedRoles, roles) ? (
         <Outlet />
-    ) : <Navigate to={`/401`} />
+    ) : !infoUser ? <Navigate to={`/401`} /> : <Navigate to={`/403`} />
 
 }
 

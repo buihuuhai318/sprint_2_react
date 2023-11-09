@@ -8,7 +8,12 @@ import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import "./list.css"
 import Badge from "react-bootstrap/Badge";
 import ProgressBar from "react-bootstrap/ProgressBar";
-import {Button} from "react-bootstrap";
+import {Button, CloseButton, InputGroup} from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
+import Form from 'react-bootstrap/Form';
+import {BsSuitHeart} from "react-icons/bs";
+import {toast} from "react-toastify";
+import * as CartService from "../../service/cart/CartService";
 
 
 function List() {
@@ -20,6 +25,53 @@ function List() {
     const [idTypes, setIdTypes] = useState(null);
     const [limit, setLimit] = useState(10);
     const [projects, setProjects] = useState(null);
+    const [show, setShow] = useState(false);
+    const [myModal, setMyModal] = useState(null);
+    const [inputValue, setInputValue] = useState(null);
+    const [key, setKey] = useState(true);
+
+
+    const addCart = async (data) => {
+        try {
+            if (inputValue < 1000) {
+                toast.warning("Số tiền quyên góp vui lòng lớn hơn 1.000đ bạn nhé !")
+            } else if (inputValue > (data.targetLimit - data.now)) {
+                toast.warning("Số tiền quyên góp vượt chỉ tiêu rồi bạn nhé !")
+            } else {
+                const cart = {
+                    projectId: data.id,
+                    money: inputValue
+                }
+                const res = await CartService.addToCart(cart);
+                if (res.status === 200) {
+                    setKey(!key);
+                    toast("Đã thêm vào giỏ tình thương !!!")
+                } else {
+
+                }
+            }
+            setInputValue(null);
+            handleClose();
+        } catch (e) {
+            console.log("loi~")
+            setInputValue(null);
+            handleClose();
+        }
+    }
+
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        setInputValue(value);
+    };
+
+    const handleClose = () => {
+        setShow(false);
+        setMyModal({});
+    }
+    const handleShow = (object) => {
+        setShow(true);
+        setMyModal(object);
+    }
 
     const getTypes = async (id) => {
         try {
@@ -91,7 +143,7 @@ function List() {
     return (infoType && idTypes && types && projects &&
         <>
             <div id="targetTop"></div>
-            <Header/>
+            <Header key={!key}/>
             <Card style={{position: 'relative', border: "none"}}>
                 <Card.Img variant="top"
                           src={infoType.image}/>
@@ -190,9 +242,14 @@ function List() {
                                                 <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                             </div>
                                             <div className="col-4 justify-content-end">
-                                                <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
                                                     Quyên góp
                                                 </Button>
+                                                <Modal show={show} onHide={handleClose}
+                                                       aria-labelledby="contained-modal-title-vcenter"
+                                                       centered>
+                                                    <MyModal action={handleClose} data={myModal}/>
+                                                </Modal>
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -206,6 +263,38 @@ function List() {
             <Footer/>
         </>
     )
+
+    function MyModal({data, action}) {
+        return (data !== {} &&
+            <>
+                <Modal.Header closeButton>
+                    <Modal.Title>Thêm vào giỏ tình thương <BsSuitHeart style={{marginBottom: "2%"}}/></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            className="input-custom"
+                            placeholder="......"
+                            aria-label="Recipient's username"
+                            aria-describedby="basic-addon2"
+                            type="number"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            autoFocus
+                        />
+                        <Button variant="outline-dark" id="button-addon2" className="custom" onClick={() => addCart(data)}>
+                            Quyên góp
+                        </Button>
+                    </InputGroup>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={action}>
+                        Thoát
+                    </Button>
+                </Modal.Footer>
+            </>
+        )
+    }
 }
 
 export default List;

@@ -10,7 +10,7 @@ const Error403 = () => {
                     <h3 className="display-1 fw-bold text-dark mb-4">403 Forbiden</h3>
                     <div>Xin Lỗi bạn không được vào đường dẫn này, hãy bấm quay lại</div>
                     <div className="text-center mt-3">
-                        <button onClick={() => navigate(-1)} className="btn btn-secondary">Quay lại</button>
+                        <button onClick={() => navigate('/')} className="btn btn-secondary ">Quay lại</button>
                     </div>
                 </div>
             </div>

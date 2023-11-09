@@ -53,4 +53,37 @@ div.scrollmenu a:hover {
     border-color: black !important;
 }
 
+.modal-backdrop {
+    /* Thay đổi màu nền overlay thành màu bạn muốn */
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
 
+.modal-content {
+    border: none !important;
+}
+
+
+.custom:hover {
+    color: white !important; /* Màu bạn muốn đổi khi hover */
+    background-color: #53b7ae !important;
+    border-color: #53b7ae !important;
+}
+
+.custom:active {
+    color: black !important; /* Màu bạn muốn đổi khi hover */
+    background-color: white !important;
+}
+
+.input-custom:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: rgb(128, 128, 128) !important;
+}
+
+
+
+.input-custom {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: rgb(128, 128, 128) !important;
+}

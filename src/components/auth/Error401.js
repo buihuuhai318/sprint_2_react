@@ -12,7 +12,7 @@ const Error401 = () => {
                     <div>Chức năng này cần đăng nhập, hãy đăng nhập hoặc quay lại trang chủ</div>
                     <div className="d-flex justify-content-center mt-3">
                         <button onClick={() => navigate('/login')} className="btn btn-primary me-1">Đăng nhập</button>
-                        <button onClick={() => navigate('/home')} className="btn btn-secondary ">Quay lại</button>
+                        <button onClick={() => navigate('/')} className="btn btn-secondary ">Quay lại</button>
                     </div>
                 </div>
             </div>

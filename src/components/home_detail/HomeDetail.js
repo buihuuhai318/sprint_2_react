@@ -9,6 +9,7 @@ import Badge from "react-bootstrap/Badge";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Table from 'react-bootstrap/Table';
 import * as HomeService from "../../service/home/HomeService";
+import * as AuthService from "../../service/user/AuthService";
 import * as CartService from "../../service/cart/CartService";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
@@ -17,6 +18,7 @@ import OtherProject from "../layout/OtherProject";
 
 function HomeDetail() {
 
+    const navigate = useNavigate();
     const params = useParams();
     const [project, setProject] = useState(null);
     const [image, setImage] = useState(null);
@@ -29,12 +31,14 @@ function HomeDetail() {
     const [most, setMost] = useState(null);
     const [other1, setOther1] = useState(null);
 
+    const handleChildValueChange = (value) => {
+        setKey(value);
+    };
 
     const handleInputChange = (event) => {
         const value = event.target.value;
         setInputValue(value);
     };
-
 
 
     const getOther1 = async () => {
@@ -81,9 +85,20 @@ function HomeDetail() {
                     setShowInput(false);
                 }
             }
+            setInputValue(null);
         } catch (e) {
             console.log("loi~")
             setShowInput(false);
+            setInputValue(null);
+        }
+    }
+
+    const donate = async () => {
+        const response = await AuthService.infoAppUserByJwtToken();
+        if (!response) {
+            navigate("/login");
+        } else {
+            setShowInput(true);
         }
     }
 
@@ -200,7 +215,7 @@ function HomeDetail() {
                                             variant="primary"
                                             className="mx-auto mt-3"
                                             style={{width: "95%"}}
-                                            onClick={() => setShowInput(true)}
+                                            onClick={() => donate()}
                                             hidden={showInput}
                                         >
                                             Quyên góp
@@ -308,7 +323,7 @@ function HomeDetail() {
                             </div>
                             <div className="col-4">
                                 <div className="sticky-top" style={{top: "90px"}}>
-                                    <h5>Chương trình đang diễn ra</h5>
+                                    <h5>Chương trình sắp hết hạn</h5>
                                     {other1 ? other1.map((project, index) => (
 
                                             <Card style={{width: '100%', marginTop: "5%", marginBottom: "5%"}}>
@@ -383,11 +398,16 @@ function HomeDetail() {
                                                             <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                                         </div>
                                                         <div className="col-4 justify-content-end">
-                                                            <Button className="btn btn-outline-dark" style={{
-                                                                fontSize: "80%",
-                                                                marginTop: "5%",
-                                                                marginLeft: "18%"
-                                                            }}>
+                                                            <Button className="btn btn-outline-dark"
+                                                                    as={Link}
+                                                                    to={`/detail/${project.id}`}
+                                                                    style={{
+                                                                        fontSize: "80%",
+                                                                        marginTop: "5%",
+                                                                        marginLeft: "18%",
+                                                                        backgroundColor: "white"
+                                                                    }}
+                                                            >
                                                                 Quyên góp
                                                             </Button>
                                                         </div>
@@ -406,8 +426,7 @@ function HomeDetail() {
                 </div>
             </div>
 
-            <OtherProject/>
-
+            <OtherProject onValueChange={handleChildValueChange}/>
             <Footer/>
         </>
     );
