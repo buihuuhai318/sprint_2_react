@@ -94,8 +94,8 @@ function Header({refresh}) {
 
     return (
         <>
-            <Navbar expand="lg" className="bg-body-tertiary sticky-top" style={{zIndex: '2000'}}>
-                <Container>
+            <Navbar expand="lg" className=" sticky-top" style={{zIndex: '2000', backgroundColor: "#53b7ae"}}>
+                <Container style={{backgroundColor: "#53b7ae"}}>
                     <Navbar.Brand as={Link} to="/">
                         <img
                             src="https://i.imgur.com/jXcDXlY.png"
@@ -123,9 +123,10 @@ function Header({refresh}) {
                             className="me-2"
                             aria-label="search"
                             value={valueSearch}
+                            style={{backgroundColor: "#53b7ae"}}
                             onChange={(e) => setValueSearch(e.target.value)}
                         />
-                        <Button as={Link} to={`/list?value=${valueSearch}`} variant="outline-success" style={{width: "45%"}}>Tìm kiếm</Button>
+                        <Button as={Link} to={`/list?value=${valueSearch}`} variant="outline-dark" style={{width: "45%"}}>Tìm kiếm</Button>
                     </Form>
                     <Navbar.Collapse className="justify-content-end">
                         {userName === "" ?
@@ -145,7 +146,7 @@ function Header({refresh}) {
                                 </Nav.Link>
 
                                 <label htmlFor="basic-nav-dropdown-login"
-                                       style={{color: `gray`, marginRight: "2%", marginLeft: "4%"}}>Xin chào: </label>
+                                       style={{color: `white`, marginRight: "2%", marginLeft: "4%"}}>Xin chào: </label>
                                 <NavDropdown title={name !== "" ? name : userName} id="basic-nav-dropdown-login">
                                     <NavDropdown.Item href="#action/3.1">Thông Tin Cá Nhân</NavDropdown.Item>
                                     <NavDropdown.Divider/>

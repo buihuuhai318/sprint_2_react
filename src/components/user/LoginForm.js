@@ -341,7 +341,7 @@ function LoginForm() {
                                                                    backgroundColor: 'rgba(192, 192, 192, 0.0)'
                                                                }}/>
                                                         <ErrorMessage name="password" component="span"
-                                                                      style={{color: "red"}}></ErrorMessage>
+                                                                      style={{color: "white"}}></ErrorMessage>
                                                     </div>
                                                 </div>
                                                 <div className="mb-3">
@@ -357,7 +357,7 @@ function LoginForm() {
                                                                    backgroundColor: 'rgba(192, 192, 192, 0.0)'
                                                                }}/>
                                                         <ErrorMessage name="confirmPass" component="span"
-                                                                      style={{color: "red"}}></ErrorMessage>
+                                                                      style={{color: "white"}}></ErrorMessage>
                                                     </div>
                                                 </div>
                                                 <div style={{paddingTop: "4%", marginBottom: "5%"}}>
@@ -586,7 +586,7 @@ function LoginForm() {
                                     justify
                                     style={{marginTop: "3%"}}
                                 >
-                                    <Tab eventKey="login" title="Đăng Nhập" onKeyUp={() => {
+                                    <Tab eventKey="login" title="Đăng Nhập" style={{ borderBottom: "1px", borderBottomColor:"black"}} onKeyUp={() => {
                                         getTitle("Đăng Nhập")
                                     }}>
                                         <div className="card-body"
@@ -832,7 +832,7 @@ function LoginForm() {
                                                                            backgroundColor: 'rgba(192, 192, 192, 0.0)'
                                                                        }}/>
                                                                 <ErrorMessage name="password" component="span"
-                                                                              style={{color: "red"}}></ErrorMessage>
+                                                                              style={{color: "white"}}></ErrorMessage>
                                                             </div>
                                                         </div>
                                                         <div className="mb-3">
@@ -849,7 +849,7 @@ function LoginForm() {
                                                                            backgroundColor: 'rgba(192, 192, 192, 0.0)'
                                                                        }}/>
                                                                 <ErrorMessage name="confirmPass" component="span"
-                                                                              style={{color: "red"}}></ErrorMessage>
+                                                                              style={{color: "white"}}></ErrorMessage>
                                                             </div>
                                                         </div>
                                                         <div style={{paddingTop: "4%", marginBottom: "5%"}}>

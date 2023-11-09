@@ -15,7 +15,7 @@ div.scrollmenu a {
 div.scrollmenu a:hover {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: #b4b4b4;
+    background-color: #53b7ae;
     color: #ffffff !important;
 }
 
@@ -25,5 +25,31 @@ div.scrollmenu a:hover {
 }
 
 .card:hover a {
-    color: #38cea1 !important; /* Màu bạn muốn đổi khi hover */
+    color: #53b7ae !important; /* Màu bạn muốn đổi khi hover */
 }
+
+.card:hover button {
+    color: black !important; /* Màu bạn muốn đổi khi hover */
+    background-color: white;
+    border-color: black;
+
+}
+
+.card button:hover {
+    color: white !important; /* Màu bạn muốn đổi khi hover */
+    background-color: #53b7ae;
+    border-color: white;
+}
+
+.card button {
+    color: black !important; /* Màu bạn muốn đổi khi hover */
+    background-color: white;
+    border-color: black;
+}
+
+.card button:active {
+    color: black !important; /* Màu bạn muốn đổi khi hover */
+    background-color: white !important;
+    border-color: black !important;
+}
+

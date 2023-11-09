@@ -164,6 +164,7 @@ function List() {
                                             </p>
                                             <ProgressBar now={project.now / project.targetLimit * 100}
                                                          label={`${project.now / project.targetLimit * 100}%`}
+                                                         variant="success"
                                                          visuallyHidden/>
                                         </div>
                                         <div className="row">
@@ -179,7 +180,7 @@ function List() {
                                                 <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                             </div>
                                             <div className="col-4 justify-content-end">
-                                                <Button variant="primary" style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
                                                     Quyên góp
                                                 </Button>
                                             </div>

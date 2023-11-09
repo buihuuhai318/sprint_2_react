@@ -2,12 +2,21 @@
 .nav-tabs .nav-item .nav-link.active {
     background-color: rgba(192, 192, 192, 0.3); /* Màu nền khi được chọn */
     color: black; /* Màu chữ khi được chọn */
+    font-weight: bold;
+    border-top: 1px !important;
+    border-left: 1px !important;
+    border-right: 1px !important;
+    border-color: black !important;
 }
 
 /* Thay đổi màu nền khi không được nhấn vào */
 .nav-tabs .nav-item .nav-link {
     background-color: rgba(192, 192, 192, 0.0); /* Màu nền khi không được chọn */
     color: black; /* Màu chữ khi không được chọn */
+    border-top: 0 !important;
+    border-left: 0!important;
+    border-right: 0!important;
+    border-bottom-color: black;
 }
 
 /*.HaiBH-button {*/

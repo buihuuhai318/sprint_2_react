@@ -105,7 +105,7 @@ function Home() {
                 </div>
             </div>
 
-            <div style={{marginTop: "5%", backgroundColor: "#FED7C3"}}>
+            <div style={{marginTop: "5%", backgroundColor: "#e8cdc5"}}>
                 <div className="container" style={{paddingBottom: "4%"}}>
                     <h1 style={{textAlign: "center", marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các hoàn
                         cảnh quyên góp</h1>
@@ -140,7 +140,7 @@ function Home() {
                                                            style={{margin: "5%"}}>{project.company}</label>
                                                 </div>
                                                 <div className="col-4">
-                                                    <Badge bg="warning" text="dark" style={{marginTop: "13%"}}>
+                                                    <Badge bg="warning" text="dark" style={{marginTop: "13%", marginLeft: "10%", width: "6rem"}}>
                                                         Còn {project.date} ngày
                                                     </Badge>
                                                 </div>
@@ -159,6 +159,7 @@ function Home() {
                                             </p>
                                             <ProgressBar now={project.now / project.targetLimit * 100}
                                                          label={`${project.now / project.targetLimit * 100}%`}
+                                                         variant="success"
                                                          visuallyHidden/>
                                         </div>
                                         <div className="row">
@@ -173,9 +174,10 @@ function Home() {
                                                     được</p>
                                                 <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                             </div>
-                                            <div className="col-4">
-                                                <Button variant="primary" style={{fontSize: "80%", marginTop: "5%"}}>Quyên
-                                                    góp</Button>
+                                            <div className="col-4 justify-content-end">
+                                                <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                    Quyên góp
+                                                </Button>
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -188,7 +190,39 @@ function Home() {
                 </div>
             </div>
 
-            <div style={{backgroundColor: "#FEE1E8"}}>
+
+
+            <div className="container" style={{paddingBottom: "10%"}}>
+                <h1 style={{textAlign: "center", marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các đối tác
+                    đồng hành</h1>
+                <p style={{textAlign: "center", marginBottom: "5%"}}>Các tổ chức nhân đạo Phi Lợi Nhuận đồng hành cùng
+                    Ví MoMo giúp đỡ các hoàn cảnh khó khăn trên khắp cả nước.</p>
+                <div className="row">
+                    {companies.map((company, index) => (
+                        <div className="col-4">
+                            <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
+                                <div className="row">
+                                    <div className="col-3">
+                                        <Image variant="top"
+                                               style={{width: "4rem", height: "4rem", margin: "11%"}}
+                                               id="img1" src={company.companyImage.name} rounded/>
+                                    </div>
+                                    <div className="col-9">
+                                        <label htmlFor="img1" style={{marginTop: "6%"}}>{company.name}</label>
+                                        <p style={{
+                                            fontSize: "70%",
+                                            color: "gray",
+                                            marginRight: "5%"
+                                        }}>{company.description}</p>
+                                    </div>
+                                </div>
+                            </Card>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div style={{backgroundColor: "#e8cdc5"}}>
                 <div className="container" style={{paddingBottom: "5%"}}>
                     <h1 style={{textAlign: "center", marginBottom: "5%", paddingTop: "7%"}}>Ví Nhân Ái - Thiện nguyện
                         mỗi ngày</h1>
@@ -266,36 +300,6 @@ function Home() {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div className="container" style={{paddingBottom: "10%"}}>
-                <h1 style={{textAlign: "center", marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các đối tác
-                    đồng hành</h1>
-                <p style={{textAlign: "center", marginBottom: "5%"}}>Các tổ chức nhân đạo Phi Lợi Nhuận đồng hành cùng
-                    Ví MoMo giúp đỡ các hoàn cảnh khó khăn trên khắp cả nước.</p>
-                <div className="row">
-                    {companies.map((company, index) => (
-                        <div className="col-4">
-                            <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
-                                <div className="row">
-                                    <div className="col-3">
-                                        <Image variant="top"
-                                               style={{width: "4rem", height: "4rem", margin: "11%"}}
-                                               id="img1" src={company.companyImage.name} rounded/>
-                                    </div>
-                                    <div className="col-9">
-                                        <label htmlFor="img1" style={{marginTop: "6%"}}>{company.name}</label>
-                                        <p style={{
-                                            fontSize: "70%",
-                                            color: "gray",
-                                            marginRight: "5%"
-                                        }}>{company.description}</p>
-                                    </div>
-                                </div>
-                            </Card>
-                        </div>
-                    ))}
                 </div>
             </div>
 
