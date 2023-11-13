@@ -3,7 +3,6 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Table from "react-bootstrap/Table";
 import {Card, CloseButton} from "react-bootstrap";
-import ProgressBar from "react-bootstrap/ProgressBar";
 import Badge from "react-bootstrap/Badge";
 import Carousel from "react-bootstrap/Carousel";
 import ExampleCarouselImage from "../home/ExampleCarouselImage";

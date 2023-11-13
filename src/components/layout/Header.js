@@ -26,6 +26,17 @@ function Header({refresh}) {
     const [valueSearch, setValueSearch] = useState("");
     const [moneyCart, setMoneyCart] = useState(0);
 
+    const roleAdmin = appUserService.checkRoleAppUser("ROLE_ADMIN");
+    const roleEmployee = appUserService.checkRoleAppUser("ROLE_EMPLOYEE");
+
+    const roleName = () => {
+        if (roleAdmin) {
+            return "Admin";
+        } else if (roleEmployee) {
+            return "Employee";
+        }
+    }
+
     useEffect(() => {
         getAppUserId();
         getUsername();
@@ -152,6 +163,9 @@ function Header({refresh}) {
                                        style={{color: `white`, marginRight: "2%", marginLeft: "4%"}}>Xin chào: </label>
                                 <NavDropdown title={name !== "" ? name : userName} id="basic-nav-dropdown-login">
                                     <NavDropdown.Item as={Link} to="/info">Thông Tin Cá Nhân</NavDropdown.Item>
+                                    {(roleAdmin || roleEmployee) && (
+                                        <NavDropdown.Item as={Link} to="/admin">Quản Lý</NavDropdown.Item>
+                                    )}
                                     <NavDropdown.Divider/>
                                     <NavDropdown.Item href="#action/3.4" onClick={handleLogOut}>
                                         Đăng Xuất

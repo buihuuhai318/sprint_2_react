@@ -1,25 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap';
 import {Link, useNavigate, NavLink} from "react-router-dom";
-import {
-    getIdByUserName,
-    infoAppUserByJwtToken,
-} from "../../service/user/AuthService";
 import * as appUserService from '../../service/user/AuthService';
-import * as UserService from '../../service/user/UserService';
-// import { useDispatch, useSelector } from "react-redux";
+import * as EmployeeService from '../../service/employee/EmployeeService';
 import {toast} from "react-toastify";
 
 
 function HeaderAdmin({refresh}) {
     const navigate = useNavigate();
     const [JwtToken, setJwtToken] = useState(localStorage.getItem("JWT"));
-    const [userName, setUsername] = useState("");
-    const [userId, setUserId] = useState("");
-    const [userAppName, setUserAppName] = useState("");
-
-    // replace 2 with userId
-    // const dispatch = useDispatch();
+    const [userName, setUsername] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [userAppName, setUserAppName] = useState(null);
 
     const roleAdmin = appUserService.checkRoleAppUser("ROLE_ADMIN");
     const roleEmployee = appUserService.checkRoleAppUser("ROLE_EMPLOYEE");
@@ -28,7 +20,7 @@ function HeaderAdmin({refresh}) {
         if (roleAdmin) {
             return "Admin";
         } else if (roleEmployee) {
-            return "Sale";
+            return "Employee";
         }
     }
 
@@ -36,29 +28,23 @@ function HeaderAdmin({refresh}) {
     useEffect(() => {
         getAppUserId();
         getUsername();
-        // getNameUser()
     }, [refresh]);
 
     const getUsername = async () => {
         const response = await appUserService.infoAppUserByJwtToken();
-        setUsername(response);
+        setUsername(response.sub);
     };
+
 
     const getAppUserId = async () => {
-        const isLoggedIn = infoAppUserByJwtToken();
+        const isLoggedIn = appUserService.infoAppUserByJwtToken();
         if (isLoggedIn) {
-            const id = await getIdByUserName(isLoggedIn.sub);
+            const id = await appUserService.getIdByUserName(isLoggedIn.sub);
             setUserId(id.data);
-            const nameUser = await UserService.findById(id.data);
-            setUserAppName(nameUser.data.employeeName)
+            const nameUser = await EmployeeService.getInfo();
+            setUserAppName(nameUser.data.nameEmployee);
         }
     };
-
-    // const getNameUser = async () => {
-    //     const nameUser = await UserService.findById(userId);
-    //     console.log(nameUser);
-    //     setUserAppName(nameUser.data.employeeName)
-    // }
 
     const handleLogOut = () => {
         localStorage.removeItem("JWT");
@@ -113,7 +99,7 @@ function HeaderAdmin({refresh}) {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                {userAppName} - {roleName()}
+                                {!userAppName ? userName : userAppName} - {roleName()}
                             </a>
                             <ul className="dropdown-menu dropdown-menu-dark" style={{left: "-60px"}}>
                                 <li><Link to={`/admin/information/${userId}`} className="dropdown-item">Thông Tin Cá

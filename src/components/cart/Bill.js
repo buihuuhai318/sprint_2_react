@@ -5,12 +5,9 @@ import ExampleCarouselImage from "../home/ExampleCarouselImage";
 import {BsSuitHeart} from "react-icons/bs";
 import Table from "react-bootstrap/Table";
 import Badge from "react-bootstrap/Badge";
-import {Card} from "react-bootstrap";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import ProgressBar from "react-bootstrap/ProgressBar";
-import Button from "react-bootstrap/Button";
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import * as appUserService from "../../service/user/AuthService";
 import format from 'date-fns/format';
 import OtherProject from "../layout/OtherProject";
@@ -24,7 +21,7 @@ function Bill() {
     const [name, setName] = useState("");
     const [bill, setBill] = useState(null);
     const [key, setKey] = useState(true);
-
+    const targetElementRef = useRef(null);
 
     const handleChildValueChange = (value) => {
         setKey(value);

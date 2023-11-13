@@ -121,6 +121,7 @@ function List() {
     }
 
     useEffect(() => {
+        document.title = "#Thehome - Danh sách"; // Đặt tiêu đề mới tại đây
         if (params.id === undefined) {
             const value = new URLSearchParams(location.search).get('value');
             if (value !== null) {

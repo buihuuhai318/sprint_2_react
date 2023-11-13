@@ -108,6 +108,7 @@ function Information() {
 
     useEffect(() => {
         getCustomers(limit);
+        document.title = "#Thehome - Thông tin cá nhân"; // Đặt tiêu đề mới tại đây
     }, [limit])
 
 

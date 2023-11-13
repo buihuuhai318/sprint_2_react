@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import * as AuthService from "../../service/user/AuthService";
+import * as EmployeeService from '../../service/employee/EmployeeService';
 import {toast} from "react-toastify";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import HeaderAdmin from "../layout/HeaderAdmin";
@@ -8,6 +9,7 @@ import * as UserService from '../../service/user/UserService';
 import {RingLoader} from "react-spinners";
 import '../../css/user/spinner.css';
 import * as Yup from "yup";
+import Footer from "../layout/Footer";
 
 function InformationAdmin() {
 
@@ -46,7 +48,6 @@ function InformationAdmin() {
     };
     const handleNewPasswordChange = (event) => {
         setNewPassword(event.target.value);
-        // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận khớp nhau
         if (event.target.value === confirmPassword) {
             setPasswordsMatch(true);
         } else {
@@ -66,7 +67,6 @@ function InformationAdmin() {
 
     const handleConfirmPasswordChange = (event) => {
         setConfirmPassword(event.target.value);
-        // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận khớp nhau
         if (newPassword === event.target.value) {
             setPasswordsMatch(true);
         } else {
@@ -74,14 +74,17 @@ function InformationAdmin() {
         }
     };
 
-    const getInfoUser = async (id) => {
-        const userTemp = await UserService.findById(id);
+    const getInfoUser = async () => {
+        const userTemp = await EmployeeService.getInfo();
         setInfoUser(userTemp.data);
     }
 
     useEffect(() => {
-        getInfoUser(params.id);
-    }, [loading, input2Disabled]);
+        getInfoUser();
+        document.title = "#Thehome - Quản lý - Thông tin cá nhân"; // Đặt tiêu đề mới tại đây
+    }, []);
+
+    console.log(infoUser)
 
     const handleToggleInputs = () => {
         setInput1Disabled(true);
@@ -99,7 +102,6 @@ function InformationAdmin() {
 
     const handleToggleInputsInfo = () => {
         setInput2Disabled(!input2Disabled);
-        getInfoUser(params.id);
     }
 
 
@@ -123,7 +125,6 @@ function InformationAdmin() {
     const handleButtonClick = () => {
         if (!isCounting) {
             startCountdown();
-            // Thực hiện công việc khi nút được nhấn
         }
     };
 
@@ -167,6 +168,7 @@ function InformationAdmin() {
                 ...data,
                 password: password
             }
+            console.log(data)
             const res = await UserService.changePass(data);
             if (res.status === 200) {
                 setInput1Disabled(true);
@@ -186,11 +188,11 @@ function InformationAdmin() {
     const changeInfo = async (data) => {
         try {
             setLoading(true);
-            const res = await UserService.edit(data);
-            setInfoUser(data);
+            const res = await EmployeeService.edit(data);
             if (res.status === 200) {
                 toast("Thông tin cá nhân đã được cập nhật");
                 handleToggleInputsInfo();
+                setInfoUser(res.data);
                 setKey(!key);
             } else {
                 toast.error("Cập nhật thất bại");
@@ -215,15 +217,14 @@ function InformationAdmin() {
         try {
             let initOtp = {
                 ...data,
-                userName: infoUser.userName,
+                userName: infoUser.appUser.userName,
                 password: newPassword,
                 otp: otp
             }
             const res = await AuthService.confirmRegister(initOtp);
-            console.log(res)
             if (res.status === 200) {
                 toast("Đổi mật khẩu thành công");
-                await getInfoUser(params.id);
+                await getInfoUser();
                 hiddenOTP();
                 setDefaultPass();
                 handleToggleInputs();
@@ -260,7 +261,7 @@ function InformationAdmin() {
                     </div>
                 </div>
             </div>
-            <div style={{width: '90%', margin: '5% auto 5% auto'}} className="row">
+            <div style={{width: '90%', margin: '7% auto 5% auto'}} className="row">
                 <div className="col-6" style={{padding: '2%'}}>
                     <Formik
                         initialValues={infoUser}
@@ -268,14 +269,14 @@ function InformationAdmin() {
                             changeInfo(values);
                         }}
                         validationSchema={Yup.object({
-                            employeeName: Yup.string().trim()//
+                            nameEmployee: Yup.string().trim()//
                                 .required("Vui lòng nhập tên.")
                                 .matches(/^[\p{L}\s]+$/u, "Tên chỉ chứa định dạng chữ.")
                                 .max(50, "Quá ký tự cho phép (50 ký tự)."),
-                            employeePhone: Yup.string().trim()//
+                            phoneNumber: Yup.string().trim()//
                                 .required("Vui lòng nhập số điện thoại.")
                                 .matches(/^(?:\+84|0)(90|91|94)\d{7}$/, "Số điện thoại không có thực."),
-                            employeeBirthday: Yup.date()//
+                            birthday: Yup.date()//
                                 .required("Vui lòng nhập ngày sinh.")
                                 .max(eighteenYearsAgo, "Nhân viên chưa đủ 18 tuổi."),
                             email: Yup.string().trim()//
@@ -283,10 +284,11 @@ function InformationAdmin() {
                                 .matches(/^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/, "Bạn nhập sai định dạng email.")
                                 .min(12, "Email không đủ ký tự cho phép (12 ký tự).")
                                 .max(50, "Email vượt quá ký tự cho phép (50 ký tự)."),
-                            employeeAddress: Yup.string().trim()//
+                            address: Yup.string().trim()//
                                 .required("Vui lòng nhập địa chỉ")
                                 .max(250, "Địa chỉ quá ký tự cho phép (250 ký tự).")
                         })}
+                        enableReinitialize
                     >
                         <Form>
                             <div className="container">
@@ -297,9 +299,9 @@ function InformationAdmin() {
                                     <div className="card-body">
                                         <div className="mb-3">
                                             <label htmlFor="name" className="form-label">Họ Và Tên</label>
-                                            <Field type="text" className="form-control" id="name" name="employeeName"
+                                            <Field type="text" className="form-control" id="name" name="nameEmployee"
                                                    disabled={input2Disabled}/>
-                                            <ErrorMessage name="employeeName" component="span"
+                                            <ErrorMessage name="nameEmployee" component="span"
                                                           style={{color: "red"}}></ErrorMessage>
                                         </div>
                                         <div className="mb-3">
@@ -312,22 +314,22 @@ function InformationAdmin() {
                                         <div className="mb-3">
                                             <label htmlFor="dateOfBirth" className="form-label">Ngày Sinh</label>
                                             <Field type="date" className="form-control" id="dateOfBirth"
-                                                   name="employeeBirthday" disabled={input2Disabled}/>
-                                            <ErrorMessage name="employeeBirthday" component="span"
+                                                   name="birthday" disabled={input2Disabled}/>
+                                            <ErrorMessage name="birthday" component="span"
                                                           style={{color: "red"}}></ErrorMessage>
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="phoneNumber" className="form-label">Số Điện Thoại</label>
                                             <Field type="text" className="form-control" id="phoneNumber"
-                                                   name="employeePhone" disabled={input2Disabled}/>
-                                            <ErrorMessage name="employeePhone" component="span"
+                                                   name="phoneNumber" disabled={input2Disabled}/>
+                                            <ErrorMessage name="phoneNumber" component="span"
                                                           style={{color: "red"}}></ErrorMessage>
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="address" className="form-label">Địa Chỉ</label>
                                             <Field type="text" className="form-control" id="address"
-                                                   name="employeeAddress" disabled={input2Disabled}/>
-                                            <ErrorMessage name="employeeAddress" component="span"
+                                                   name="address" disabled={input2Disabled}/>
+                                            <ErrorMessage name="address" component="span"
                                                           style={{color: "red"}}></ErrorMessage>
                                         </div>
                                         <div className="mb-3 mt-4">
@@ -367,8 +369,8 @@ function InformationAdmin() {
                             <div className="card-body">
                                 <Formik
                                     initialValues={{
-                                        id: infoUser.id,
-                                        userName: infoUser.userName,
+                                        id: infoUser.appUser.id,
+                                        userName: infoUser.appUser.userName,
                                         newPassword: "",
                                         password: "",
                                         newPasswordConfirmation: ""
@@ -540,6 +542,7 @@ function InformationAdmin() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 }
