@@ -4,9 +4,6 @@ import ExampleCarouselImage from "../home/ExampleCarouselImage";
 import * as CustomerService from "../../service/customer/CustomerService";
 import Table from "react-bootstrap/Table";
 import {Link} from "react-router-dom";
-import Badge from "react-bootstrap/Badge";
-import {Card} from "react-bootstrap";
-import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
 import Footer from "../layout/Footer";
 import * as React from "react";
@@ -17,7 +14,6 @@ import {BsPencilSquare} from "react-icons/bs";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import {toast} from "react-toastify";
-import * as AuthService from "../../service/user/AuthService";
 import {RingLoader} from "react-spinners";
 
 
@@ -205,7 +201,10 @@ function Information() {
                             <tr>
                                 <td style={{verticalAlign: "middle", textAlign: "center"}}>{index + 1}</td>
                                 <td style={{verticalAlign: "middle"}}>
-                                    {cart.title}
+                                    <Link to={`/detail/${cart.projectId}`}
+                                          style={{color: "black", textDecoration: "none"}}>
+                                        {cart.title}
+                                    </Link>
                                 </td>
                                 <td style={{verticalAlign: "middle", textAlign: "right"}}>
                                     {cart.money.toLocaleString('vi-VN', {

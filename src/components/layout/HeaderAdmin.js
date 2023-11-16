@@ -80,15 +80,10 @@ function HeaderAdmin({refresh}) {
 
                     {(roleAdmin || roleEmployee) && (
                         <Nav>
-                            <NavDropdown title="Kinh Doanh" id="nav-dropdown-dark">
-                                <Link to="/admin/business/order/saleHistory" className="dropdown-item">Quản Lý Lịch Sử
-                                    Bán Hàng</Link>
-                                <Link to="/admin/business/salereport" className="dropdown-item">Quản Lý Báo Cáo Doanh
-                                    Thu</Link>
-                                <Link to="/admin/business/product/list" className="dropdown-item">Xem Thông Tin Hàng
-                                    Hoá</Link>
-                                <Link to="/admin/business/supplier" className="dropdown-item">Quản Lý Nhà Cung
-                                    Cấp</Link>
+                            <NavDropdown title="Dự Án" id="nav-dropdown-dark">
+                                <Link to="/admin/history" className="dropdown-item">Lịch sử quyên góp</Link>
+                                <Link to="/admin/project" className="dropdown-item">Danh sách dự án</Link>
+                                <Link to="/admin/business/product/list" className="dropdown-item">Đối tác đồng hành</Link>
                                 <Link to="/admin/business/customer" className="dropdown-item">Quản Lý Khách Hàng</Link>
                             </NavDropdown>
                         </Nav>

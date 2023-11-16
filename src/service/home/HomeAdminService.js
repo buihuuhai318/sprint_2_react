@@ -23,3 +23,9 @@ export const getDaysOfMonth = () => {
 
     return daysArray;
 }
+
+export const getHistory = async () => {
+    return await axios.get(apiAdmin + `/history`);
+}
+
+

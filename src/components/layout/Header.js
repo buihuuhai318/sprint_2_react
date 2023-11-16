@@ -29,14 +29,6 @@ function Header({refresh}) {
     const roleAdmin = appUserService.checkRoleAppUser("ROLE_ADMIN");
     const roleEmployee = appUserService.checkRoleAppUser("ROLE_EMPLOYEE");
 
-    const roleName = () => {
-        if (roleAdmin) {
-            return "Admin";
-        } else if (roleEmployee) {
-            return "Employee";
-        }
-    }
-
     useEffect(() => {
         getAppUserId();
         getUsername();

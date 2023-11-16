@@ -7,13 +7,19 @@ import {RingLoader} from "react-spinners";
 import '../../css/user/spinner.css'
 import '../../css/user/login.css'
 import {Helmet} from "react-helmet";
-import {BsFacebook} from "react-icons/bs";
+import {BsArrowBarLeft, BsFacebook, BsGithub, BsGoogle} from "react-icons/bs";
 import Swal from "sweetalert2";
-import {LoginSocialFacebook} from "reactjs-social-login";
+import {
+    LoginSocialFacebook,
+    LoginSocialGithub,
+    LoginSocialGoogle,
+} from "reactjs-social-login";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import './login.css';
 import * as Yup from "yup";
+import {infoAppUserByJwtToken} from "../../service/user/AuthService";
+import {Button} from "react-bootstrap";
 
 
 function LoginForm() {
@@ -38,6 +44,64 @@ function LoginForm() {
     const [showReset, setShowReset] = useState(false);
     const [userNameForNewPass, setUserNameForNewPass] = useState(null);
     const [url, setUrl] = useState(null);
+
+    const loginWithGithub = async (resolve) => {
+        console.log("LOGIN SUCCESS", resolve.data)
+        Swal.fire({
+            text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua Github ' + resolve.data.email + " không?",
+            showDenyButton: true,
+            confirmButtonText: 'Xác nhận',
+            denyButtonText: `Thoát`,
+            customClass: {
+                confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleLogin(resolve)
+            } else if (result.isDenied) {
+
+            }
+        })
+    }
+
+    const loginWithGoogle = async (resolve) => {
+        console.log("LOGIN SUCCESS", resolve)
+        Swal.fire({
+            text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua Google không?',
+            showDenyButton: true,
+            confirmButtonText: 'Xác nhận',
+            denyButtonText: `Thoát`,
+            customClass: {
+                confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleLogin(resolve)
+            } else if (result.isDenied) {
+
+            }
+        })
+    }
+
+    const loginWithFacebook = async (resolve) => {
+        console.log(resolve)
+        Swal.fire({
+            text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua facebook ' + resolve.data.email + " không?",
+            showDenyButton: true,
+            confirmButtonText: 'Xác nhận',
+            denyButtonText: `Thoát`,
+            customClass: {
+                confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleLogin(resolve)
+            } else if (result.isDenied) {
+
+            }
+        })
+    }
+
 
     const handleClick = () => {
         setLoading(true);
@@ -146,6 +210,15 @@ function LoginForm() {
         check(params.userName, params.urlPass);
     }, [reset]);
 
+    useEffect(() => {
+        const isLoggedIn = infoAppUserByJwtToken();
+        console.log(isLoggedIn)
+        if (isLoggedIn) {
+            toast.warn("Bạn đã đăng nhập rồi")
+            navigate("/");
+        }
+    }, [])
+
 
     const startCountdown = () => {
         setIsCounting(true);
@@ -193,6 +266,12 @@ function LoginForm() {
     }
 
     const handleLogin = async (resolve) => {
+        if (!resolve.data.email) {
+            resolve.data = {
+                ...resolve.data,
+                email: resolve.data.sub
+            }
+        }
         try {
             const result = await AuthService.loginWithFacebook(resolve.data);
             AuthService.addJwtTokenToLocalStorage(result.data.jwtToken);
@@ -204,30 +283,13 @@ function LoginForm() {
                 navigate('/');
             }
         } catch (e) {
-            Swal.fire({
+            await Swal.fire({
                 icon: 'error',
                 title: e.response.data,
             })
         }
     }
 
-    const loginWithFacebook = async (resolve) => {
-        Swal.fire({
-            text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua facebook ' + resolve.data.email + " không?",
-            showDenyButton: true,
-            confirmButtonText: 'Xác nhận',
-            denyButtonText: `Thoát`,
-            customClass: {
-                confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                handleLogin(resolve)
-            } else if (result.isDenied) {
-
-            }
-        })
-    }
 
     const login = async (data) => {
         try {
@@ -288,6 +350,10 @@ function LoginForm() {
 
     return (
         <>
+            <Button className="btn btn-outline-dark sticky-top"
+                    style={{top: "50px", left: "50px", backgroundColor: 'rgba(192, 192, 192, 0)'}} as={Link} to="/">
+                <BsArrowBarLeft size={20}/> Trang chủ
+            </Button>
             <div>
                 <Helmet>
                     <body className="custom-background-HaiBH"/>
@@ -307,7 +373,6 @@ function LoginForm() {
                             src="https://i.imgur.com/QkqytXc.png" // Đường dẫn đến hình ảnh logo của bạn
                             alt="Home"
                             width="100%"
-
                         />
                     </div>
                     {
@@ -593,7 +658,8 @@ function LoginForm() {
                                     justify
                                     style={{marginTop: "3%"}}
                                 >
-                                    <Tab eventKey="login" title="Đăng Nhập" style={{ borderBottom: "1px", borderBottomColor:"black"}} onKeyUp={() => {
+                                    <Tab eventKey="login" title="Đăng Nhập"
+                                         style={{borderBottom: "1px", borderBottomColor: "black"}} onKeyUp={() => {
                                         getTitle("Đăng Nhập")
                                     }}>
                                         <div className="card-body"
@@ -663,25 +729,52 @@ function LoginForm() {
                                                                 marginRight: 'auto'
                                                             }}>
                                                                 <button type="submit" style={{
-                                                                    width: '70%',
+                                                                    width: '100%',
                                                                     color: 'black',
                                                                     backgroundColor: 'rgba(192, 192, 192, 0.4)',
-                                                                    marginLeft: "auto",
-                                                                    marginRight: "2%"
                                                                 }}
                                                                         className="btn btn-light" onClick={handleClick}>
                                                                     Đăng Nhập
                                                                 </button>
 
-                                                                <LoginSocialFacebook
-                                                                    className="btn border-0"
-                                                                    onResolve={(resolve) => {
-                                                                        loginWithFacebook(resolve);
-                                                                    }}
-                                                                    appId="263186536240807"
-                                                                    onReject="9b7840e0e3c737ca4f9d6535c1006239">
-                                                                    <BsFacebook color="black" size={30}/>
-                                                                </LoginSocialFacebook>
+                                                                <div className="row mt-3">
+                                                                    <div className="col-4 text-center">
+                                                                        <LoginSocialFacebook
+                                                                            onResolve={(resolve) => {
+                                                                                loginWithFacebook(resolve);
+                                                                            }}
+                                                                            appId="263186536240807"
+                                                                            onReject="9b7840e0e3c737ca4f9d6535c1006239">
+                                                                            <BsFacebook color="black" size={30}/>
+                                                                        </LoginSocialFacebook>
+                                                                    </div>
+                                                                    <div className="col-4 text-center">
+                                                                        <LoginSocialGoogle
+                                                                            client_id="690818040697-rtqtde7n18sbg5h2fv8nsishuk9a6gpm.apps.googleusercontent.com"
+                                                                            onReject=""
+                                                                            client_secret="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"
+                                                                            onResolve={(resolve) => {
+                                                                                loginWithGoogle(resolve)
+                                                                            }}
+                                                                        >
+                                                                            <BsGoogle color="black" size={30}/>
+                                                                        </LoginSocialGoogle>
+                                                                    </div>
+                                                                    <div className="col-4 text-center">
+                                                                        <LoginSocialGithub
+                                                                            client_id="071322a32d1c5a73c457"
+                                                                            redirect_uri=""
+                                                                            client_secret="826f1d34559618b4aef9b1ed10e8271631fdf3e3"
+                                                                            onReject=""
+                                                                            onResolve={(resolve) => {
+                                                                                loginWithGithub(resolve)
+                                                                            }}
+                                                                        >
+                                                                            <BsGithub color="black" size={30}/>
+                                                                        </LoginSocialGithub>
+
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </Form>

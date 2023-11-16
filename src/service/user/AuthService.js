@@ -53,10 +53,7 @@ export const getIdByUserName = async (userName) => {
 };
 
 export const loginWithFacebook = async (facebookUser) => {
-    return await axios.post(
-        apiAuth + `/login-by-facebook`,
-        facebookUser
-    );
+    return await axios.post(apiAuth + `/login-by-facebook`, facebookUser);
 };
 
 export const getObjByUserName = async () => {

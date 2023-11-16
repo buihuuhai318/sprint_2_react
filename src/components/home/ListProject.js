@@ -22,20 +22,37 @@ function List() {
     const params = useParams();
     const [types, setTypes] = useState(null);
     const [infoType, setInfoType] = useState(null);
-    const [idTypes, setIdTypes] = useState(null);
-    const [limit, setLimit] = useState(10);
+    const [idTypes, setIdTypes] = useState(params.id);
+    const [limit, setLimit] = useState(6);
     const [projects, setProjects] = useState(null);
     const [show, setShow] = useState(false);
     const [myModal, setMyModal] = useState(null);
     const [inputValue, setInputValue] = useState(null);
     const [key, setKey] = useState(true);
+    const [buttonMore, setButtonMore] = useState(true);
+    const [totalElement, setTotalElement] = useState(null);
 
+
+    const getMore = () => {
+        if (limit + 3 < totalElement) {
+            setLimit(limit + 3);
+        } else {
+            setLimit(limit + 3);
+            setButtonMore(false);
+        }
+    }
+
+    const getDefault = () => {
+        setLimit(6);
+        setButtonMore(true);
+        handleScrollToTop();
+    }
 
     const addCart = async (data) => {
         try {
             if (inputValue < 1000) {
                 toast.warning("Số tiền quyên góp vui lòng lớn hơn 1.000đ bạn nhé !")
-            } else if (inputValue > (data.targetLimit - data.now)) {
+            } else if (inputValue > 1000000000) {
                 toast.warning("Số tiền quyên góp vượt chỉ tiêu rồi bạn nhé !")
             } else {
                 const cart = {
@@ -97,6 +114,7 @@ function List() {
             const res = await ListService.getProjectBySearch(value, limit);
             if (res.data !== "") {
                 setProjects(res.data.content);
+                setTotalElement(res.data.totalElements);
             } else {
                 setProjects(null);
             }
@@ -111,6 +129,7 @@ function List() {
             const res = await ListService.getProject(id, limit);
             if (res.data !== "") {
                 setProjects(res.data.content);
+                setTotalElement(res.data.totalElements);
             } else {
                 setProjects(null);
             }
@@ -138,10 +157,23 @@ function List() {
     }, [params.id, location.search]);
 
     useEffect(() => {
+        if (params.id === undefined) {
+            const value = new URLSearchParams(location.search).get('value');
+            if (value !== null) {
+                getListBySearch(value);
+            } else {
+                getListByType(idTypes);
+            }
+        } else {
+            getListByType(idTypes);
+        }
+    }, [limit]);
+
+    useEffect(() => {
         getTypes(idTypes);
     }, [idTypes]);
 
-    return (infoType && idTypes && types && projects &&
+    return (infoType && idTypes && types &&
         <>
             <div id="targetTop"></div>
             <Header key={!key}/>
@@ -166,19 +198,19 @@ function List() {
             </Card>
             <div className="container mt-3 mb-5">
                 <div className="scrollmenu">
-                    {idTypes ? types.map((type, index) => (
-                        <a href={`#${type.code}`}
+                    {types.map((type, index) => (
+                        <a key={index} href={`#${type.code}`}
                            style={{
                                borderBottom: "1px solid",
                                borderBottomColor: "gray",
-                               fontWeight: idTypes !== type.id ? "normal" : "bold"
+                               fontWeight: index !== 0 ? "normal" : "bold"
                            }}
                            onClick={() => {
                                getListByType(type.id)
                            }}>
                             {type.name}
                         </a>
-                    )) : <></>}
+                    ))}
                 </div>
                 <div className="row">
                     {projects ? projects.map((project, index) => (
@@ -243,9 +275,16 @@ function List() {
                                                 <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                             </div>
                                             <div className="col-4 justify-content-end">
-                                                <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
-                                                    Quyên góp
-                                                </Button>
+                                                {project.status === 0 ?
+                                                    <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                        Quyên góp
+                                                    </Button>
+                                                    :
+                                                    <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "15%"}} disabled>
+                                                        Đạt chỉ tiêu
+                                                    </Button>
+                                                }
+
                                                 <Modal show={show} onHide={handleClose}
                                                        aria-labelledby="contained-modal-title-vcenter"
                                                        centered>
@@ -255,10 +294,17 @@ function List() {
                                         </div>
                                     </Card.Body>
                                 </Card>
-
                             </div>
                         )) :
-                        <h1 style={{textAlign: "center"}}>Vui lòng quay lại sau !!!</h1>}
+                        <h1 style={{textAlign: "center", marginTop: "5%"}}>Vui lòng quay lại sau !!!</h1>}
+                    <div className="text-center">
+                        {buttonMore && totalElement > 6 ?
+                            <Button variant="outline-dark" onClick={() => getMore()}>Xem tiếp</Button>
+                            :
+                            totalElement > 6 &&
+                            <Button variant="outline-dark" onClick={() => getDefault()}>Thu gọn</Button>
+                        }
+                    </div>
                 </div>
             </div>
             <Footer/>

@@ -32,7 +32,7 @@ function Home() {
         try {
             if (inputValue < 1000) {
                 toast.warning("Số tiền quyên góp vui lòng lớn hơn 1.000đ bạn nhé !")
-            } else if (inputValue > (data.targetLimit - data.now)) {
+            } else if (inputValue > 1000000000) {
                 toast.warning("Số tiền quyên góp vượt chỉ tiêu rồi bạn nhé !")
             } else {
                 const cart = {
@@ -227,9 +227,15 @@ function Home() {
                                                 <p style={{fontWeight: "bold"}}>{(project.now / project.targetLimit * 100).toFixed(2)}%</p>
                                             </div>
                                             <div className="col-4 justify-content-end">
-                                                <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
-                                                    Quyên góp
-                                                </Button>
+                                                {project.status === 0 ?
+                                                    <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                        Quyên góp
+                                                    </Button>
+                                                    :
+                                                    <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "15%"}} disabled>
+                                                        Đạt chỉ tiêu
+                                                    </Button>
+                                                }
                                                 <Modal show={show} onHide={handleClose}
                                                        aria-labelledby="contained-modal-title-vcenter"
                                                        centered>

@@ -17,6 +17,10 @@ import Bill from "./components/cart/Bill";
 import ListProject from "./components/home/ListProject";
 import {PayPalScriptProvider} from "@paypal/react-paypal-js";
 import Information from "./components/user/Information";
+import History from "./components/admin/History";
+import Project from "./components/admin/Project";
+import ChatRoom from "./components/chat/ChatRoom";
+import FaceIo from "./components/login/FaceIo";
 
 
 function App() {
@@ -34,6 +38,8 @@ function App() {
                     <Route path="/detail/:id" element={<HomeDetail/>}/>
                     <Route path="/list" element={<ListProject/>}/>
                     <Route path="/list/:id" element={<ListProject/>}/>
+                    <Route path="/chat" element={<ChatRoom/>}/>
+                    <Route path="/face" element={<FaceIo/>}/>
 
                     <Route
                         element={
@@ -62,6 +68,8 @@ function App() {
                         <Route path="/admin/information/:id" element={<InformationAdmin/>}/>
                         <Route path="/admin/home" element={<HomeAdmin/>}/>
                         <Route path="/admin/*" element={<HomeAdmin/>}/>
+                        <Route path="/admin/history" element={<History/>}/>
+                        <Route path="/admin/project" element={<Project/>}/>
                     </Route>
                 </Routes>
             </PayPalScriptProvider>

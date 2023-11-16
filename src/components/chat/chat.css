@@ -1,0 +1,49 @@
+/*.container {*/
+/*    display: flex;*/
+/*}*/
+
+.scrollmenu-chat {
+    background-color: #ffffff;
+    overflow: auto;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+.scrollmenu-chat li {
+    display: block;
+    color: #000000;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    border: 1px black !important;
+}
+
+.scrollmenu-chat li:hover {
+    border-radius: 10px;
+    background-color: #53b7ae;
+    color: #ffffff !important;
+}
+
+.card-chat {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.tab-container-chat {
+    width: 200px; /* Điều chỉnh kích thước của tab-container tùy theo mong muốn */
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+.card-container-chat {
+    flex: 1;
+    padding: 20px;
+}
+
+.floating-button-chat {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}

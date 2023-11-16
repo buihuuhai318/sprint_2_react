@@ -26,6 +26,14 @@ export function Cart() {
     const [myModal, setMyModal] = useState(null);
     const [bill, setBill] = useState(null);
 
+    const handleScrollToDiv = () => {
+        const targetDiv = document.getElementById('targetDiv');
+        if (targetDiv) {
+            const targetOffset = targetDiv.offsetTop - 100; // Khoảng cách từ phía trên
+            window.scrollTo({top: targetOffset, behavior: 'smooth'});
+        }
+    };
+
     const handleChildValueChange = (value) => {
         setKey(value);
     };
@@ -84,6 +92,7 @@ export function Cart() {
         getCarts();
         getMoneyCart();
         getBill();
+        handleScrollToDiv();
     }, [key]);
 
     return (carts &&
@@ -102,7 +111,7 @@ export function Cart() {
             </Carousel>
             <div style={{marginTop: "5%"}}>
                 <div className="container">
-                    <h3 className="text-center">Giỏ tình thương <BsSuitHeart/></h3>
+                    <h3 className="text-center" id="targetDiv">Giỏ tình thương <BsSuitHeart/></h3>
                     <hr/>
                     <div className="row">
                         <div className="col-9">
@@ -117,36 +126,42 @@ export function Cart() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {carts && carts.map((cart, index) => (
+                                {carts.length !== 0 ? carts.map((cart, index) => (
+                                        <tr>
+                                            <td style={{verticalAlign: "middle"}}>{index + 1}</td>
+                                            <td style={{verticalAlign: "middle"}}>
+                                                <Link to={`/detail/${cart.projectId}`}
+                                                      style={{color: "black", textDecoration: "none"}}>
+                                                    {cart.title}
+                                                </Link>
+                                            </td>
+                                            <td style={{verticalAlign: "middle"}}>
+                                                <Badge bg="warning" text="dark">
+                                                    Còn {cart.date} ngày
+                                                </Badge>
+                                            </td>
+                                            <td style={{verticalAlign: "middle"}}>
+                                                {cart.money.toLocaleString('vi-VN', {
+                                                    style: 'currency',
+                                                    currency: 'VND'
+                                                })}
+                                            </td>
+                                            <td style={{verticalAlign: "middle"}}>
+                                                <CloseButton onClick={() => handleShow(cart)}/>
+                                                <Modal show={show} onHide={handleClose}
+                                                       aria-labelledby="contained-modal-title-vcenter"
+                                                       centered>
+                                                    <MyModal action={handleClose} data={myModal}/>
+                                                </Modal>
+                                            </td>
+                                        </tr>
+                                    )) :
                                     <tr>
-                                        <td style={{verticalAlign: "middle"}}>{index + 1}</td>
-                                        <td style={{verticalAlign: "middle"}}>
-                                            <Link to={`/detail/${cart.projectId}`}
-                                                  style={{color: "black", textDecoration: "none"}}>
-                                            {cart.title}
-                                            </Link>
-                                        </td>
-                                        <td style={{verticalAlign: "middle"}}>
-                                            <Badge bg="warning" text="dark">
-                                                Còn {cart.date} ngày
-                                            </Badge>
-                                        </td>
-                                        <td style={{verticalAlign: "middle"}}>
-                                            {cart.money.toLocaleString('vi-VN', {
-                                                style: 'currency',
-                                                currency: 'VND'
-                                            })}
-                                        </td>
-                                        <td style={{verticalAlign: "middle"}}>
-                                            <CloseButton onClick={() => handleShow(cart)}/>
-                                            <Modal show={show} onHide={handleClose}
-                                                   aria-labelledby="contained-modal-title-vcenter"
-                                                   centered>
-                                                <MyModal action={handleClose} data={myModal}/>
-                                            </Modal>
+                                        <td style={{verticalAlign: "middle", textAlign: "center"}} colSpan={5}>
+                                            Chưa có lượt quyên góp nào
                                         </td>
                                     </tr>
-                                ))}
+                                }
                                 </tbody>
                             </Table>
                         </div>
@@ -180,7 +195,9 @@ export function Cart() {
                                         <div style={{marginTop: "3%"}}>
                                             <div className="container">
                                                 <div className="text-center">
-                                                    <PaypalCheckoutButton bill={bill} />
+                                                    {moneyCart !== 0 &&
+                                                        <PaypalCheckoutButton bill={bill}/>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -210,7 +227,7 @@ export function Cart() {
                             currency: 'VND'
                         })}
                     </span>
-                     &nbsp; ra khỏi giỏ tình thương ?
+                    &nbsp; ra khỏi giỏ tình thương ?
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={action}>
