@@ -20,7 +20,7 @@ import Information from "./components/user/Information";
 import History from "./components/admin/History";
 import Project from "./components/admin/Project";
 import ChatRoom from "./components/chat/ChatRoom";
-import FaceIo from "./components/login/FaceIo";
+import ListProjectByCompany from "./components/home/ListProjectByCompany";
 
 
 function App() {
@@ -37,9 +37,9 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/detail/:id" element={<HomeDetail/>}/>
                     <Route path="/list" element={<ListProject/>}/>
+                    <Route path="/company" element={<ListProjectByCompany/>}/>
                     <Route path="/list/:id" element={<ListProject/>}/>
                     <Route path="/chat" element={<ChatRoom/>}/>
-                    <Route path="/face" element={<FaceIo/>}/>
 
                     <Route
                         element={

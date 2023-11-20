@@ -117,7 +117,7 @@ function Header({refresh}) {
                                         </NavDropdown.Item>
                                     ) )}
                             </NavDropdown>
-                            <Nav.Link href="#home">Đối Tác Đồng Hành</Nav.Link>
+                            <Nav.Link as={Link} to={`/company`}>Đối Tác Đồng Hành</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                     <Form className="d-flex">

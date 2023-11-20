@@ -20,6 +20,10 @@ export const listCompany = async () => {
     return await axios.get(apiHome + `/companies`);
 }
 
+export const listCompanyAll = async () => {
+    return await axios.get(apiHome + `/companies-all`);
+}
+
 export const getProjectOther = async (limit) => {
     return await axios.get(apiHome + `/projects/getOther?limit=${limit}`);
 }

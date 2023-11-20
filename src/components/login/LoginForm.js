@@ -46,60 +46,71 @@ function LoginForm() {
     const [url, setUrl] = useState(null);
 
     const loginWithGithub = async (resolve) => {
-        console.log("LOGIN SUCCESS", resolve.data)
-        Swal.fire({
-            text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua Github ' + resolve.data.email + " không?",
-            showDenyButton: true,
-            confirmButtonText: 'Xác nhận',
-            denyButtonText: `Thoát`,
-            customClass: {
-                confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                handleLogin(resolve)
-            } else if (result.isDenied) {
+        try {
+            console.log("LOGIN SUCCESS", resolve.data)
+            Swal.fire({
+                text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua Github ' + resolve.data.email + " không?",
+                showDenyButton: true,
+                confirmButtonText: 'Xác nhận',
+                denyButtonText: `Thoát`,
+                customClass: {
+                    confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    handleLogin(resolve)
+                } else if (result.isDenied) {
 
-            }
-        })
+                }
+            })
+        } catch (e) {
+            toast.error("Đăng nhập thất bại")
+        }
     }
 
     const loginWithGoogle = async (resolve) => {
-        console.log("LOGIN SUCCESS", resolve)
-        Swal.fire({
-            text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua Google không?',
-            showDenyButton: true,
-            confirmButtonText: 'Xác nhận',
-            denyButtonText: `Thoát`,
-            customClass: {
-                confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                handleLogin(resolve)
-            } else if (result.isDenied) {
+        try {
+            console.log("LOGIN SUCCESS", resolve)
+            Swal.fire({
+                text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua Google không?',
+                showDenyButton: true,
+                confirmButtonText: 'Xác nhận',
+                denyButtonText: `Thoát`,
+                customClass: {
+                    confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    handleLogin(resolve)
+                } else if (result.isDenied) {
 
-            }
-        })
+                }
+            })
+        } catch (e) {
+            toast.error("Đăng nhập thất bại")
+        }
     }
 
     const loginWithFacebook = async (resolve) => {
-        console.log(resolve)
-        Swal.fire({
-            text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua facebook ' + resolve.data.email + " không?",
-            showDenyButton: true,
-            confirmButtonText: 'Xác nhận',
-            denyButtonText: `Thoát`,
-            customClass: {
-                confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                handleLogin(resolve)
-            } else if (result.isDenied) {
+        try {
+            Swal.fire({
+                text: 'Chào ' + resolve.data.name + ', bạn có muốn đăng nhập thông qua facebook ' + resolve.data.email + " không?",
+                showDenyButton: true,
+                confirmButtonText: 'Xác nhận',
+                denyButtonText: `Thoát`,
+                customClass: {
+                    confirmButton: 'custom-confirm-button', // Thêm lớp CSS cho nút confirm
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    handleLogin(resolve)
+                } else if (result.isDenied) {
 
-            }
-        })
+                }
+            })
+        } catch (e) {
+            toast.error("Đăng nhập thất bại")
+        }
     }
 
 
@@ -714,7 +725,7 @@ function LoginForm() {
                                                                         setShowForgot(true);
                                                                         getTitle("Lấy lại mật khẩu")
                                                                     }}
-                                                                          style={{color: "black"}}>Quên mật khẩu</Link>
+                                                                          style={{color: "black !important"}}>Quên mật khẩu</Link>
                                                                 </div>
                                                             </div>
                                                         </div>

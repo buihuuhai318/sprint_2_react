@@ -5,8 +5,8 @@ import {useNavigate} from "react-router-dom";
 
 
 const PaypalCheckoutButton = (props) => {
-    const {bill} = props;
 
+    const {bill} = props;
     const navigate = useNavigate();
     const [paidFor, setPaidFor] = useState(false);
     const [error, setError] = useState(null);

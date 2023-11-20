@@ -57,7 +57,6 @@ const ChatRoom = () => {
     const registerUser = () => {
         getUsername();
         connect();
-        // setTab("server");
     }
     const connect = () => {
         let Sock = new SockJS('http://localhost:8080/ws');
@@ -166,7 +165,6 @@ const ChatRoom = () => {
         console.log(1)
     };
 
-    console.log(tab)
 
     return (
         <>
@@ -189,7 +187,6 @@ const ChatRoom = () => {
                     <Modal.Title>Modal Title</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* Nội dung của Modal */}
                     <p>Hello, this is the modal content!</p>
                 </Modal.Body>
                 <Modal.Footer>
