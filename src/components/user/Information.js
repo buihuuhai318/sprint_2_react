@@ -15,6 +15,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import {toast} from "react-toastify";
 import {RingLoader} from "react-spinners";
+import {debounce} from 'lodash';
 
 
 function Information() {
@@ -25,6 +26,7 @@ function Information() {
     const [customer, setCustomer] = useState(null);
     const [edit, setEdit] = useState(false);
     const [buttonMore, setButtonMore] = useState(true);
+    const [buttonLess, setButtonLess] = useState(false);
     const [key, setKey] = useState(true);
     const [loading, setLoading] = useState(false);
 
@@ -68,7 +70,6 @@ function Information() {
     const getCustomers = async (data) => {
         const res = await CustomerService.getHistory(data);
         const cus = await CustomerService.getInfo();
-        console.log(cus)
         setHistory(res.data.content);
         setCustomer(cus.data);
         setTotalElement(res.data.totalElements);
@@ -83,6 +84,20 @@ function Information() {
         }
     }
 
+    useEffect(() => {
+        if (limit === 5) {
+            setButtonMore(true);
+            setButtonLess(false);
+        } else if (limit > 5) {
+            setButtonLess(true);
+        }
+        if (limit + 5 < totalElement) {
+            setButtonMore(true);
+        } else {
+            setButtonMore(false);
+        }
+    }, [limit])
+
     const handleScrollToDiv = () => {
         const targetDiv = document.getElementById('targetDiv');
         if (targetDiv) {
@@ -91,11 +106,15 @@ function Information() {
         }
     };
 
-    const getDefault = () => {
-        setLimit(5);
-        setButtonMore(true);
+    const getDefaultToDiv = () => {
+        getDefault();
         handleScrollToDiv();
     }
+
+    const getDefault = debounce (() => {
+        setLimit(5);
+        setButtonMore(true);
+    }, 500)
 
     const getDate = (date) => {
         const dateObject = new Date(date);
@@ -222,10 +241,10 @@ function Information() {
                     <div style={{marginTop: "3%"}}>
                         <div className="container">
                             <div className="text-center">
-                                {buttonMore ?
-                                    <Button variant="outline-dark" onClick={() => getMore()}>Xem tiếp</Button>
-                                    :
-                                    <Button variant="outline-dark" onClick={() => getDefault()}>Thu gọn</Button>
+                                {buttonMore &&
+                                    <Button variant="outline-dark" style={{margin: "1%"}} onClick={() => getMore()}>Xem tiếp</Button>}
+                                {buttonLess &&
+                                    <Button variant="outline-dark" style={{margin: "1%"}} onClick={() => getDefaultToDiv()}>Thu gọn</Button>
                                 }
                             </div>
                         </div>

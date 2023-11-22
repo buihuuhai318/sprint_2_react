@@ -28,6 +28,10 @@ div.scrollmenu a:hover {
     color: #53b7ae !important; /* Màu bạn muốn đổi khi hover */
 }
 
+.company:hover a {
+    color: #e8cdc5 !important; /* Màu bạn muốn đổi khi hover */
+}
+
 .card:hover button {
     color: black !important; /* Màu bạn muốn đổi khi hover */
     background-color: white;

@@ -1,0 +1,43 @@
+.searchButton {
+    display: grid;
+    place-items: center;
+    position: relative;
+    z-index: 100000; /* Đặt z-index để nổi lên trên các phần khác */
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    transition: color 0.25s;
+}
+
+.searchButton:hover {
+    color: #090505;
+}
+.search:focus-within input {
+    width: 200px;
+}
+::placeholder {
+    font: inherit;
+    color: #090505;
+}
+
+.search {
+    display: inline-flex;
+    align-items: center;
+    background-image: #c22957;
+    color: #090505;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #090505;
+}
+
+.search :is(input, button) {
+    background: transparent;
+    color: inherit;
+    border: none;
+    outline: none;
+}
+
+.searchInput {
+    width: 0;
+    transition: width 0.5s;
+}

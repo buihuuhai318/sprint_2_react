@@ -239,18 +239,22 @@ function List() {
                                         <Card.Text>
                                             <div className="row">
                                                 <div className="col-8">
-                                                    <Card.Img variant="top"
-                                                              style={{
-                                                                  width: "2rem",
-                                                                  height: "2rem",
-                                                                  borderRadius: "50%"
-                                                              }}
-                                                              id="img1" src={project.companyImage}/>
-                                                    <label htmlFor="img1"
-                                                           style={{margin: "5%"}}>{project.company}</label>
+                                                    <Link to={`/company/${project.companyId}`}
+                                                          style={{textDecoration: "none", color: 'black'}}>
+                                                        <Card.Img variant="top"
+                                                                  style={{
+                                                                      width: "2rem",
+                                                                      height: "2rem",
+                                                                      borderRadius: "50%"
+                                                                  }}
+                                                                  id="img1" src={project.companyImage}/>
+                                                        <label htmlFor="img1"
+                                                               style={{margin: "5%"}}>{project.company}</label>
+                                                    </Link>
                                                 </div>
                                                 <div className="col-4">
-                                                    <Badge bg="warning" text="dark" style={{marginTop: "13%", marginLeft: "10%", width: "6rem"}}>
+                                                    <Badge bg="warning" text="dark"
+                                                           style={{marginTop: "13%", marginLeft: "10%", width: "6rem"}}>
                                                         Còn {project.date} ngày
                                                     </Badge>
                                                 </div>
@@ -286,11 +290,15 @@ function List() {
                                             </div>
                                             <div className="col-4 justify-content-end">
                                                 {project.status === 0 ?
-                                                    <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                    <Button className="btn btn-outline-dark"
+                                                            onClick={() => handleShow(project)}
+                                                            style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
                                                         Quyên góp
                                                     </Button>
                                                     :
-                                                    <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "15%"}} disabled>
+                                                    <Button className="btn btn-outline-dark"
+                                                            style={{fontSize: "80%", marginTop: "5%", marginLeft: "15%"}}
+                                                            disabled>
                                                         Đạt chỉ tiêu
                                                     </Button>
                                                 }
@@ -339,7 +347,8 @@ function List() {
                             onChange={handleInputChange}
                             autoFocus
                         />
-                        <Button variant="outline-dark" id="button-addon2" className="custom" onClick={() => addCart(data)}>
+                        <Button variant="outline-dark" id="button-addon2" className="custom"
+                                onClick={() => addCart(data)}>
                             Quyên góp
                         </Button>
                     </InputGroup>

@@ -14,6 +14,7 @@ import Form from 'react-bootstrap/Form';
 import {BsSuitHeart} from "react-icons/bs";
 import {toast} from "react-toastify";
 import * as CartService from "../../service/cart/CartService";
+import {debounce} from "lodash";
 
 
 function List() {
@@ -42,11 +43,15 @@ function List() {
         }
     }
 
-    const getDefault = () => {
-        setLimit(6);
-        setButtonMore(true);
+    const getDefaultToDiv = () => {
+        getDefault();
         handleScrollToTop();
     }
+
+    const getDefault = debounce (() => {
+        setLimit(6);
+        setButtonMore(true);
+    }, 500)
 
     const addCart = async (data) => {
         try {
@@ -173,6 +178,7 @@ function List() {
         getTypes(idTypes);
     }, [idTypes]);
 
+
     return (infoType && idTypes && types &&
         <>
             <div id="targetTop"></div>
@@ -229,7 +235,9 @@ function List() {
                                         <Card.Text>
                                             <div className="row">
                                                 <div className="col-8">
-                                                    <Card.Img variant="top"
+                                                    <Link to={`/company/${project.companyId}`}
+                                                          style={{textDecoration: "none", color: 'black', }} className="company">
+                                                    <Card.Img variant="top" className="company"
                                                               style={{
                                                                   width: "2rem",
                                                                   height: "2rem",
@@ -238,6 +246,7 @@ function List() {
                                                               id="img1" src={project.companyImage}/>
                                                     <label htmlFor="img1"
                                                            style={{margin: "5%"}}>{project.company}</label>
+                                                    </Link>
                                                 </div>
                                                 <div className="col-4">
                                                     <Badge bg="warning" text="dark" style={{marginTop: "13%", marginLeft: "10%", width: "6rem"}}>
@@ -302,7 +311,7 @@ function List() {
                             <Button variant="outline-dark" onClick={() => getMore()}>Xem tiếp</Button>
                             :
                             totalElement > 6 &&
-                            <Button variant="outline-dark" onClick={() => getDefault()}>Thu gọn</Button>
+                            <Button variant="outline-dark" onClick={() => getDefaultToDiv()}>Thu gọn</Button>
                         }
                     </div>
                 </div>

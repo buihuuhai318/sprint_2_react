@@ -376,7 +376,7 @@ function LoginForm() {
                 </div>
             </div>
 
-            <div style={{width: '40%', height: '30%', margin: '0% auto 0% auto', padding: '10% 0 15% 0'}}>
+            <div style={{width: '40%', height: '30%', margin: '0% auto 0% auto', padding: '2% 0 0% 0'}}>
                 <div className="transparent-div-HaiBH card"
                      style={{backgroundColor: 'rgba(192, 192, 192, 0.3)', border: "0 solid", borderRadius: "10%"}}>
                     <div style={{width: "80%", marginRight: "auto", marginLeft: "auto"}} className="mt-4 mb-2">
@@ -725,7 +725,8 @@ function LoginForm() {
                                                                         setShowForgot(true);
                                                                         getTitle("Lấy lại mật khẩu")
                                                                     }}
-                                                                          style={{color: "black !important"}}>Quên mật khẩu</Link>
+                                                                          style={{color: "black !important"}}>Quên mật
+                                                                        khẩu</Link>
                                                                 </div>
                                                             </div>
                                                         </div>

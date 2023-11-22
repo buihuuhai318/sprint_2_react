@@ -38,6 +38,7 @@ function App() {
                     <Route path="/detail/:id" element={<HomeDetail/>}/>
                     <Route path="/list" element={<ListProject/>}/>
                     <Route path="/company" element={<ListProjectByCompany/>}/>
+                    <Route path="/company/:id" element={<ListProjectByCompany/>}/>
                     <Route path="/list/:id" element={<ListProject/>}/>
                     <Route path="/chat" element={<ChatRoom/>}/>
 

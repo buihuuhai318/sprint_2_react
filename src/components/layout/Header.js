@@ -13,6 +13,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import {Button, InputGroup} from "react-bootstrap";
 import "./header.css"
+import './SearchBox.css'; // Tạo một file SearchBox.css để điều chỉnh kiểu dáng
 
 
 
@@ -120,7 +121,7 @@ function Header({refresh}) {
                             <Nav.Link as={Link} to={`/company`}>Đối Tác Đồng Hành</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
-                    <Form className="d-flex">
+                    <Form className="d-flex" style={{maxWidth: "280px"}}>
                         <InputGroup>
                         <Form.Control
                             type="search"
@@ -131,10 +132,17 @@ function Header({refresh}) {
                             style={{backgroundColor: "#53b7ae"}}
                             onChange={(e) => setValueSearch(e.target.value)}
                         />
-                        <Button as={Link} to={`/list?value=${valueSearch}`} variant="outline-light" style={{width: "45%"}}>Tìm kiếm</Button>
+                        <Button as={Link} to={`/list?value=${valueSearch}`} variant="outline-light" style={{width: "35%"}}>Tìm kiếm</Button>
                         </InputGroup>
+                        {/*<form className="search">*/}
+                        {/*    <input type="text" placeholder="Search" className="searchInput" />*/}
+                        {/*    <button type="button" className="searchButton">*/}
+                        {/*        asd*/}
+                        {/*        <i className="ri-search-2-1ine"></i>*/}
+                        {/*    </button>*/}
+                        {/*</form>*/}
                     </Form>
-                    <Navbar.Collapse className="justify-content-end">
+                    <Navbar.Collapse className="justify-content-end d-flex">
                         {userName === "" ?
                             <Navbar.Text>
                                 <Link className="nav-link" role="button" to="/login"
@@ -144,7 +152,7 @@ function Header({refresh}) {
                             </Navbar.Text>
                             :
                             <>
-                                <Nav.Link as={Link}  to="/cart" style={{width: "auto"}} id='basic-nav-dropdown-cart'>
+                                <Nav.Link as={Link}  to="/cart" style={{width: "auto", marginLeft: "1%"}} id='basic-nav-dropdown-cart'>
                                         Giỏ tình thương: {moneyCart.toLocaleString('vi-VN', {
                                     style: 'currency',
                                     currency: 'VND'

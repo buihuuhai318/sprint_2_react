@@ -12,7 +12,7 @@ import {BsSuitHeart} from "react-icons/bs";
 import Form from "react-bootstrap/Form";
 
 
-function OtherProject({ onValueChange }) {
+function OtherProject({onValueChange}) {
 
     const [other, setOther] = useState(null);
     const [show, setShow] = useState(false);
@@ -79,7 +79,7 @@ function OtherProject({ onValueChange }) {
     }, [])
 
 
-    return(other &&
+    return (other &&
         <>
             <div style={{marginTop: "5%"}}>
                 <div className="container" style={{paddingBottom: "4%"}}>
@@ -102,15 +102,18 @@ function OtherProject({ onValueChange }) {
                                             <Card.Text>
                                                 <div className="row">
                                                     <div className="col-8">
-                                                        <Card.Img variant="top"
-                                                                  style={{
-                                                                      width: "2rem",
-                                                                      height: "2rem",
-                                                                      borderRadius: "50%"
-                                                                  }}
-                                                                  id="img1" src={project.companyImage}/>
-                                                        <label htmlFor="img1"
-                                                               style={{margin: "5%"}}>{project.company}</label>
+                                                        <Link to={`/company/${project.companyId}`}
+                                                              style={{textDecoration: "none", color: 'black'}}>
+                                                            <Card.Img variant="top"
+                                                                      style={{
+                                                                          width: "2rem",
+                                                                          height: "2rem",
+                                                                          borderRadius: "50%"
+                                                                      }}
+                                                                      id="img1" src={project.companyImage}/>
+                                                            <label htmlFor="img1"
+                                                                   style={{margin: "5%"}}>{project.company}</label>
+                                                        </Link>
                                                     </div>
                                                     <div className="col-4">
                                                         <Badge bg="warning" text="dark"
@@ -150,11 +153,20 @@ function OtherProject({ onValueChange }) {
                                                 </div>
                                                 <div className="col-4 justify-content-end">
                                                     {project.status === 0 ?
-                                                        <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                        <Button className="btn btn-outline-dark"
+                                                                onClick={() => handleShow(project)} style={{
+                                                            fontSize: "80%",
+                                                            marginTop: "5%",
+                                                            marginLeft: "18%"
+                                                        }}>
                                                             Quyên góp
                                                         </Button>
                                                         :
-                                                        <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "15%"}} disabled>
+                                                        <Button className="btn btn-outline-dark" style={{
+                                                            fontSize: "80%",
+                                                            marginTop: "5%",
+                                                            marginLeft: "15%"
+                                                        }} disabled>
                                                             Đạt chỉ tiêu
                                                         </Button>
                                                     }
@@ -176,6 +188,7 @@ function OtherProject({ onValueChange }) {
             </div>
         </>
     )
+
     function MyModal({data, action}) {
         return (data !== {} &&
             <>
@@ -194,7 +207,8 @@ function OtherProject({ onValueChange }) {
                             onChange={handleInputChange}
                             autoFocus
                         />
-                        <Button variant="outline-dark" id="button-addon2" className="custom" onClick={() => addCart(data)}>
+                        <Button variant="outline-dark" id="button-addon2" className="custom"
+                                onClick={() => addCart(data)}>
                             Quyên góp
                         </Button>
                     </InputGroup>

@@ -94,18 +94,23 @@ function Home() {
         getCompanies()
     }, []);
 
+    console.log(projects)
+
     return (
         <>
             <Header key={!key}/>
             <Carousel>
                 <Carousel.Item interval={2000}>
-                    <ExampleCarouselImage link={"https://i.imgur.com/hGcNOjB.jpg"} text="First slide"/>
+                    <ExampleCarouselImage link={"https://i.imgur.com/QulrpUE.jpg"} text="First slide"/>
                 </Carousel.Item>
                 <Carousel.Item interval={2000}>
-                    <ExampleCarouselImage link={"https://i.imgur.com/opo70w8.jpg"} text="Second slide"/>
+                    <ExampleCarouselImage link={"https://i.imgur.com/oClErpd.jpg"} text="Second slide"/>
                 </Carousel.Item>
                 <Carousel.Item interval={2000}>
-                    <ExampleCarouselImage link={"https://i.imgur.com/sWqodzX.jpg"} text="Third slide"/>
+                    <ExampleCarouselImage link={"https://i.imgur.com/L33GvEL.jpg"} text="Third slide"/>
+                </Carousel.Item>
+                <Carousel.Item interval={2000}>
+                    <ExampleCarouselImage link={"https://i.imgur.com/cdgWCZu.jpg"} text="Third slide"/>
                 </Carousel.Item>
             </Carousel>
             <div style={{marginTop: "5%", zIndex: "99999"}}>
@@ -181,18 +186,22 @@ function Home() {
                                         <Card.Text>
                                             <div className="row">
                                                 <div className="col-8">
-                                                    <Card.Img variant="top"
-                                                              style={{
-                                                                  width: "2rem",
-                                                                  height: "2rem",
-                                                                  borderRadius: "50%"
-                                                              }}
-                                                              id="img1" src={project.companyImage}/>
-                                                    <label htmlFor="img1"
-                                                           style={{margin: "5%"}}>{project.company}</label>
+                                                    <Link to={`/company/${project.companyId}`}
+                                                          style={{textDecoration: "none", color: 'black'}}>
+                                                        <Card.Img variant="top"
+                                                                  style={{
+                                                                      width: "2rem",
+                                                                      height: "2rem",
+                                                                      borderRadius: "50%"
+                                                                  }}
+                                                                  id="img1" src={project.companyImage}/>
+                                                        <label htmlFor="img1"
+                                                               style={{margin: "5%"}}>{project.company}</label>
+                                                    </Link>
                                                 </div>
                                                 <div className="col-4">
-                                                    <Badge bg="warning" text="dark" style={{marginTop: "13%", marginLeft: "10%", width: "6rem"}}>
+                                                    <Badge bg="warning" text="dark"
+                                                           style={{marginTop: "13%", marginLeft: "10%", width: "6rem"}}>
                                                         Còn {project.date} ngày
                                                     </Badge>
                                                 </div>
@@ -228,11 +237,20 @@ function Home() {
                                             </div>
                                             <div className="col-4 justify-content-end">
                                                 {project.status === 0 ?
-                                                    <Button className="btn btn-outline-dark" onClick={() => handleShow(project)} style={{fontSize: "80%", marginTop: "5%", marginLeft: "18%"}}>
+                                                    <Button className="btn btn-outline-dark"
+                                                            onClick={() => handleShow(project)} style={{
+                                                        fontSize: "80%",
+                                                        marginTop: "5%",
+                                                        marginLeft: "18%"
+                                                    }}>
                                                         Quyên góp
                                                     </Button>
                                                     :
-                                                    <Button className="btn btn-outline-dark" style={{fontSize: "80%", marginTop: "5%", marginLeft: "15%"}} disabled>
+                                                    <Button className="btn btn-outline-dark" style={{
+                                                        fontSize: "80%",
+                                                        marginTop: "5%",
+                                                        marginLeft: "15%"
+                                                    }} disabled>
                                                         Đạt chỉ tiêu
                                                     </Button>
                                                 }
@@ -254,7 +272,6 @@ function Home() {
             </div>
 
 
-
             <div className="container" style={{paddingBottom: "10%"}}>
                 <h1 style={{textAlign: "center", marginTop: "5%", paddingTop: "7%", fontWeight: "bold"}}>Các đối tác
                     đồng hành</h1>
@@ -263,23 +280,25 @@ function Home() {
                 <div className="row">
                     {companies.map((company, index) => (
                         <div className="col-4">
-                            <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
-                                <div className="row">
-                                    <div className="col-3">
-                                        <Image variant="top"
-                                               style={{width: "4rem", height: "4rem", margin: "11%"}}
-                                               id="img1" src={company.companyImage.name} rounded/>
+                            <Link to={`/company/${company.id}`} style={{textDecoration: "none"}}>
+                                <Card style={{width: '100%', height: "5rem", marginBottom: "5%"}}>
+                                    <div className="row">
+                                        <div className="col-3">
+                                            <Image variant="top"
+                                                   style={{width: "4rem", height: "4rem", margin: "11%"}}
+                                                   id="img1" src={company.companyImage.name} rounded/>
+                                        </div>
+                                        <div className="col-9">
+                                            <label htmlFor="img1" style={{marginTop: "6%"}}>{company.name}</label>
+                                            <p style={{
+                                                fontSize: "70%",
+                                                color: "gray",
+                                                marginRight: "5%"
+                                            }}>{company.description}</p>
+                                        </div>
                                     </div>
-                                    <div className="col-9">
-                                        <label htmlFor="img1" style={{marginTop: "6%"}}>{company.name}</label>
-                                        <p style={{
-                                            fontSize: "70%",
-                                            color: "gray",
-                                            marginRight: "5%"
-                                        }}>{company.description}</p>
-                                    </div>
-                                </div>
-                            </Card>
+                                </Card>
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -388,7 +407,8 @@ function Home() {
                             onChange={handleInputChange}
                             autoFocus
                         />
-                        <Button variant="outline-dark" id="button-addon2" className="custom" onClick={() => addCart(data)}>
+                        <Button variant="outline-dark" id="button-addon2" className="custom"
+                                onClick={() => addCart(data)}>
                             Quyên góp
                         </Button>
                     </InputGroup>
