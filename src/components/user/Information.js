@@ -111,6 +111,10 @@ function Information() {
         handleScrollToDiv();
     }
 
+    const getFirst = debounce (() => {
+        handleScrollToDiv();
+    }, 300);
+
     const getDefault = debounce (() => {
         setLimit(5);
         setButtonMore(true);
@@ -126,6 +130,7 @@ function Information() {
         document.title = "#Thehome - Thông tin cá nhân"; // Đặt tiêu đề mới tại đây
     }, [limit])
 
+    getFirst();
 
     return (history &&
         <>

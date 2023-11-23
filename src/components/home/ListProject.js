@@ -15,6 +15,7 @@ import {BsSuitHeart} from "react-icons/bs";
 import {toast} from "react-toastify";
 import * as CartService from "../../service/cart/CartService";
 import {debounce} from "lodash";
+import * as AuthService from "../../service/user/AuthService";
 
 
 function List() {
@@ -32,6 +33,8 @@ function List() {
     const [key, setKey] = useState(true);
     const [buttonMore, setButtonMore] = useState(true);
     const [totalElement, setTotalElement] = useState(null);
+    const navigate = useNavigate();
+
 
 
     const getMore = () => {
@@ -90,9 +93,22 @@ function List() {
         setShow(false);
         setMyModal({});
     }
+    const donate = async () => {
+        const response = await AuthService.infoAppUserByJwtToken();
+        if (!response) {
+            navigate("/login");
+            toast.warning("Bận cần phải đăng nhập trước !!!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     const handleShow = (object) => {
-        setShow(true);
-        setMyModal(object);
+        if (donate()) {
+            setShow(true);
+            setMyModal(object);
+        }
     }
 
     const getTypes = async (id) => {
@@ -138,7 +154,7 @@ function List() {
             } else {
                 setProjects(null);
             }
-            await getTypes(id)
+            await getTypes(id);
         } catch (e) {
             setProjects(null);
         }

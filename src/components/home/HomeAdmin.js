@@ -130,7 +130,7 @@ function HomeAdmin() {
         <>
             <HeaderAdmin/>
             <div className="container my-5 pt-4" style={{margin: '10% auto 10% auto', paddingTop: "10%"}}>
-                <div className="row mt-5">
+                <div className="row mt-5 pb-4">
                     <div className="col-md-3">
                         <div className="card" style={{...cardBodyStyle, backgroundColor: '#02b9a8'}}>
                             <div className="card-header">

@@ -361,8 +361,8 @@ function LoginForm() {
 
     return (
         <>
-            <Button className="btn btn-outline-dark sticky-top"
-                    style={{top: "50px", left: "50px", backgroundColor: 'rgba(192, 192, 192, 0)'}} as={Link} to="/">
+            <Button className="btn btn-outline-dark sticky-top custom-btn"
+                    style={{top: "50px", left: "50px", backgroundColor: 'rgba(192, 192, 192, 0.5)'}} as={Link} to="/">
                 <BsArrowBarLeft size={20}/> Trang chủ
             </Button>
             <div>
@@ -748,7 +748,7 @@ function LoginForm() {
                                                                         className="btn btn-light" onClick={handleClick}>
                                                                     Đăng Nhập
                                                                 </button>
-
+                                                                <hr/>
                                                                 <div className="row mt-3">
                                                                     <div className="col-4 text-center">
                                                                         <LoginSocialFacebook

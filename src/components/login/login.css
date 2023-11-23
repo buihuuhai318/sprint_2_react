@@ -34,3 +34,8 @@
     color: white;
     border : none;
 }
+
+.custom-btn:hover {
+    background-color: #000000 !important;
+    color: white;
+}

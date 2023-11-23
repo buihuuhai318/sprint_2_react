@@ -99,6 +99,7 @@ function HomeDetail() {
         const response = await AuthService.infoAppUserByJwtToken();
         if (!response) {
             navigate("/login");
+            toast.warning("Bận cần phải đăng nhập trước !!!");
         } else {
             setShowInput(true);
         }
@@ -247,7 +248,6 @@ function HomeDetail() {
                                                 variant="primary"
                                                 className="mx-auto mt-3"
                                                 style={{width: "95%", backgroundColor: "white", borderColor: "gray"}}
-                                                onClick={() => donate()}
                                                 hidden={showInput}
                                                 disabled
                                             >

@@ -15,6 +15,7 @@ import {BsSuitHeart} from "react-icons/bs";
 import {toast} from "react-toastify";
 import * as CartService from "../../service/cart/CartService";
 import * as HomeService from "../../service/home/HomeService";
+import * as AuthService from "../../service/user/AuthService";
 
 
 function List() {
@@ -32,6 +33,7 @@ function List() {
     const [buttonMore, setButtonMore] = useState(true);
     const [totalElement, setTotalElement] = useState(null);
     const [companies, setCompanies] = useState(null);
+    const navigate = useNavigate();
 
 
     const getCompanies = async () => {
@@ -95,9 +97,22 @@ function List() {
         setShow(false);
         setMyModal({});
     }
+    const donate = async () => {
+        const response = await AuthService.infoAppUserByJwtToken();
+        if (!response) {
+            navigate("/login");
+            toast.warning("Bận cần phải đăng nhập trước !!!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     const handleShow = (object) => {
-        setShow(true);
-        setMyModal(object);
+        if (donate()) {
+            setShow(true);
+            setMyModal(object);
+        }
     }
 
     const getTypes = async (id) => {
@@ -137,6 +152,7 @@ function List() {
     const getListByType = async (id) => {
         try {
             const res = await ListService.getProjectByCompany(id, limit);
+            console.log(res)
             if (res.data !== "") {
                 setProjects(res.data.content);
                 setTotalElement(res.data.totalElements);
@@ -151,13 +167,13 @@ function List() {
 
     useEffect(() => {
         document.title = "#Thehome - Danh sách"; // Đặt tiêu đề mới tại đây
+        console.log(params.id)
         if (params.id === undefined) {
             const value = new URLSearchParams(location.search).get('value');
             if (value !== null) {
                 getListBySearch(value);
             } else {
                 getListByType(1);
-                setIdTypes(1);
             }
         } else {
             getListByType(params.id);
@@ -187,25 +203,6 @@ function List() {
         <>
             <div id="targetTop"></div>
             <Header key={!key}/>
-            <Card style={{position: 'relative', border: "none"}}>
-                <Card.Img variant="top"
-                          src={infoType.image}/>
-                <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)'
-                }}>
-                    <Card.Body>
-                        <Carousel.Caption style={{top: "100px"}}>
-                            <h1>{infoType.name}</h1>
-                            <p>{infoType.description}</p>
-                        </Carousel.Caption>
-                    </Card.Body>
-                </div>
-            </Card>
             <div className="container mt-3 mb-5">
                 <div className="scrollmenu">
                     {companies.map((type, index) => (

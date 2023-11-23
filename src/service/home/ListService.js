@@ -8,6 +8,7 @@ export const getProject = async (id, limit) => {
 }
 
 export const getProjectByCompany = async (id, limit) => {
+    if (id === undefined) id = 1;
     return await axios.get(apiList + `/company/${id}?limit=${limit}`);
 }
 

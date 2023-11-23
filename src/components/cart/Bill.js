@@ -11,6 +11,7 @@ import {useEffect, useState, useRef} from "react";
 import * as appUserService from "../../service/user/AuthService";
 import format from 'date-fns/format';
 import OtherProject from "../layout/OtherProject";
+import {debounce} from "lodash";
 
 
 
@@ -35,6 +36,18 @@ function Bill() {
         }
     }
 
+    const handleScrollToTop = () => {
+        const targetDiv = document.getElementById('targetTop');
+        if (targetDiv) {
+            const targetOffset = targetDiv.offsetTop - 100; // Khoảng cách từ phía trên
+            window.scrollTo({top: targetOffset, behavior: 'smooth'});
+        }
+    };
+
+    const getDefault = debounce (() => {
+        handleScrollToTop();
+    }, 300);
+
     const getDate = (date) => {
         const dateObject = new Date(date);
         return format(dateObject, "dd/MM/yyyy HH:mm:ss")
@@ -48,6 +61,8 @@ function Bill() {
             navigate("/");
         }
     }, []);
+
+    getDefault();
 
     return ( bill &&
         <>
@@ -65,7 +80,7 @@ function Bill() {
             </Carousel>
             <div style={{marginTop: "5%"}}>
                 <div className="container">
-                    <h3 className="text-center">Cám ơn {name} <BsSuitHeart/></h3>
+                    <h3 className="text-center" id="targetTop">Cám ơn {name} <BsSuitHeart/></h3>
                     <hr/>
                     <Table style={{width: "50%", margin: "5%"}}>
                         <tbody>

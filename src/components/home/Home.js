@@ -10,12 +10,13 @@ import Image from 'react-bootstrap/Image';
 import React, {useEffect, useState} from 'react';
 import Footer from "../layout/Footer";
 import * as HomeService from "../../service/home/HomeService";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import {BsSuitHeart} from "react-icons/bs";
 import Form from "react-bootstrap/Form";
 import {toast} from "react-toastify";
 import * as CartService from "../../service/cart/CartService";
+import * as AuthService from "../../service/user/AuthService";
 
 
 function Home() {
@@ -26,6 +27,8 @@ function Home() {
     const [myModal, setMyModal] = useState(null);
     const [inputValue, setInputValue] = useState(null);
     const [key, setKey] = useState(true);
+    const navigate = useNavigate();
+
 
 
     const addCart = async (data) => {
@@ -65,9 +68,24 @@ function Home() {
         setShow(false);
         setMyModal({});
     }
+
+    const donate = async () => {
+        const response = await AuthService.infoAppUserByJwtToken();
+        if (!response) {
+            navigate("/login");
+            toast.warning("Bận cần phải đăng nhập trước !!!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     const handleShow = (object) => {
-        setShow(true);
-        setMyModal(object);
+        if (donate()) {
+            setShow(true);
+            setMyModal(object);
+        }
     }
 
     const getProjects = async () => {
@@ -94,17 +112,15 @@ function Home() {
         getCompanies()
     }, []);
 
-    console.log(projects)
-
     return (
         <>
             <Header key={!key}/>
             <Carousel>
                 <Carousel.Item interval={2000}>
-                    <ExampleCarouselImage link={"https://i.imgur.com/QulrpUE.jpg"} text="First slide"/>
+                    <ExampleCarouselImage link={"https://i.imgur.com/oClErpd.jpg"} text="Second slide"/>
                 </Carousel.Item>
                 <Carousel.Item interval={2000}>
-                    <ExampleCarouselImage link={"https://i.imgur.com/oClErpd.jpg"} text="Second slide"/>
+                    <ExampleCarouselImage link={"https://i.imgur.com/QulrpUE.jpg"} text="First slide"/>
                 </Carousel.Item>
                 <Carousel.Item interval={2000}>
                     <ExampleCarouselImage link={"https://i.imgur.com/L33GvEL.jpg"} text="Third slide"/>

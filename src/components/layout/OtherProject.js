@@ -1,5 +1,5 @@
 import {Button, Card, InputGroup} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import * as React from "react";
@@ -10,6 +10,7 @@ import * as CartService from "../../service/cart/CartService";
 import Modal from "react-bootstrap/Modal";
 import {BsSuitHeart} from "react-icons/bs";
 import Form from "react-bootstrap/Form";
+import * as AuthService from "../../service/user/AuthService";
 
 
 function OtherProject({onValueChange}) {
@@ -19,6 +20,8 @@ function OtherProject({onValueChange}) {
     const [myModal, setMyModal] = useState(null);
     const [inputValue, setInputValue] = useState(null);
     const [key, setKey] = useState(true);
+    const navigate = useNavigate();
+
 
 
     const addCart = async (data) => {
@@ -59,9 +62,22 @@ function OtherProject({onValueChange}) {
         setShow(false);
         setMyModal({});
     }
+    const donate = async () => {
+        const response = await AuthService.infoAppUserByJwtToken();
+        if (!response) {
+            navigate("/login");
+            toast.warning("Bận cần phải đăng nhập trước !!!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     const handleShow = (object) => {
-        setShow(true);
-        setMyModal(object);
+        if (donate()) {
+            setShow(true);
+            setMyModal(object);
+        }
     }
 
     const getOther = async () => {

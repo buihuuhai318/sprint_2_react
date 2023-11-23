@@ -15,6 +15,8 @@ import Modal from "react-bootstrap/Modal";
 import {toast} from "react-toastify";
 import PaypalCheckoutButton from "../paypal/PaypalCheckoutButton";
 import OtherProject from "../layout/OtherProject";
+import {debounce} from "lodash";
+
 
 
 export function Cart() {
@@ -25,6 +27,8 @@ export function Cart() {
     const [show, setShow] = useState(false);
     const [myModal, setMyModal] = useState(null);
     const [bill, setBill] = useState(null);
+
+
 
     const handleScrollToDiv = () => {
         const targetDiv = document.getElementById('targetDiv');
@@ -92,8 +96,13 @@ export function Cart() {
         getCarts();
         getMoneyCart();
         getBill();
-        handleScrollToDiv();
     }, [key]);
+
+    const getDefault = debounce (() => {
+        handleScrollToDiv();
+    }, 300);
+
+    getDefault();
 
     return (carts &&
         <>
